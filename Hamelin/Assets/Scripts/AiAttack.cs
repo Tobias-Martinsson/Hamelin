@@ -17,7 +17,7 @@ public class AiAttack : State
 
     public override void RunUpdate()
     {
-        Debug.Log("Attacking player.");
+        //Debug.Log("Attacking player.");
 
         if(Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > AttackDistance)
         {

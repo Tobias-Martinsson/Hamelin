@@ -32,6 +32,7 @@ public class PlayerController3D : MonoBehaviour
     public Vector3 gravityPower;
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
+    public GameObject net;
 
     private StateMachine StateMachine;
     public CapsuleCollider collider;
@@ -55,15 +56,19 @@ public class PlayerController3D : MonoBehaviour
         //input och gravitation / hoppkraft
         //input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
         gravityPower = Vector3.down * gravity * Time.deltaTime;
-        
+        net.transform.rotation = transform.rotation;
 
         //förflyttning av kameran. Bara fått det att fungera någolunda med en dynamisk kamera, men har problem att raycasta mot föremål jag nuddar. 
         
         rotationX -= Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
         Vector3 offset = camera.transform.rotation * cameraOffset;
+        var CharacterRotation = camera.transform.rotation;
+        CharacterRotation.x = 0;
+        CharacterRotation.z = 0;
+        transform.rotation = CharacterRotation;
 
-       
+
         camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
         
         Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
@@ -125,14 +130,18 @@ public class PlayerController3D : MonoBehaviour
     void Decelerate()
     {
         
-       if(deceleration > Mathf.Abs(velocity.x)){
+       if(0.01f > Mathf.Abs(velocity.x)){
             velocity.x = 0;
         }
 
-        if (deceleration > Mathf.Abs(velocity.y)){
+        if (0.01f > Mathf.Abs(velocity.y)){
             velocity.y = 0;
         }
-        
+        if (0.01f > Mathf.Abs(velocity.z))
+        {
+            velocity.z = 0;
+        }
+
 
 
         Vector3 projection = new Vector3(velocity.x, 0.0f,velocity.z).normalized;
@@ -162,12 +171,18 @@ public class PlayerController3D : MonoBehaviour
 
         if (velocity.magnitude < normalForce.magnitude * staticFrictionCoefficient)
         {
+            Debug.Log("Zeroing velocity");
             velocity = Vector3.zero;
         }
         else
         {
-            velocity -= velocity.normalized * normalForce.magnitude *
-                kineticFrictionCoefficient;
+   
+            /*
+            Debug.Log("Vel:" + velocity.normalized);
+            Debug.Log("Normalforce Magnitude:" + normalForce.magnitude);
+            Debug.Log("KineticFriction:" + kineticFrictionCoefficient);
+            */
+            velocity -= velocity.normalized * normalForce.magnitude * kineticFrictionCoefficient;
         }
 
 
@@ -186,11 +201,10 @@ public class PlayerController3D : MonoBehaviour
             velocity += separationVector.normalized * skinWidth;
 
             Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
-            //ApplyFriction(normalForce);
+            ApplyFriction(normalForce);
 
-            Debug.Log(velocity);
             velocity += normalForce;
-            Debug.Log(velocity);
+
         }
 
 
