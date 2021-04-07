@@ -20,6 +20,7 @@ public class PlayerController3D : MonoBehaviour
     public float rotationY;
     public float mouseSensitivity;
     public Camera camera;
+   
     public Vector3 cameraOffset;
     public float staticFrictionCoefficient;
     public float kineticFrictionCoefficient;
@@ -32,6 +33,14 @@ public class PlayerController3D : MonoBehaviour
     public Vector3 gravityPower;
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
+
+    //bugnet test
+    float netRotationX = 0;
+    float netRotationY = 0;
+    public SphereCollider bugNet;
+    float netRotationSpeed = -0.3f;
+    public Vector3 bugNetOffset = new Vector3(-10, -10);
+    //
 
     private StateMachine StateMachine;
     public CapsuleCollider collider;
@@ -62,8 +71,8 @@ public class PlayerController3D : MonoBehaviour
         rotationX -= Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
         Vector3 offset = camera.transform.rotation * cameraOffset;
+        rotationX = Mathf.Clamp(rotationX, -90, 90);
 
-       
         camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
         
         Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
@@ -85,6 +94,24 @@ public class PlayerController3D : MonoBehaviour
         camera.transform.position = (offset + transform.position);
     
         velocity += gravityPower;
+
+        // bugnet
+        Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
+
+        netRotationX -= netRotationSpeed;
+       
+        netRotationX = Mathf.Clamp(netRotationX, 0, 180);
+
+        
+
+
+        bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+
+
+        bugNet.transform.position = (netOffset + transform.position);
+        
+
+        //
 
         //En array av alla object som min overlapcapsule returnerar, alltså de kolliderade med. 
         collidingObjects = Physics.OverlapCapsule(point1,
@@ -186,7 +213,7 @@ public class PlayerController3D : MonoBehaviour
             velocity += separationVector.normalized * skinWidth;
 
             Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
-            //ApplyFriction(normalForce);
+            ApplyFriction(normalForce);
 
             Debug.Log(velocity);
             velocity += normalForce;
