@@ -33,6 +33,7 @@ public class PlayerController3D : MonoBehaviour
     public Vector3 gravityPower;
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
+    public Vector3 henrikLuktar;
 
     private StateMachine StateMachine;
     public CapsuleCollider collider;
