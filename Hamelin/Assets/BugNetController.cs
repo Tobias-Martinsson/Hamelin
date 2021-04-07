@@ -6,7 +6,7 @@ public class BugNetController : MonoBehaviour
 {
     public SphereCollider collider;
     public RaycastHit hit;
-    public float forwardCheckDistance = 1f;
+    public float downwardCheckDistance = 1f;
     void Awake() => collider = GetComponent<SphereCollider>();
     // Start is called before the first frame update
     void Start()
@@ -18,7 +18,7 @@ public class BugNetController : MonoBehaviour
     void Update()
     {
 
-        if (Physics.SphereCast(transform.position, collider.radius * 0.95f, Vector3.down, out hit, forwardCheckDistance))
+        if (Physics.SphereCast(transform.position, collider.radius, Vector3.down, out hit, downwardCheckDistance))
         {
             if (hit.transform.tag == "Enemy")
             {
