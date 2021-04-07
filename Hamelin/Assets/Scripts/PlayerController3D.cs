@@ -21,7 +21,6 @@ public class PlayerController3D : MonoBehaviour
     public float mouseSensitivity;
     public Camera camera;
     public Vector3 cameraOffset;
-    public float turnSmoothTime = 0.1f;
     public float staticFrictionCoefficient;
     public float kineticFrictionCoefficient;
     public float airResistance;
@@ -33,8 +32,6 @@ public class PlayerController3D : MonoBehaviour
     public Vector3 gravityPower;
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
-
-    public Vector3 Fucktard;
 
     private StateMachine StateMachine;
     public CapsuleCollider collider;

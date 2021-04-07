@@ -29,9 +29,7 @@ public class PlayerGroundedState : State
             Player.velocity += Player.jumpPower;
         }
 
-        Player.velocity *= Mathf.Pow(Player.airResistance, Time.deltaTime);
         Player.transform.position += Player.velocity * Time.deltaTime;
-
 
         if (!Physics.CapsuleCast(Player.point1, Player.point2, Player.collider.radius * 0.95f, Vector3.down, Player.groundCheckDistance))
         {
