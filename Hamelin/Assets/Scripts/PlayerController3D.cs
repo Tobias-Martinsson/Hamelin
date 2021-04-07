@@ -34,6 +34,8 @@ public class PlayerController3D : MonoBehaviour
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
 
+    public Vector3 Fucktard;
+
     private StateMachine StateMachine;
     public CapsuleCollider collider;
     void Awake() => collider = GetComponent<CapsuleCollider>();
