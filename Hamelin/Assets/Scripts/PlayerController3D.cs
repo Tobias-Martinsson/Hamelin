@@ -36,10 +36,10 @@ public class PlayerController3D : MonoBehaviour
 
     //bugnet test
     float netRotationX = 0;
-    float netRotationY = 0;
     public SphereCollider bugNet;
     float netRotationSpeed = -0.3f;
-    public Vector3 bugNetOffset = new Vector3(-10, -10);
+    Vector3 bugNetOffset = new Vector3(0, 4, 0);
+    bool netStart = false;
     //
 
     private StateMachine StateMachine;
@@ -95,22 +95,41 @@ public class PlayerController3D : MonoBehaviour
     
         velocity += gravityPower;
 
-        // bugnet
-        Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
 
-        netRotationX -= netRotationSpeed;
-       
-        netRotationX = Mathf.Clamp(netRotationX, 0, 180);
 
+        // bugnet   offset funkar inte riktigt
+
+        Debug.Log(bugNetOffset);
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            netStart = true;
+        }
+
+        if (netStart)
+        {
+
+            Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
+
+            netRotationX -= netRotationSpeed;
+
+            netRotationX = Mathf.Clamp(netRotationX, 0, 90);
+
+
+            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+
+
+            bugNet.transform.position = (netOffset + transform.position);
+        }
+
+      
+
+        if (netRotationX >= 90)
+        {
         
-
-
-        bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
-
-
-        bugNet.transform.position = (netOffset + transform.position);
-        
-
+            netStart = false;
+            netRotationX = 0;
+            bugNet.transform.position = (bugNetOffset + transform.position);
+        }
         //
 
         //En array av alla object som min overlapcapsule returnerar, alltså de kolliderade med. 
