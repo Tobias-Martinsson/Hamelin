@@ -21,7 +21,6 @@ public class PlayerController3D : MonoBehaviour
     public float mouseSensitivity;
     public Camera camera;
     public Vector3 cameraOffset;
-    public float turnSmoothTime = 0.1f;
     public float staticFrictionCoefficient;
     public float kineticFrictionCoefficient;
     public float airResistance;
@@ -33,7 +32,7 @@ public class PlayerController3D : MonoBehaviour
     public Vector3 gravityPower;
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
-    public Vector3 henrikLuktar;
+    public GameObject net;
 
     private StateMachine StateMachine;
     public CapsuleCollider collider;
@@ -57,17 +56,24 @@ public class PlayerController3D : MonoBehaviour
         //input och gravitation / hoppkraft
         //input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
         gravityPower = Vector3.down * gravity * Time.deltaTime;
-        
+        net.transform.rotation = transform.rotation;
 
         //förflyttning av kameran. Bara fått det att fungera någolunda med en dynamisk kamera, men har problem att raycasta mot föremål jag nuddar. 
+        
         rotationX -= Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
         Vector3 offset = camera.transform.rotation * cameraOffset;
-       
+        var CharacterRotation = camera.transform.rotation;
+        CharacterRotation.x = 0;
+        CharacterRotation.z = 0;
+        transform.rotation = CharacterRotation;
+
+
         camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-      
+        
         Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
         Debug.DrawLine(transform.position,camera.transform.position);
+        /*
         if (Physics.SphereCast(transform.position, 2f,offset + camera.transform.position.normalized, out hitInfo3,offset.magnitude,collisionMask))
         {
             Debug.DrawLine(transform.position, hitInfo3.point, Color.red);
@@ -79,8 +85,9 @@ public class PlayerController3D : MonoBehaviour
             camera.transform.position = (offset + transform.position);
         }
 
+        */
         //kommentera ut det ovanför om det behövs testa med en simpel kamera. 
-        //camera.transform.position = (offset + transform.position);
+        camera.transform.position = (offset + transform.position);
     
         velocity += gravityPower;
 
@@ -122,18 +129,22 @@ public class PlayerController3D : MonoBehaviour
 
     void Decelerate()
     {
-       if(deceleration > Mathf.Abs(velocity.x)){
+        
+       if(0.01f > Mathf.Abs(velocity.x)){
             velocity.x = 0;
         }
-        if (deceleration > Mathf.Abs(velocity.y)){
+
+        if (0.01f > Mathf.Abs(velocity.y)){
             velocity.y = 0;
         }
-        if(deceleration > Mathf.Abs(velocity.z))
+        if (0.01f > Mathf.Abs(velocity.z))
         {
             velocity.z = 0;
         }
 
-        Vector3 projection = new Vector3(velocity.x, 0.0f).normalized;
+
+
+        Vector3 projection = new Vector3(velocity.x, 0.0f,velocity.z).normalized;
         velocity -= projection * deceleration * Time.deltaTime;
         
 
@@ -155,18 +166,23 @@ public class PlayerController3D : MonoBehaviour
     }
 
     //applicerar friktion på karaktären.
-    void ApplyFriction(Vector2 normalForce)
+    void ApplyFriction(Vector3 normalForce)
     {
 
-        if (velocity.magnitude <
-            normalForce.magnitude * staticFrictionCoefficient)
+        if (velocity.magnitude < normalForce.magnitude * staticFrictionCoefficient)
         {
-            velocity = Vector2.zero;
+            Debug.Log("Zeroing velocity");
+            velocity = Vector3.zero;
         }
         else
         {
-            velocity -= velocity.normalized * normalForce.magnitude *
-                kineticFrictionCoefficient;
+   
+            /*
+            Debug.Log("Vel:" + velocity.normalized);
+            Debug.Log("Normalforce Magnitude:" + normalForce.magnitude);
+            Debug.Log("KineticFriction:" + kineticFrictionCoefficient);
+            */
+            velocity -= velocity.normalized * normalForce.magnitude * kineticFrictionCoefficient;
         }
 
 
@@ -183,10 +199,12 @@ public class PlayerController3D : MonoBehaviour
             Physics.ComputePenetration(collider, transform.position, transform.rotation, col, col.transform.position, col.transform.rotation, out separationVector, out float distance);
 
             velocity += separationVector.normalized * skinWidth;
+
             Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
             ApplyFriction(normalForce);
-            
+
             velocity += normalForce;
+
         }
 
 

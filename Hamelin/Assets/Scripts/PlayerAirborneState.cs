@@ -19,7 +19,7 @@ public class PlayerAirborneState : State
     }
     public override void RunUpdate()
     {
-         Player.input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
+        Player.input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
         Player.input = Player.camera.transform.rotation * Player.input;
 
         Player.velocity *= Mathf.Pow(Player.airResistance, Time.deltaTime);

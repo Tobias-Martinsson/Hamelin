@@ -27,7 +27,7 @@ public class AiChasePlayer : State
 
         if (Physics.Linecast(Agent.transform.position, Agent.PlayerPosition, Agent.CollisionLayer))
         {
-            Debug.Log("Patrol");
+            //Debug.Log("Patrol");
             StateMachine.ChangeState<AiPatrolState>();
         }
 
