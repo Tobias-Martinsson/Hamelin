@@ -33,6 +33,7 @@ public class BugNetController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
+       
         Debug.Log(collision.gameObject.tag);
         if(collision.gameObject.tag == "Enemy")
         {

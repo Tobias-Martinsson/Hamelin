@@ -9,6 +9,7 @@ public class PlayerController3D : MonoBehaviour
     public Vector3 velocity;
     public Vector3 input;
     public float maxSpeed;
+    private float startMaxSpeed;
     public float skinWidth;
     public LayerMask collisionMask;
     public RaycastHit hit;
@@ -37,10 +38,18 @@ public class PlayerController3D : MonoBehaviour
     //bugnet test
     float netRotationX = 0;
     public SphereCollider bugNet;
-    float netRotationSpeed = -0.3f;
+    float netRotationSpeed = -0.8f;
     Vector3 bugNetOffset = new Vector3(0, 4, 0);
-    bool netStart = false;
+    Vector3 bugNetStartOffset = new Vector3(1, 1, 0);
+
+    bool netReady = true;
+    bool netHolding = false;
+    bool netSwipe = false;
+
+    float timer = 0;
     //
+
+
 
     private StateMachine StateMachine;
     public CapsuleCollider collider;
@@ -51,6 +60,9 @@ public class PlayerController3D : MonoBehaviour
     {
         StateMachine = new StateMachine(this, States);
         jumpPower = Vector3.up * jumpPowerVariable;
+        startMaxSpeed = maxSpeed;
+     
+
     }
 
     // Update is called once per frame
@@ -100,14 +112,48 @@ public class PlayerController3D : MonoBehaviour
         // bugnet   offset funkar inte riktigt
 
         //Debug.Log(bugNetOffset);
-        if (Input.GetKeyDown(KeyCode.G))
+
+        if (netReady)
         {
-            netStart = true;
+            Vector3 netOffset = bugNet.transform.rotation * bugNetStartOffset;
+
+
+            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+
+
+            bugNet.transform.position = (netOffset + transform.position);
+
         }
 
-        if (netStart)
+        if (Input.GetMouseButtonDown(0))
         {
+            netHolding = true;
+            netReady = false;
+        } 
+       
+        if (netHolding){
+            Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
 
+   
+            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+
+
+            bugNet.transform.position = (netOffset + transform.position);
+
+            maxSpeed = startMaxSpeed / 5;
+
+           
+            if(Input.GetMouseButtonUp(0)){
+                netSwipe = true;
+                netHolding = false;
+
+            }
+        }
+
+
+        if (netSwipe) {
+
+            maxSpeed = 0;
             Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
 
             netRotationX -= netRotationSpeed;
@@ -119,16 +165,22 @@ public class PlayerController3D : MonoBehaviour
 
 
             bugNet.transform.position = (netOffset + transform.position);
+           
+
         }
-
-
 
         if (netRotationX >= 90)
         {
+            if (WaitTime(0.5f)) {
+                netRotationX = 0;
 
-            netStart = false;
-            netRotationX = 0;
-            bugNet.transform.position = (bugNetOffset + transform.position);
+                maxSpeed = startMaxSpeed;
+
+                netReady = true;
+                netSwipe = false;
+            }
+
+          
         }
         //
 
@@ -144,6 +196,20 @@ public class PlayerController3D : MonoBehaviour
         }
 
         StateMachine.RunUpdate();
+    }
+
+    bool WaitTime(float seconds) {
+        
+        timer += Time.deltaTime;
+
+        if (timer >= seconds)
+        {
+            timer = 0;
+            return true;
+            
+        }
+
+        return false;
     }
 
     //3 funktioner för att hantera acceleration
