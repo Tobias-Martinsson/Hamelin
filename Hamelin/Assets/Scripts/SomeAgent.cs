@@ -29,6 +29,9 @@ public class SomeAgent : MonoBehaviour
     {
         StateMachine.RunUpdate();
 
+<<<<<<< Updated upstream
     }
 
+=======
+>>>>>>> Stashed changes
 }

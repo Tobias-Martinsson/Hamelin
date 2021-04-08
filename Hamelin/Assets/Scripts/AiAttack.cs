@@ -17,9 +17,15 @@ public class AiAttack : State
 
     public override void RunUpdate()
     {
+<<<<<<< Updated upstream
         Debug.Log("Attacking player.");
 
         if(Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > AttackDistance)
+=======
+        SceneManager.LoadScene(scene.name);
+
+        if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > AttackDistance)
+>>>>>>> Stashed changes
         {
             StateMachine.ChangeState<AiChasePlayer>();
         }
