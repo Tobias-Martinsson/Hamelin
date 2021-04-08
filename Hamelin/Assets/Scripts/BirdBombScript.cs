@@ -12,9 +12,14 @@ public class BirdBombScript : MonoBehaviour
         scene = SceneManager.GetActiveScene();
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
-        //Debug.Log(collision.gameObject.tag);
+        if(collision.gameObject.tag == "Geometry")
+        {
+            Destroy(this);
+            gameObject.GetComponent<Renderer>().enabled = false;
+        }
+
         if (collision.gameObject.tag == "Player")
         {
             SceneManager.LoadScene(scene.name);
