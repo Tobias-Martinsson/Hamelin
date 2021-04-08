@@ -17,7 +17,7 @@ public class BugNetController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        /*
         if (Physics.SphereCast(transform.position, collider.radius, Vector3.down, out hit, downwardCheckDistance))
         {
             if (hit.transform.tag == "Enemy")
@@ -28,5 +28,17 @@ public class BugNetController : MonoBehaviour
                 
 
         }
+        */
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.tag);
+        if(collision.gameObject.tag == "Enemy")
+        {
+            Destroy(collision.gameObject);
+            collision.gameObject.GetComponent<Renderer>().enabled = false;
+        }
+        
     }
 }

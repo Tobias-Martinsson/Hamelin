@@ -99,7 +99,7 @@ public class PlayerController3D : MonoBehaviour
 
         // bugnet   offset funkar inte riktigt
 
-        Debug.Log(bugNetOffset);
+        //Debug.Log(bugNetOffset);
         if (Input.GetKeyDown(KeyCode.G))
         {
             netStart = true;
@@ -236,9 +236,7 @@ public class PlayerController3D : MonoBehaviour
             Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
             ApplyFriction(normalForce);
 
-            Debug.Log(velocity);
             velocity += normalForce;
-            Debug.Log(velocity);
         }
 
 
