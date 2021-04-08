@@ -100,7 +100,7 @@ public class PlayerController3D : MonoBehaviour
         // bugnet   offset funkar inte riktigt
 
         //Debug.Log(bugNetOffset);
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.E))
         {
             netStart = true;
         }
