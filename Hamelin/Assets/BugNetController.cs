@@ -36,7 +36,9 @@ public class BugNetController : MonoBehaviour
         Debug.Log(collision.gameObject.tag);
         if(collision.gameObject.tag == "Enemy")
         {
+            
             Destroy(collision.gameObject);
+            Destroy(collision.transform.parent.gameObject);
             //collision.gameObject.GetComponent<Renderer>().enabled = false;
         }
         
