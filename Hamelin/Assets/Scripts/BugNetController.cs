@@ -25,7 +25,8 @@ public class BugNetController : MonoBehaviour
         if(collision.gameObject.tag == "Enemy")
         {
             Destroy(collision.gameObject);
-            Destroy(collision.gameObject.GetComponentInParent<GameObject>().gameObject);
+            //Ifall flying enemies
+       //      Destroy(collision.gameObject.GetComponentInParent<GameObject>().gameObject);
             //collision.gameObject.GetComponent<Renderer>().enabled = false;
         }
 
