@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class AiPatrolState : State
 {
-    float chaseDistance = 20;
+    public float chaseDistance;
     public float Speed;
     SomeAgent Agent;
 
