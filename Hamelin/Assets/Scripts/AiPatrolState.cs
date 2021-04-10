@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu()]
 public class AiPatrolState : State
 {
+    public float chaseDistance;
     public float Speed;
     SomeAgent Agent;
 
@@ -30,9 +31,9 @@ public class AiPatrolState : State
             Agent.NavAgent.SetDestination(CurrentPatrol.position);
         }
 
-        if (!Physics.Linecast(Agent.transform.position, Agent.PlayerPosition, Agent.CollisionLayer))
+        if (!Physics.Linecast(Agent.transform.position, Agent.PlayerPosition, Agent.CollisionLayer) && (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) < chaseDistance))
         {
-            //Debug.Log("Chase player");
+            Debug.Log("Chase player");
             StateMachine.ChangeState<AiChasePlayer>();
         }
     }
