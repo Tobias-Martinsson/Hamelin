@@ -2492,26 +2492,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35798d0633677241b7b48792f071a80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 10
+  acceleration: 0.15
   velocity: {x: 0, y: 0, z: 0}
   input: {x: 0, y: 0, z: 0}
-  maxSpeed: 25
-  skinWidth: 0.1
+  maxSpeed: 0.05
+  skinWidth: 0.15
   collisionMask:
     serializedVersion: 2
     m_Bits: 64
-  gravity: 15
-  jumpPowerVariable: 15
-  groundCheckDistance: 1
+  gravity: 0.25
+  jumpPowerVariable: 0.09
+  groundCheckDistance: 0.5
   deceleration: 1
   rotationX: 0
   rotationY: 0
-  mouseSensitivity: 1
+  mouseSensitivity: 3
   camera: {fileID: 963194227}
   cameraOffset: {x: 0, y: 1, z: -20}
-  staticFrictionCoefficient: 0.99
+  staticFrictionCoefficient: 0.3
   kineticFrictionCoefficient: 0.2
-  airResistance: 0.8
+  airResistance: 0.7
   States:
   - {fileID: 11400000, guid: 14d4b2fd3c839c84fae35e6d64f882c0, type: 2}
   - {fileID: 11400000, guid: 373f296490b8ab142a807e68785ae155, type: 2}

@@ -62,7 +62,7 @@ public class PlayerController3D : MonoBehaviour
     void Start()
     {
         StateMachine = new StateMachine(this, States);
-        jumpPower = Vector3.up * jumpPowerVariable;
+       
         startMaxSpeed = maxSpeed;
 
 
@@ -71,6 +71,11 @@ public class PlayerController3D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        jumpPower = Vector3.up * jumpPowerVariable;
+        gravityPower = Vector3.down * gravity * Time.deltaTime;
+        input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxis("Vertical");
+       
+       
 
         //Variablar som behöver sättas varje update.
         point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
@@ -78,8 +83,7 @@ public class PlayerController3D : MonoBehaviour
 
         //input och gravitation / hoppkraft
         //input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
-        gravityPower = Vector3.down * gravity * Time.deltaTime;
-
+       
 
         //förflyttning av kameran. Bara fått det att fungera någolunda med en dynamisk kamera, men har problem att raycasta mot föremål jag nuddar. 
 
@@ -87,6 +91,7 @@ public class PlayerController3D : MonoBehaviour
         rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
         Vector3 offset = camera.transform.rotation * cameraOffset;
         rotationX = Mathf.Clamp(rotationX, -90, 90);
+
 
         camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
 
@@ -108,8 +113,8 @@ public class PlayerController3D : MonoBehaviour
         //kommentera ut det ovanför om det behövs testa med en simpel kamera. 
         camera.transform.position = (offset + transform.position);
 
-        velocity += gravityPower;
-
+        
+        
 
 
         // bugnet   offset funkar inte riktigt
@@ -154,7 +159,6 @@ public class PlayerController3D : MonoBehaviour
                 {
                     netSwipe = true;
                     netHolding = false;
-
                 }
             
         }
@@ -193,7 +197,22 @@ public class PlayerController3D : MonoBehaviour
 
 
         }
-        //
+
+        input = camera.transform.rotation * input;
+       Vector3.ProjectOnPlane(input, GroundNormal(point2));
+
+
+        if (velocity.x > -maxSpeed || velocity.x < maxSpeed)
+        {
+            velocity += input * acceleration * Time.deltaTime;
+        }
+
+        velocity += gravityPower;
+
+        if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
+        {
+            velocity += jumpPower;
+        }
 
         //En array av alla object som min overlapcapsule returnerar, alltså de kolliderade med. 
         collidingObjects = Physics.OverlapCapsule(point1,
@@ -206,11 +225,14 @@ public class PlayerController3D : MonoBehaviour
             PreventCollision(collidingObjects);
         }
 
+
+        transform.position += velocity;
+
+
+
         StateMachine.RunUpdate();
     }
 
-
-   
 
 
     bool WaitTime(float seconds)
@@ -228,48 +250,10 @@ public class PlayerController3D : MonoBehaviour
         return false;
     }
 
-    //3 funktioner för att hantera acceleration
-    public void AccelerateOrDecelerate(Vector3 input)
-    {
-        if (input.magnitude != 0)
-            Accelerate(input);
-        else
-            Decelerate();
-    }
-
-    void Accelerate(Vector3 input)
-    {
-
-        velocity += input * acceleration * Time.deltaTime;
-
-        if (velocity.magnitude > maxSpeed)
-        {
-            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-            //velocity += velocity.normalized* maxSpeed * Time.deltaTime;
-        }
-
-    }
-
-    void Decelerate()
-    {
-
-        if (deceleration > Mathf.Abs(velocity.x))
-        {
-            velocity.x = 0;
-        }
-
-        if (deceleration > Mathf.Abs(velocity.y))
-        {
-            velocity.y = 0;
-        }
+   
 
 
 
-        Vector3 projection = new Vector3(velocity.x, 0.0f, velocity.z).normalized;
-        velocity -= projection * deceleration * Time.deltaTime;
-
-
-    }
 
     //kalkylerar normalkraften med hjälp av normalen från overlapcapsule-kollisionerna.
     Vector3 CalculateNormalForce(Vector3 velocity, Vector3 normal)
@@ -286,8 +270,18 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    //applicerar friktion på karaktären.
-    void ApplyFriction(Vector3 normalForce)
+
+
+
+
+void ApplyAirResistance() {
+
+    //airResistance
+    velocity *= Mathf.Pow(airResistance, Time.deltaTime);
+
+}
+//applicerar friktion på karaktären.
+void ApplyFriction(Vector3 normalForce)
     {
 
         if (velocity.magnitude < normalForce.magnitude * staticFrictionCoefficient)
@@ -303,22 +297,41 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    bool GroundCheck(Vector3 point2)
+    {
+
+        return Physics.Raycast(point2, Vector3.down, collider.radius + skinWidth + groundCheckDistance, collisionMask);
+
+    }
+
+
+    Vector3 GroundNormal(Vector3 point2)
+    {
+        RaycastHit hit;
+        Physics.Raycast(point2, velocity.normalized, out hit, collider.radius + skinWidth + groundCheckDistance, collisionMask);
+        return hit.normal;
+    }
+
+
     //ser till att karaktären inte åker igenom något, tvingar den att stanna och dödar dens momentum vid kontakt.
     public void PreventCollision(Collider[] collidingObjects)
     {
 
-        Vector3 separationVector;
-        foreach (Collider col in collidingObjects)
-        {
 
-            Physics.ComputePenetration(collider, transform.position, transform.rotation, col, col.transform.position, col.transform.rotation, out separationVector, out float distance);
+    Vector3 separationVector;
+    foreach (Collider col in collidingObjects)
+    {
 
-            velocity += separationVector.normalized * skinWidth;
+        Physics.ComputePenetration(collider, transform.position, transform.rotation, col, col.transform.position, col.transform.rotation, out separationVector, out float distance);
 
-            Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
-            ApplyFriction(normalForce);
 
-            velocity += normalForce;
+        //  velocity += separationVector.normalized * skinWidth;
+        Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
+        velocity += normalForce;
+      
+        ApplyFriction(normalForce);
+        ApplyAirResistance();
+          
         }
 
 
@@ -329,4 +342,5 @@ public class PlayerController3D : MonoBehaviour
         */
 
     }
+
 }
