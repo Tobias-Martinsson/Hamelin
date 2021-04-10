@@ -22,6 +22,7 @@ public class AiAttack : State
     public override void RunUpdate()
     {
         SceneManager.LoadScene(scene.name);
+
         if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > AttackDistance)
         {
             StateMachine.ChangeState<AiChasePlayer>();

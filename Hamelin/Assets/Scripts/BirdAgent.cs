@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class BirdAgent : SomeAgent
 {
     public float timeLeft = 5.0f;
-    public float originalTime;
+    private float originalTime;
     public GameObject myPrefab;
     private StateMachine StateMachine;
 

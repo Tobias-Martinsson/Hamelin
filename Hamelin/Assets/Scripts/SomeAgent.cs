@@ -14,7 +14,6 @@ public class SomeAgent : MonoBehaviour
     public List<Transform> PatrolPoints;
     public CapsuleCollider collider;
     public State[] States; 
-    public float forwardCheckDistance;
     public RaycastHit hit;
 
     private StateMachine StateMachine;
