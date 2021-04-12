@@ -22,7 +22,6 @@ public class PlayerController3D : MonoBehaviour
     public float mouseSensitivity;
     public Camera camera;
 
-
     public Vector3 cameraOffset;
     public float staticFrictionCoefficient;
     public float kineticFrictionCoefficient;
@@ -49,9 +48,6 @@ public class PlayerController3D : MonoBehaviour
 
     float timer = 0;
 
-    //
-
-
 
     private StateMachine StateMachine;
     public CapsuleCollider collider;
@@ -65,7 +61,6 @@ public class PlayerController3D : MonoBehaviour
         jumpPower = Vector3.up * jumpPowerVariable;
         startMaxSpeed = maxSpeed;
 
-
     }
 
     // Update is called once per frame
@@ -77,21 +72,11 @@ public class PlayerController3D : MonoBehaviour
         point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
 
         //input och gravitation / hoppkraft
-        //input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
         gravityPower = Vector3.down * gravity * Time.deltaTime;
+        velocity += gravityPower;
 
-
-        //förflyttning av kameran. Bara fått det att fungera någolunda med en dynamisk kamera, men har problem att raycasta mot föremål jag nuddar. 
-
-        rotationX -= Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
-        rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
-        Vector3 offset = camera.transform.rotation * cameraOffset;
-        rotationX = Mathf.Clamp(rotationX, -90, 90);
-
-        camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-
-        Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
-        Debug.DrawLine(transform.position, camera.transform.position);
+        //Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
+        //Debug.DrawLine(transform.position, camera.transform.position);
         /*
         if (Physics.SphereCast(transform.position, 2f,offset + camera.transform.position.normalized, out hitInfo3,offset.magnitude,collisionMask))
         {
@@ -105,11 +90,6 @@ public class PlayerController3D : MonoBehaviour
         }
 
         */
-        //kommentera ut det ovanför om det behövs testa med en simpel kamera. 
-        camera.transform.position = (offset + transform.position);
-
-        velocity += gravityPower;
-
 
 
         // bugnet   offset funkar inte riktigt
@@ -121,7 +101,7 @@ public class PlayerController3D : MonoBehaviour
             Vector3 netOffset = bugNet.transform.rotation * bugNetStartOffset;
 
 
-            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+            bugNet.transform.rotation = Quaternion.Euler(netRotationX, camera.GetComponent<CameraFollowScript>().rotationY, 0);
 
 
             bugNet.transform.position = (netOffset + transform.position);
@@ -142,7 +122,7 @@ public class PlayerController3D : MonoBehaviour
             Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
 
 
-            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+            bugNet.transform.rotation = Quaternion.Euler(netRotationX, camera.GetComponent<CameraFollowScript>().rotationY, 0);
 
 
             bugNet.transform.position = (netOffset + transform.position);
@@ -171,7 +151,7 @@ public class PlayerController3D : MonoBehaviour
             netRotationX = Mathf.Clamp(netRotationX, 0, 90);
 
 
-            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+            bugNet.transform.rotation = Quaternion.Euler(netRotationX, camera.GetComponent<CameraFollowScript>().rotationY, 0);
 
 
             bugNet.transform.position = (netOffset + transform.position);
