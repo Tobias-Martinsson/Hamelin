@@ -83,8 +83,8 @@ public class PlayerController3D : MonoBehaviour
 
         camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
 
-        Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
-        Debug.DrawLine(transform.position, camera.transform.position);
+        //Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
+        //Debug.DrawLine(transform.position, camera.transform.position);
         /*
         if (Physics.SphereCast(transform.position, 2f,offset + camera.transform.position.normalized, out hitInfo3,offset.magnitude,collisionMask))
         {
