@@ -8,8 +8,9 @@ public class PlayerController3D : MonoBehaviour
     public float acceleration;
     public Vector3 velocity;
     public Vector3 input;
-    public float maxSpeed;
-    private float startMaxSpeed;
+    public float maxSpeedXZ;
+    private float startMaxSpeedXZ;
+    public float maxSpeedY;
     public float skinWidth;
     public LayerMask collisionMask;
     public RaycastHit hit;
@@ -31,7 +32,7 @@ public class PlayerController3D : MonoBehaviour
     public State[] States;
     public Vector3 point1;
     public Vector3 point2;
-    public Vector3 jumpPower;
+    private Vector3 jumpPower;
     public Vector3 gravityPower;
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
@@ -63,7 +64,7 @@ public class PlayerController3D : MonoBehaviour
     {
         StateMachine = new StateMachine(this, States);
        
-        startMaxSpeed = maxSpeed;
+        startMaxSpeedXZ = maxSpeedXZ;
 
 
     }
@@ -152,7 +153,7 @@ public class PlayerController3D : MonoBehaviour
 
             bugNet.transform.position = (netOffset + transform.position);
 
-            maxSpeed = startMaxSpeed / 5;
+            maxSpeedXZ = startMaxSpeedXZ / 5;
 
             
                 if (Input.GetMouseButtonUp(0))
@@ -167,7 +168,7 @@ public class PlayerController3D : MonoBehaviour
         if (netSwipe)
         {
 
-            maxSpeed = 0;
+            maxSpeedXZ = 0;
             Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
 
             netRotationX -= netRotationSpeed;
@@ -189,7 +190,7 @@ public class PlayerController3D : MonoBehaviour
             {
                 netRotationX = 0;
 
-                maxSpeed = startMaxSpeed;
+                maxSpeedXZ = startMaxSpeedXZ;
 
                 netReady = true;
                 netSwipe = false;
@@ -202,10 +203,9 @@ public class PlayerController3D : MonoBehaviour
        Vector3.ProjectOnPlane(input, GroundNormal(point2));
 
 
-        if (velocity.x > -maxSpeed || velocity.x < maxSpeed)
-        {
+       
             velocity += input * acceleration * Time.deltaTime;
-        }
+        
 
         velocity += gravityPower;
 
@@ -223,6 +223,29 @@ public class PlayerController3D : MonoBehaviour
         if (!(collidingObjects.Length == 0))
         {
             PreventCollision(collidingObjects);
+        }
+
+        if (velocity.x > maxSpeedXZ)
+        {
+            velocity.x = maxSpeedXZ;
+        }
+        if (velocity.x < -maxSpeedXZ)
+        {
+            velocity.x = -maxSpeedXZ;
+        }
+     
+        // har inte max speed för y positivt för att annars kan man inte hoppa 
+        if (velocity.y < -maxSpeedY)
+        {
+            velocity.y = -maxSpeedY;
+        }
+        if (velocity.z > maxSpeedXZ)
+        {
+            velocity.z = maxSpeedXZ;
+        }
+        if (velocity.z < -maxSpeedXZ)
+        {
+            velocity.z = -maxSpeedXZ;
         }
 
 

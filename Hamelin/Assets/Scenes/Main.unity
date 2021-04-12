@@ -2495,13 +2495,14 @@ MonoBehaviour:
   acceleration: 0.15
   velocity: {x: 0, y: 0, z: 0}
   input: {x: 0, y: 0, z: 0}
-  maxSpeed: 0.05
+  maxSpeedXZ: 0.05
+  maxSpeedY: 0.1
   skinWidth: 0.15
   collisionMask:
     serializedVersion: 2
     m_Bits: 64
-  gravity: 0.25
-  jumpPowerVariable: 0.09
+  gravity: 0.2
+  jumpPowerVariable: 0.07
   groundCheckDistance: 0.5
   deceleration: 1
   rotationX: 0
@@ -2517,7 +2518,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 373f296490b8ab142a807e68785ae155, type: 2}
   point1: {x: 0, y: 0, z: 0}
   point2: {x: 0, y: 0, z: 0}
-  jumpPower: {x: 0, y: 0, z: 0}
   gravityPower: {x: 0, y: 0, z: 0}
   collidingObjects: []
   bugNet: {fileID: 1024018372}
