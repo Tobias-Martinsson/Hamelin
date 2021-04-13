@@ -7,7 +7,9 @@ public class PlayerController3D : MonoBehaviour
     //deklarering av variablar så jag kan se dem i Unity och buggfixa.
     public float acceleration;
     public Vector3 velocity;
-    public Vector3 input;
+    private Vector3 inputX;
+    private Vector3 inputZ;
+    private Vector3 inputCameraAdjust;
     public float maxSpeedXZ;
     private float startMaxSpeedXZ;
     public float maxSpeedY;
@@ -74,7 +76,6 @@ public class PlayerController3D : MonoBehaviour
     {
         jumpPower = Vector3.up * jumpPowerVariable;
         gravityPower = Vector3.down * gravity * Time.deltaTime;
-        input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxis("Vertical");
        
        
 
@@ -198,14 +199,20 @@ public class PlayerController3D : MonoBehaviour
 
 
         }
-
-        input = camera.transform.rotation * input;
-       Vector3.ProjectOnPlane(input, GroundNormal(point2));
-
-
        
-            velocity += input * acceleration * Time.deltaTime;
+        inputX = (Vector3.right * Input.GetAxisRaw("Horizontal")) * acceleration * Time.deltaTime;
+        inputZ = (Vector3.forward * Input.GetAxis("Vertical")) * acceleration * Time.deltaTime;
         
+      
+
+        inputX = (Quaternion.Euler(0, rotationY, 0)) * inputX;
+        inputZ = (Quaternion.Euler(0, rotationY, 0)) * inputZ;
+        Vector3.ProjectOnPlane(inputZ, GroundNormal(point2));
+
+
+
+        velocity += inputX;
+        velocity += inputZ;
 
         velocity += gravityPower;
 
