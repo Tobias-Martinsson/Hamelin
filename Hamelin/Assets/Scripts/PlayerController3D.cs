@@ -7,7 +7,9 @@ public class PlayerController3D : MonoBehaviour
     //deklarering av variablar så jag kan se dem i Unity och buggfixa.
     public float acceleration;
     public Vector3 velocity;
-    public Vector3 input;
+    private Vector3 inputX;
+    private Vector3 inputZ;
+    private Vector3 inputCameraAdjust;
     public float maxSpeedXZ;
     private float startMaxSpeedXZ;
     public float maxSpeedY;
@@ -57,13 +59,13 @@ public class PlayerController3D : MonoBehaviour
     private StateMachine StateMachine;
     public CapsuleCollider collider;
     void Awake() => collider = GetComponent<CapsuleCollider>();
-   
+
 
     // Start is called before the first frame update
     void Start()
     {
         StateMachine = new StateMachine(this, States);
-       
+
         startMaxSpeedXZ = maxSpeedXZ;
 
 
@@ -74,9 +76,8 @@ public class PlayerController3D : MonoBehaviour
     {
         jumpPower = Vector3.up * jumpPowerVariable;
         gravityPower = Vector3.down * gravity * Time.deltaTime;
-        input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxis("Vertical");
-       
-       
+
+
 
         //Variablar som behöver sättas varje update.
         point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
@@ -84,7 +85,7 @@ public class PlayerController3D : MonoBehaviour
 
         //input och gravitation / hoppkraft
         //input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
-       
+
 
         //förflyttning av kameran. Bara fått det att fungera någolunda med en dynamisk kamera, men har problem att raycasta mot föremål jag nuddar. 
 
@@ -114,8 +115,8 @@ public class PlayerController3D : MonoBehaviour
         //kommentera ut det ovanför om det behövs testa med en simpel kamera. 
         camera.transform.position = (offset + transform.position);
 
-        
-        
+
+
 
 
         // bugnet   offset funkar inte riktigt
@@ -136,11 +137,11 @@ public class PlayerController3D : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-           
-                netHolding = true;
-           
-                netReady = false;
-            
+
+            netHolding = true;
+
+            netReady = false;
+
         }
 
         if (netHolding)
@@ -155,13 +156,13 @@ public class PlayerController3D : MonoBehaviour
 
             maxSpeedXZ = startMaxSpeedXZ / 5;
 
-            
-                if (Input.GetMouseButtonUp(0))
-                {
-                    netSwipe = true;
-                    netHolding = false;
-                }
-            
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                netSwipe = true;
+                netHolding = false;
+            }
+
         }
 
 
@@ -199,13 +200,19 @@ public class PlayerController3D : MonoBehaviour
 
         }
 
-        input = camera.transform.rotation * input;
-       Vector3.ProjectOnPlane(input, GroundNormal(point2));
+        inputX = (Vector3.right * Input.GetAxisRaw("Horizontal")) * acceleration * Time.deltaTime;
+        inputZ = (Vector3.forward * Input.GetAxis("Vertical")) * acceleration * Time.deltaTime;
 
 
-       
-            velocity += input * acceleration * Time.deltaTime;
-        
+
+        inputX = (Quaternion.Euler(0, rotationY, 0)) * inputX;
+        inputZ = (Quaternion.Euler(0, rotationY, 0)) * inputZ;
+        Vector3.ProjectOnPlane(inputZ, GroundNormal(point2));
+
+
+
+        velocity += inputX;
+        velocity += inputZ;
 
         velocity += gravityPower;
 
@@ -233,7 +240,7 @@ public class PlayerController3D : MonoBehaviour
         {
             velocity.x = -maxSpeedXZ;
         }
-     
+
         // har inte max speed för y positivt för att annars kan man inte hoppa 
         if (velocity.y < -maxSpeedY)
         {
@@ -273,7 +280,7 @@ public class PlayerController3D : MonoBehaviour
         return false;
     }
 
-   
+
 
 
 
@@ -297,14 +304,15 @@ public class PlayerController3D : MonoBehaviour
 
 
 
-void ApplyAirResistance() {
+    void ApplyAirResistance()
+    {
 
-    //airResistance
-    velocity *= Mathf.Pow(airResistance, Time.deltaTime);
+        //airResistance
+        velocity *= Mathf.Pow(airResistance, Time.deltaTime);
 
-}
-//applicerar friktion på karaktären.
-void ApplyFriction(Vector3 normalForce)
+    }
+    //applicerar friktion på karaktären.
+    void ApplyFriction(Vector3 normalForce)
     {
 
         if (velocity.magnitude < normalForce.magnitude * staticFrictionCoefficient)
@@ -341,20 +349,20 @@ void ApplyFriction(Vector3 normalForce)
     {
 
 
-    Vector3 separationVector;
-    foreach (Collider col in collidingObjects)
-    {
+        Vector3 separationVector;
+        foreach (Collider col in collidingObjects)
+        {
 
-        Physics.ComputePenetration(collider, transform.position, transform.rotation, col, col.transform.position, col.transform.rotation, out separationVector, out float distance);
+            Physics.ComputePenetration(collider, transform.position, transform.rotation, col, col.transform.position, col.transform.rotation, out separationVector, out float distance);
 
 
-        //  velocity += separationVector.normalized * skinWidth;
-        Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
-        velocity += normalForce;
-      
-        ApplyFriction(normalForce);
-        ApplyAirResistance();
-          
+            //  velocity += separationVector.normalized * skinWidth;
+            Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
+            velocity += normalForce;
+
+            ApplyFriction(normalForce);
+            ApplyAirResistance();
+
         }
 
 
