@@ -76,7 +76,8 @@ public class PlayerController3D : MonoBehaviour
     {
         jumpPower = Vector3.up * jumpPowerVariable;
         gravityPower = Vector3.down * gravity * Time.deltaTime;
-
+        rotationY = camera.GetComponent<CameraFollowScript>().rotationY;
+        rotationX = camera.GetComponent<CameraFollowScript>().rotationX;
 
 
         //Variablar som behöver sättas varje update.
@@ -89,13 +90,13 @@ public class PlayerController3D : MonoBehaviour
 
         //förflyttning av kameran. Bara fått det att fungera någolunda med en dynamisk kamera, men har problem att raycasta mot föremål jag nuddar. 
 
-        rotationX -= Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
-        rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
-        Vector3 offset = camera.transform.rotation * cameraOffset;
-        rotationX = Mathf.Clamp(rotationX, -90, 90);
+        //rotationX -= Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
+        //rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
+        //Vector3 offset = camera.transform.rotation * cameraOffset;
+        //rotationX = Mathf.Clamp(rotationX, -90, 90);
 
 
-        camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+        //camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
 
         Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
         Debug.DrawLine(transform.position, camera.transform.position);
@@ -113,7 +114,7 @@ public class PlayerController3D : MonoBehaviour
 
         */
         //kommentera ut det ovanför om det behövs testa med en simpel kamera. 
-        camera.transform.position = (offset + transform.position);
+        //camera.transform.position = (offset + transform.position);
 
 
 
