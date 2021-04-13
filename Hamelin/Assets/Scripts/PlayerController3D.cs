@@ -58,10 +58,10 @@ public class PlayerController3D : MonoBehaviour
 
     //Grapple Test
 
-    [SerializeField] float pullSpeed = 0.5f;
-    [SerializeField] float stopDistance = 4f;
-    [SerializeField] GameObject hookPrefab;
-    [SerializeField] Transform shootTransform;
+    public float pullSpeed = 0.5f;
+    public float stopDistance = 4f;
+    public GameObject hookPrefab;
+    public Transform shootTransform;
 
     Hook hook;
     bool pulling;
@@ -201,7 +201,8 @@ public class PlayerController3D : MonoBehaviour
         StateMachine.RunUpdate();
 
         //Grappling hook test
-        if (hook == null && Input.GetMouseButtonDown(0))
+        //if (hook == null && Input.GetMouseButtonDown(1))
+        if (hook == null && Input.GetKeyDown(KeyCode.G))
         {
             StopAllCoroutines();
             pulling = false;
@@ -222,8 +223,24 @@ public class PlayerController3D : MonoBehaviour
         }
         else
         {
-            rigid.AddForce((hook.transform.position - transform.position).normalized * pullSpeed, ForceMode.VelocityChange);
+            //rigid.AddForce((hook.transform.position - transform.position).normalized * pullSpeed, ForceMode.VelocityChange);
+
+
+
             //Accelerate(velocity);
+
+            //Vector3 newVector = hookPrefab.transform.position - transform.position;
+            Vector3 newVector = (hook.transform.position - transform.position).normalized * pullSpeed;
+            velocity += newVector;
+
+            if (velocity.magnitude > maxSpeed)
+            {
+                velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+                //velocity += velocity.normalized* maxSpeed * Time.deltaTime;
+            }
+
+            //velocity -= velocity.normalized * normalForce.magnitude * kineticFrictionCoefficient;
+
         }
         //
     }

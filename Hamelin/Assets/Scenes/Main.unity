@@ -1713,7 +1713,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 781320443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.62, y: 0, z: 0}
+  m_LocalPosition: {x: 0.6199951, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1172874144}
@@ -2746,7 +2746,6 @@ GameObject:
   - component: {fileID: 1172874142}
   - component: {fileID: 1172874141}
   - component: {fileID: 1172874140}
-  - component: {fileID: 1172874145}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -2796,8 +2795,8 @@ MonoBehaviour:
   collidingObjects: []
   bugNet: {fileID: 1024018372}
   collider: {fileID: 0}
-  pullSpeed: 0.5
-  stopDistance: 4
+  pullSpeed: 3.32
+  stopDistance: 4.56
   hookPrefab: {fileID: 7703645936239361278, guid: 3dd294b04e83c1a42b60cdc9cac1a0e1, type: 3}
   shootTransform: {fileID: 781320444}
 --- !u!136 &1172874141
@@ -2879,22 +2878,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &1172874145
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1172874139}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!1001 &1244334580
 PrefabInstance:
   m_ObjectHideFlags: 0
