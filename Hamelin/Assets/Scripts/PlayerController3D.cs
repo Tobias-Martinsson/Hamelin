@@ -8,7 +8,9 @@ public class PlayerController3D : MonoBehaviour
     public float acceleration;
     public Vector3 velocity;
     public Vector3 input;
-    public float maxSpeed;
+    public float maxSpeedXZ;
+    private float startMaxSpeedXZ;
+    public float maxSpeedY;
     public float skinWidth;
     public LayerMask collisionMask;
     public RaycastHit hit;
@@ -20,8 +22,9 @@ public class PlayerController3D : MonoBehaviour
     public float rotationY;
     public float mouseSensitivity;
     public Camera camera;
+
+
     public Vector3 cameraOffset;
-    public float turnSmoothTime = 0.1f;
     public float staticFrictionCoefficient;
     public float kineticFrictionCoefficient;
     public float airResistance;
@@ -29,45 +32,73 @@ public class PlayerController3D : MonoBehaviour
     public State[] States;
     public Vector3 point1;
     public Vector3 point2;
-    public Vector3 jumpPower;
+    private Vector3 jumpPower;
     public Vector3 gravityPower;
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
-    public Vector3 henrikLuktar;
+
+    //bugnet test
+    float netRotationX = 0;
+    public SphereCollider bugNet;
+    float netRotationSpeed = -0.8f;
+    Vector3 bugNetOffset = new Vector3(0, 4, 0);
+    Vector3 bugNetStartOffset = new Vector3(1, 1, 0);
+
+    bool netReady = true;
+    bool netHolding = false;
+    bool netSwipe = false;
+
+    float timer = 0;
+
+    //
+
+
 
     private StateMachine StateMachine;
     public CapsuleCollider collider;
     void Awake() => collider = GetComponent<CapsuleCollider>();
+   
 
     // Start is called before the first frame update
     void Start()
     {
         StateMachine = new StateMachine(this, States);
-        jumpPower = Vector3.up * jumpPowerVariable;
+       
+        startMaxSpeedXZ = maxSpeedXZ;
+
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        jumpPower = Vector3.up * jumpPowerVariable;
+        gravityPower = Vector3.down * gravity * Time.deltaTime;
+        input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxis("Vertical");
+       
+       
+
         //Variablar som behöver sättas varje update.
         point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
         point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
 
         //input och gravitation / hoppkraft
         //input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
-        gravityPower = Vector3.down * gravity * Time.deltaTime;
-        
+       
 
         //förflyttning av kameran. Bara fått det att fungera någolunda med en dynamisk kamera, men har problem att raycasta mot föremål jag nuddar. 
+
         rotationX -= Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
         Vector3 offset = camera.transform.rotation * cameraOffset;
-       
+        rotationX = Mathf.Clamp(rotationX, -90, 90);
+
+
         camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-      
+
         Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
-        Debug.DrawLine(transform.position,camera.transform.position);
+        Debug.DrawLine(transform.position, camera.transform.position);
+        /*
         if (Physics.SphereCast(transform.position, 2f,offset + camera.transform.position.normalized, out hitInfo3,offset.magnitude,collisionMask))
         {
             Debug.DrawLine(transform.position, hitInfo3.point, Color.red);
@@ -79,65 +110,173 @@ public class PlayerController3D : MonoBehaviour
             camera.transform.position = (offset + transform.position);
         }
 
+        */
         //kommentera ut det ovanför om det behövs testa med en simpel kamera. 
-        //camera.transform.position = (offset + transform.position);
-    
+        camera.transform.position = (offset + transform.position);
+
+        
+        
+
+
+        // bugnet   offset funkar inte riktigt
+
+        //Debug.Log(bugNetOffset);
+
+        if (netReady)
+        {
+            Vector3 netOffset = bugNet.transform.rotation * bugNetStartOffset;
+
+
+            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+
+
+            bugNet.transform.position = (netOffset + transform.position);
+
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+           
+                netHolding = true;
+           
+                netReady = false;
+            
+        }
+
+        if (netHolding)
+        {
+            Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
+
+
+            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+
+
+            bugNet.transform.position = (netOffset + transform.position);
+
+            maxSpeedXZ = startMaxSpeedXZ / 5;
+
+            
+                if (Input.GetMouseButtonUp(0))
+                {
+                    netSwipe = true;
+                    netHolding = false;
+                }
+            
+        }
+
+
+        if (netSwipe)
+        {
+
+            maxSpeedXZ = 0;
+            Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
+
+            netRotationX -= netRotationSpeed;
+
+            netRotationX = Mathf.Clamp(netRotationX, 0, 90);
+
+
+            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+
+
+            bugNet.transform.position = (netOffset + transform.position);
+
+
+        }
+
+        if (netRotationX >= 90)
+        {
+            if (WaitTime(0.5f))
+            {
+                netRotationX = 0;
+
+                maxSpeedXZ = startMaxSpeedXZ;
+
+                netReady = true;
+                netSwipe = false;
+            }
+
+
+        }
+
+        input = camera.transform.rotation * input;
+       Vector3.ProjectOnPlane(input, GroundNormal(point2));
+
+
+       
+            velocity += input * acceleration * Time.deltaTime;
+        
+
         velocity += gravityPower;
+
+        if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
+        {
+            velocity += jumpPower;
+        }
 
         //En array av alla object som min overlapcapsule returnerar, alltså de kolliderade med. 
         collidingObjects = Physics.OverlapCapsule(point1,
                             point2,
                             collider.radius, collisionMask);
-       
+
         //om någonting kolliderades med så checkar den att karaktären inte åker igenom det. 
         if (!(collidingObjects.Length == 0))
         {
             PreventCollision(collidingObjects);
         }
 
+        if (velocity.x > maxSpeedXZ)
+        {
+            velocity.x = maxSpeedXZ;
+        }
+        if (velocity.x < -maxSpeedXZ)
+        {
+            velocity.x = -maxSpeedXZ;
+        }
+     
+        // har inte max speed för y positivt för att annars kan man inte hoppa 
+        if (velocity.y < -maxSpeedY)
+        {
+            velocity.y = -maxSpeedY;
+        }
+        if (velocity.z > maxSpeedXZ)
+        {
+            velocity.z = maxSpeedXZ;
+        }
+        if (velocity.z < -maxSpeedXZ)
+        {
+            velocity.z = -maxSpeedXZ;
+        }
+
+
+        transform.position += velocity;
+
+
+
         StateMachine.RunUpdate();
     }
 
-    //3 funktioner för att hantera acceleration
-    public void AccelerateOrDecelerate(Vector3 input)
-    {
-        if (input.magnitude != 0)
-            Accelerate(input);
-        else
-            Decelerate();
-    }
 
-    void Accelerate(Vector3 input)
+
+    bool WaitTime(float seconds)
     {
 
-        velocity += input * acceleration * Time.deltaTime;
+        timer += Time.deltaTime;
 
-        if (velocity.magnitude > maxSpeed)
+        if (timer >= seconds)
         {
-            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
-            //velocity += velocity.normalized* maxSpeed * Time.deltaTime;
+            timer = 0;
+            return true;
+
         }
 
+        return false;
     }
 
-    void Decelerate()
-    {
-       if(deceleration > Mathf.Abs(velocity.x)){
-            velocity.x = 0;
-        }
-        if (deceleration > Mathf.Abs(velocity.y)){
-            velocity.y = 0;
-        }
-        if(deceleration > Mathf.Abs(velocity.z))
-        {
-            velocity.z = 0;
-        }
+   
 
-        Vector3 projection = new Vector3(velocity.x, 0.0f).normalized;
-        velocity -= projection * deceleration * Time.deltaTime;
-        
 
-    }
+
 
     //kalkylerar normalkraften med hjälp av normalen från overlapcapsule-kollisionerna.
     Vector3 CalculateNormalForce(Vector3 velocity, Vector3 normal)
@@ -154,14 +293,23 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    //applicerar friktion på karaktären.
-    void ApplyFriction(Vector2 normalForce)
+
+
+
+
+void ApplyAirResistance() {
+
+    //airResistance
+    velocity *= Mathf.Pow(airResistance, Time.deltaTime);
+
+}
+//applicerar friktion på karaktären.
+void ApplyFriction(Vector3 normalForce)
     {
 
-        if (velocity.magnitude <
-            normalForce.magnitude * staticFrictionCoefficient)
+        if (velocity.magnitude < normalForce.magnitude * staticFrictionCoefficient)
         {
-            velocity = Vector2.zero;
+            velocity = Vector3.zero;
         }
         else
         {
@@ -172,21 +320,41 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    bool GroundCheck(Vector3 point2)
+    {
+
+        return Physics.Raycast(point2, Vector3.down, collider.radius + skinWidth + groundCheckDistance, collisionMask);
+
+    }
+
+
+    Vector3 GroundNormal(Vector3 point2)
+    {
+        RaycastHit hit;
+        Physics.Raycast(point2, velocity.normalized, out hit, collider.radius + skinWidth + groundCheckDistance, collisionMask);
+        return hit.normal;
+    }
+
+
     //ser till att karaktären inte åker igenom något, tvingar den att stanna och dödar dens momentum vid kontakt.
     public void PreventCollision(Collider[] collidingObjects)
     {
-        
-        Vector3 separationVector;
-        foreach (Collider col in collidingObjects)
-        {
-            
-            Physics.ComputePenetration(collider, transform.position, transform.rotation, col, col.transform.position, col.transform.rotation, out separationVector, out float distance);
 
-            velocity += separationVector.normalized * skinWidth;
-            Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
-            ApplyFriction(normalForce);
-            
-            velocity += normalForce;
+
+    Vector3 separationVector;
+    foreach (Collider col in collidingObjects)
+    {
+
+        Physics.ComputePenetration(collider, transform.position, transform.rotation, col, col.transform.position, col.transform.rotation, out separationVector, out float distance);
+
+
+        //  velocity += separationVector.normalized * skinWidth;
+        Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
+        velocity += normalForce;
+      
+        ApplyFriction(normalForce);
+        ApplyAirResistance();
+          
         }
 
 
@@ -197,4 +365,5 @@ public class PlayerController3D : MonoBehaviour
         */
 
     }
+
 }
