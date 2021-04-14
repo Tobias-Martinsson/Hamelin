@@ -284,7 +284,8 @@ public class PlayerController3D : MonoBehaviour
             hook.Initialize(this, shootLocation);
             StartCoroutine(DestroyHookAfterLifetime());
         }
-        else if (hook != null && Input.GetMouseButtonDown(1))
+        //else if (hook != null && Input.GetMouseButtonDown(1))
+        else if (hook != null && Input.GetKeyDown(KeyCode.G))
         {
             DestroyHook();
         }
@@ -297,23 +298,14 @@ public class PlayerController3D : MonoBehaviour
             }
             else
             {
-                //rigid.AddForce((hook.transform.position - transform.position).normalized * pullSpeed, ForceMode.VelocityChange);
 
-
-
-                //Accelerate(velocity);
-
-                //Vector3 newVector = hookPrefab.transform.position - transform.position;
                 Vector3 newVector = (hook.transform.position - transform.position).normalized * grapplingSpeed;
                 velocity += newVector;
 
                 if (velocity.magnitude > maxGrapplingSpeed)
                 {
                     velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
-                    //velocity += velocity.normalized* maxSpeed * Time.deltaTime;
                 }
-
-                //velocity -= velocity.normalized * normalForce.magnitude * kineticFrictionCoefficient;
 
             }
         }
