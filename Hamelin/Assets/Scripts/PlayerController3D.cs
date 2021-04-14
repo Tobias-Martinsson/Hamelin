@@ -113,6 +113,7 @@ public class PlayerController3D : MonoBehaviour
 
 
         camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+        shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
 
         Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
         Debug.DrawLine(transform.position, camera.transform.position);
