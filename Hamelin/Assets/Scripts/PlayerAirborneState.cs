@@ -22,7 +22,7 @@ public class PlayerAirborneState : State
      
     
       
-        if (Physics.CapsuleCast(Player.point1, Player.point2, Player.collider.radius, Vector3.down, Player.groundCheckDistance, Player.collisionMask))
+        if (Player.GroundCheck(Player.point2))
         {
             Debug.Log("Switched to Grounded");
             StateMachine.ChangeState<PlayerGroundedState>();

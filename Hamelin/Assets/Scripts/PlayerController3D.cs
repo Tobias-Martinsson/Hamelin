@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController3D : MonoBehaviour
 {
-    //deklarering av variablar så jag kan se dem i Unity och buggfixa.
+    //deklarering av variablar sï¿½ jag kan se dem i Unity och buggfixa.
     public float acceleration;
     public Vector3 velocity;
     private Vector3 inputX;
@@ -34,7 +34,7 @@ public class PlayerController3D : MonoBehaviour
     public State[] States;
     public Vector3 point1;
     public Vector3 point2;
-    private Vector3 jumpPower;
+    public Vector3 jumpPower;
     public Vector3 gravityPower;
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
@@ -54,6 +54,18 @@ public class PlayerController3D : MonoBehaviour
 
     //
 
+    //Grapple Test
+
+    public float grapplingSpeed = 0.5f;
+    public float maxGrapplingSpeed = 20.0f;
+    public float hookDistanceStop = 4f;
+    public GameObject hookPrefab;
+    public Transform shootLocation;
+
+    Hook hook;
+    bool pulling;
+    Rigidbody rigid;
+    //
 
 
     private StateMachine StateMachine;
@@ -64,6 +76,11 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //grappling hook test
+        rigid = GetComponent<Rigidbody>();
+        pulling = false;
+        //
+
         StateMachine = new StateMachine(this, States);
 
         startMaxSpeedXZ = maxSpeedXZ;
@@ -80,7 +97,7 @@ public class PlayerController3D : MonoBehaviour
         rotationX = camera.GetComponent<CameraFollowScript>().rotationX;
 
 
-        //Variablar som behöver sättas varje update.
+        //Variablar som behï¿½ver sï¿½ttas varje update.
         point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
         point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
 
@@ -88,7 +105,7 @@ public class PlayerController3D : MonoBehaviour
         //input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
 
 
-        //förflyttning av kameran. Bara fått det att fungera någolunda med en dynamisk kamera, men har problem att raycasta mot föremål jag nuddar. 
+        //fï¿½rflyttning av kameran. Bara fï¿½tt det att fungera nï¿½golunda med en dynamisk kamera, men har problem att raycasta mot fï¿½remï¿½l jag nuddar. 
 
         //rotationX -= Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         //rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
@@ -96,7 +113,8 @@ public class PlayerController3D : MonoBehaviour
         //rotationX = Mathf.Clamp(rotationX, -90, 90);
 
 
-        //camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+        camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+        shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
 
         Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
         Debug.DrawLine(transform.position, camera.transform.position);
@@ -113,7 +131,7 @@ public class PlayerController3D : MonoBehaviour
         }
 
         */
-        //kommentera ut det ovanför om det behövs testa med en simpel kamera. 
+        //kommentera ut det ovanfï¿½r om det behï¿½vs testa med en simpel kamera. 
         //camera.transform.position = (offset + transform.position);
 
 
@@ -216,22 +234,15 @@ public class PlayerController3D : MonoBehaviour
         velocity += inputZ;
 
         velocity += gravityPower;
-
+        /*
         if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
         {
             velocity += jumpPower;
         }
+        */
 
-        //En array av alla object som min overlapcapsule returnerar, alltså de kolliderade med. 
-        collidingObjects = Physics.OverlapCapsule(point1,
-                            point2,
-                            collider.radius, collisionMask);
-
-        //om någonting kolliderades med så checkar den att karaktären inte åker igenom det. 
-        if (!(collidingObjects.Length == 0))
-        {
-            PreventCollision(collidingObjects);
-        }
+        //En array av alla object som min overlapcapsule returnerar, alltsï¿½ de kolliderade med. 
+        
 
         if (velocity.x > maxSpeedXZ)
         {
@@ -242,7 +253,7 @@ public class PlayerController3D : MonoBehaviour
             velocity.x = -maxSpeedXZ;
         }
 
-        // har inte max speed för y positivt för att annars kan man inte hoppa 
+        // har inte max speed fï¿½r y positivt fï¿½r att annars kan man inte hoppa 
         if (velocity.y < -maxSpeedY)
         {
             velocity.y = -maxSpeedY;
@@ -256,6 +267,57 @@ public class PlayerController3D : MonoBehaviour
             velocity.z = -maxSpeedXZ;
         }
 
+
+        // Grappling hook test
+        //if (hook == null && Input.GetMouseButtonDown(1))
+        if (hook == null && Input.GetKeyDown(KeyCode.G))
+        {
+            StopAllCoroutines();
+            pulling = false;
+            hook = Instantiate(hookPrefab, shootLocation.position, Quaternion.identity).GetComponent<Hook>();
+            hook.Initialize(this, shootLocation);
+            StartCoroutine(DestroyHookAfterLifetime());
+        }
+        //else if (hook != null && Input.GetMouseButtonDown(1))
+        else if (hook != null && Input.GetKeyDown(KeyCode.G))
+        {
+            DestroyHook();
+        }
+        if (pulling && hook != null)
+        {
+            Debug.Log("pulling");
+            if (Vector3.Distance(transform.position, hook.transform.position) <= hookDistanceStop)
+            {
+                DestroyHook();
+            }
+            else
+            {
+
+                Vector3 newVector = (hook.transform.position - transform.position).normalized * grapplingSpeed;
+                velocity += newVector;
+
+                if (velocity.magnitude > maxGrapplingSpeed)
+                {
+                    velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
+                }
+
+            }
+        }
+        else
+        {
+            Debug.Log("not pulling");
+        }
+
+        //
+        collidingObjects = Physics.OverlapCapsule(point1,
+                            point2,
+                            collider.radius, collisionMask);
+
+        //om nï¿½gonting kolliderades med sï¿½ checkar den att karaktï¿½ren inte ï¿½ker igenom det. 
+        if (!(collidingObjects.Length == 0))
+        {
+            PreventCollision(collidingObjects);
+        }
 
         transform.position += velocity;
 
@@ -286,7 +348,7 @@ public class PlayerController3D : MonoBehaviour
 
 
 
-    //kalkylerar normalkraften med hjälp av normalen från overlapcapsule-kollisionerna.
+    //kalkylerar normalkraften med hjï¿½lp av normalen frï¿½n overlapcapsule-kollisionerna.
     Vector3 CalculateNormalForce(Vector3 velocity, Vector3 normal)
     {
         if (Vector3.Dot(velocity, normal) > 0)
@@ -312,7 +374,7 @@ public class PlayerController3D : MonoBehaviour
         velocity *= Mathf.Pow(airResistance, Time.deltaTime);
 
     }
-    //applicerar friktion på karaktären.
+    //applicerar friktion pï¿½ karaktï¿½ren.
     void ApplyFriction(Vector3 normalForce)
     {
 
@@ -329,12 +391,14 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    bool GroundCheck(Vector3 point2)
+    
+    public bool GroundCheck(Vector3 point2)
     {
 
         return Physics.Raycast(point2, Vector3.down, collider.radius + skinWidth + groundCheckDistance, collisionMask);
 
     }
+    
 
 
     Vector3 GroundNormal(Vector3 point2)
@@ -345,7 +409,7 @@ public class PlayerController3D : MonoBehaviour
     }
 
 
-    //ser till att karaktären inte åker igenom något, tvingar den att stanna och dödar dens momentum vid kontakt.
+    //ser till att karaktï¿½ren inte ï¿½ker igenom nï¿½got, tvingar den att stanna och dï¿½dar dens momentum vid kontakt.
     public void PreventCollision(Collider[] collidingObjects)
     {
 
@@ -375,4 +439,24 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    public void StartPull()
+    {
+        pulling = true;
+    }
+
+    private void DestroyHook()
+    {
+        if (hook == null) return;
+
+        pulling = false;
+        Destroy(hook.gameObject);
+        hook = null;
+    }
+
+    private IEnumerator DestroyHookAfterLifetime()
+    {
+        yield return new WaitForSeconds(8f);
+
+        DestroyHook();
+    }
 }

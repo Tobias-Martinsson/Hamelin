@@ -19,15 +19,18 @@ public class PlayerGroundedState : State
     }
     public override void RunUpdate()
     {
-   
-  
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Debug.Log("Jumping");
+            Player.velocity += Player.jumpPower;
+        }
 
-       
 
-        if (!Physics.CapsuleCast(Player.point1, Player.point2, Player.collider.radius, Vector3.down, Player.groundCheckDistance,Player.collisionMask))
+        if (!Player.GroundCheck(Player.point2))
         {
             Debug.Log("Changed to Airborne");
             StateMachine.ChangeState<PlayerAirborneState>();
         }
+
     }
 }
