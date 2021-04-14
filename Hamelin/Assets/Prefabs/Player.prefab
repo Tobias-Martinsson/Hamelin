@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &384245218
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 384245219}
+  m_Layer: 3
+  m_Name: shootLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &384245219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 384245218}
+  m_LocalRotation: {x: -0.24124356, y: -0, z: -0, w: 0.97046465}
+  m_LocalPosition: {x: -0.70599365, y: 0.25899982, z: 0.4569702}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8995250748122010109}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: -27.92, y: 0, z: 0}
 --- !u!1 &4909174947148535359
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,6 +144,7 @@ Transform:
   m_Children:
   - {fileID: 8995250750137365918}
   - {fileID: 8995250750210744105}
+  - {fileID: 384245219}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -194,7 +225,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   acceleration: 0.15
   velocity: {x: 0, y: 0, z: 0}
-  input: {x: 0, y: 0, z: 0}
   maxSpeedXZ: 0.05
   maxSpeedY: 0.1
   skinWidth: 0.15
@@ -221,6 +251,11 @@ MonoBehaviour:
   gravityPower: {x: 0, y: 0, z: 0}
   collidingObjects: []
   bugNet: {fileID: 8995250750137365913}
+  grapplingSpeed: 1.5
+  maxGrapplingSpeed: 0.31
+  hookDistanceStop: 4
+  hookPrefab: {fileID: 7703645936239361278, guid: 3dd294b04e83c1a42b60cdc9cac1a0e1, type: 3}
+  shootLocation: {fileID: 384245219}
   collider: {fileID: 0}
 --- !u!1 &8995250750137365919
 GameObject:
