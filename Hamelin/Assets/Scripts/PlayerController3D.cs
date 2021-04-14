@@ -56,11 +56,11 @@ public class PlayerController3D : MonoBehaviour
 
     //Grapple Test
 
-    public float pullSpeed = 0.5f;
-    public float maxPullSpeed = 20.0f;
-    public float stopDistance = 4f;
+    public float grapplingSpeed = 0.5f;
+    public float maxGrapplingSpeed = 20.0f;
+    public float hookDistanceStop = 4f;
     public GameObject hookPrefab;
-    public Transform shootTransform;
+    public Transform shootLocation;
 
     Hook hook;
     bool pulling;
@@ -279,8 +279,8 @@ public class PlayerController3D : MonoBehaviour
         {
             StopAllCoroutines();
             pulling = false;
-            hook = Instantiate(hookPrefab, shootTransform.position, Quaternion.identity).GetComponent<Hook>();
-            hook.Initialize(this, shootTransform);
+            hook = Instantiate(hookPrefab, shootLocation.position, Quaternion.identity).GetComponent<Hook>();
+            hook.Initialize(this, shootLocation);
             StartCoroutine(DestroyHookAfterLifetime());
         }
         else if (hook != null && Input.GetMouseButtonDown(1))
@@ -290,7 +290,7 @@ public class PlayerController3D : MonoBehaviour
         if (pulling && hook != null)
         {
             Debug.Log("pulling");
-            if (Vector3.Distance(transform.position, hook.transform.position) <= stopDistance)
+            if (Vector3.Distance(transform.position, hook.transform.position) <= hookDistanceStop)
             {
                 DestroyHook();
             }
@@ -303,12 +303,12 @@ public class PlayerController3D : MonoBehaviour
                 //Accelerate(velocity);
 
                 //Vector3 newVector = hookPrefab.transform.position - transform.position;
-                Vector3 newVector = (hook.transform.position - transform.position).normalized * pullSpeed;
+                Vector3 newVector = (hook.transform.position - transform.position).normalized * grapplingSpeed;
                 velocity += newVector;
 
-                if (velocity.magnitude > maxPullSpeed)
+                if (velocity.magnitude > maxGrapplingSpeed)
                 {
-                    velocity = Vector3.ClampMagnitude(velocity, maxPullSpeed);
+                    velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
                     //velocity += velocity.normalized* maxSpeed * Time.deltaTime;
                 }
 
