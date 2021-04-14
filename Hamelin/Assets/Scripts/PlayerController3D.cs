@@ -34,7 +34,7 @@ public class PlayerController3D : MonoBehaviour
     public State[] States;
     public Vector3 point1;
     public Vector3 point2;
-    private Vector3 jumpPower;
+    public Vector3 jumpPower;
     public Vector3 gravityPower;
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
@@ -233,22 +233,15 @@ public class PlayerController3D : MonoBehaviour
         velocity += inputZ;
 
         velocity += gravityPower;
-
+        /*
         if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
         {
             velocity += jumpPower;
         }
+        */
 
         //En array av alla object som min overlapcapsule returnerar, alltså de kolliderade med. 
-        collidingObjects = Physics.OverlapCapsule(point1,
-                            point2,
-                            collider.radius, collisionMask);
-
-        //om någonting kolliderades med så checkar den att karaktären inte åker igenom det. 
-        if (!(collidingObjects.Length == 0))
-        {
-            PreventCollision(collidingObjects);
-        }
+        
 
         if (velocity.x > maxSpeedXZ)
         {
@@ -315,6 +308,15 @@ public class PlayerController3D : MonoBehaviour
         }
 
         //
+        collidingObjects = Physics.OverlapCapsule(point1,
+                            point2,
+                            collider.radius, collisionMask);
+
+        //om någonting kolliderades med så checkar den att karaktären inte åker igenom det. 
+        if (!(collidingObjects.Length == 0))
+        {
+            PreventCollision(collidingObjects);
+        }
 
         transform.position += velocity;
 
@@ -388,12 +390,14 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    bool GroundCheck(Vector3 point2)
+    
+    public bool GroundCheck(Vector3 point2)
     {
 
         return Physics.Raycast(point2, Vector3.down, collider.radius + skinWidth + groundCheckDistance, collisionMask);
 
     }
+    
 
 
     Vector3 GroundNormal(Vector3 point2)
