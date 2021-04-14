@@ -54,6 +54,18 @@ public class PlayerController3D : MonoBehaviour
 
     //
 
+    //Grapple Test
+
+    public float pullSpeed = 0.5f;
+    public float maxPullSpeed = 20.0f;
+    public float stopDistance = 4f;
+    public GameObject hookPrefab;
+    public Transform shootTransform;
+
+    Hook hook;
+    bool pulling;
+    Rigidbody rigid;
+    //
 
 
     private StateMachine StateMachine;
@@ -64,6 +76,11 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //grappling hook test
+        rigid = GetComponent<Rigidbody>();
+        pulling = false;
+        //
+
         StateMachine = new StateMachine(this, States);
 
         startMaxSpeedXZ = maxSpeedXZ;
@@ -256,6 +273,56 @@ public class PlayerController3D : MonoBehaviour
         }
 
 
+        // Grappling hook test
+        //if (hook == null && Input.GetMouseButtonDown(1))
+        if (hook == null && Input.GetKeyDown(KeyCode.G))
+        {
+            StopAllCoroutines();
+            pulling = false;
+            hook = Instantiate(hookPrefab, shootTransform.position, Quaternion.identity).GetComponent<Hook>();
+            hook.Initialize(this, shootTransform);
+            StartCoroutine(DestroyHookAfterLifetime());
+        }
+        else if (hook != null && Input.GetMouseButtonDown(1))
+        {
+            DestroyHook();
+        }
+        if (pulling && hook != null)
+        {
+            Debug.Log("pulling");
+            if (Vector3.Distance(transform.position, hook.transform.position) <= stopDistance)
+            {
+                DestroyHook();
+            }
+            else
+            {
+                //rigid.AddForce((hook.transform.position - transform.position).normalized * pullSpeed, ForceMode.VelocityChange);
+
+
+
+                //Accelerate(velocity);
+
+                //Vector3 newVector = hookPrefab.transform.position - transform.position;
+                Vector3 newVector = (hook.transform.position - transform.position).normalized * pullSpeed;
+                velocity += newVector;
+
+                if (velocity.magnitude > maxPullSpeed)
+                {
+                    velocity = Vector3.ClampMagnitude(velocity, maxPullSpeed);
+                    //velocity += velocity.normalized* maxSpeed * Time.deltaTime;
+                }
+
+                //velocity -= velocity.normalized * normalForce.magnitude * kineticFrictionCoefficient;
+
+            }
+        }
+        else
+        {
+            Debug.Log("not pulling");
+        }
+
+        //
+
         transform.position += velocity;
 
 
@@ -374,4 +441,24 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    public void StartPull()
+    {
+        pulling = true;
+    }
+
+    private void DestroyHook()
+    {
+        if (hook == null) return;
+
+        pulling = false;
+        Destroy(hook.gameObject);
+        hook = null;
+    }
+
+    private IEnumerator DestroyHookAfterLifetime()
+    {
+        yield return new WaitForSeconds(8f);
+
+        DestroyHook();
+    }
 }
