@@ -248,6 +248,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 373f296490b8ab142a807e68785ae155, type: 2}
   point1: {x: 0, y: 0, z: 0}
   point2: {x: 0, y: 0, z: 0}
+  jumpPower: {x: 0, y: 0, z: 0}
   gravityPower: {x: 0, y: 0, z: 0}
   collidingObjects: []
   bugNet: {fileID: 8995250750137365913}
@@ -396,6 +397,7 @@ GameObject:
   - component: {fileID: 8995250750210744105}
   - component: {fileID: 8995250750210744110}
   - component: {fileID: 8995250750210744111}
+  - component: {fileID: 1604694749}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -468,3 +470,24 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8995250750210744108}
   m_Enabled: 1
+--- !u!114 &1604694749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8995250750210744108}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5b5f2df35523684f8537b18772049bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetObject: {fileID: 8995250748122010109}
+  cameraOffset: {x: 0, y: 1, z: -20}
+  smoothFactor: 0.5
+  mouseSensitivity: 1
+  rotationX: 0
+  rotationY: 0
+  cameraCollisionMask:
+    serializedVersion: 2
+    m_Bits: 0
