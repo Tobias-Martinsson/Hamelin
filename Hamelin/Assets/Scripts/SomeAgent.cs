@@ -27,6 +27,7 @@ public class SomeAgent : MonoBehaviour
         collider = GetComponent<CapsuleCollider>();
         NavAgent = GetComponent<NavMeshAgent>();
         StateMachine = new StateMachine(this, States);
+        //Player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Update()
