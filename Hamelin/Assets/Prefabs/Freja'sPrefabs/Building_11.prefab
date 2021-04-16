@@ -33,7 +33,6 @@ Transform:
   - {fileID: 2391735219899838579}
   - {fileID: 2391735220416719616}
   - {fileID: 2391735220911523679}
-  - {fileID: 2391735220420601520}
   - {fileID: 379519853037097932}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -260,6 +259,7 @@ Transform:
   m_Children:
   - {fileID: 2391735220172057428}
   - {fileID: 2391735220078906048}
+  - {fileID: 2391735220420601520}
   m_Father: {fileID: 2391735219597995030}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -273,7 +273,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2391735220420601520}
   m_Layer: 6
-  m_Name: HalfRoof
+  m_Name: HalfRoof3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -286,16 +286,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2391735220420601521}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.339951, y: -65.39366, z: -90.34942}
+  m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: 108.54001, y: -62.930004, z: -27.609985}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2791000314997895540}
   - {fileID: 2791000315134123655}
   - {fileID: 2791000314090888906}
   - {fileID: 2791000314729637491}
-  m_Father: {fileID: 2391735219597995030}
-  m_RootOrder: 6
+  m_Father: {fileID: 2391735220416719616}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2391735220911523676
 GameObject:
@@ -377,7 +377,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 7e0b160d51967cb498381380adff4039, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7e0b160d51967cb498381380adff4039, type: 3}
       propertyPath: m_LocalPosition.x
@@ -547,6 +547,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (29)
@@ -617,6 +621,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (12)
@@ -769,6 +777,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (25)
@@ -839,6 +851,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (31)
@@ -909,6 +925,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (1)
@@ -979,6 +999,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (2)
@@ -1049,6 +1073,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c778b87e6d9acd8498600d469c7b5a62, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: c778b87e6d9acd8498600d469c7b5a62, type: 3}
       propertyPath: m_Name
       value: Wall_Roof30_1 (1)
@@ -1115,6 +1143,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9d4ec775181545f46a782dc561524229, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdfa9bd0929500640a388a4266019886, type: 2}
     - target: {fileID: 919132149155446097, guid: 9d4ec775181545f46a782dc561524229, type: 3}
       propertyPath: m_Name
       value: Roof30_1 (2)
@@ -1541,6 +1573,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (9)
@@ -1709,6 +1745,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (36)
@@ -1779,6 +1819,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c778b87e6d9acd8498600d469c7b5a62, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: c778b87e6d9acd8498600d469c7b5a62, type: 3}
       propertyPath: m_Name
       value: Wall_Roof30_1 (1)
@@ -1927,6 +1971,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9d4ec775181545f46a782dc561524229, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdfa9bd0929500640a388a4266019886, type: 2}
     - target: {fileID: 919132149155446097, guid: 9d4ec775181545f46a782dc561524229, type: 3}
       propertyPath: m_Name
       value: Roof30_1
@@ -1993,6 +2041,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 328223bb28097d54991156f34babe396, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdfa9bd0929500640a388a4266019886, type: 2}
     - target: {fileID: 919132149155446097, guid: 328223bb28097d54991156f34babe396, type: 3}
       propertyPath: m_Name
       value: Roof15_1 (1)
@@ -2223,6 +2275,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (6)
@@ -2293,6 +2349,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (3)
@@ -2363,6 +2423,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9d4ec775181545f46a782dc561524229, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdfa9bd0929500640a388a4266019886, type: 2}
     - target: {fileID: 919132149155446097, guid: 9d4ec775181545f46a782dc561524229, type: 3}
       propertyPath: m_Name
       value: Roof30_1
@@ -2429,6 +2493,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (7)
@@ -2499,6 +2567,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 328223bb28097d54991156f34babe396, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdfa9bd0929500640a388a4266019886, type: 2}
     - target: {fileID: 919132149155446097, guid: 328223bb28097d54991156f34babe396, type: 3}
       propertyPath: m_Name
       value: Roof15_1
@@ -2565,6 +2637,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9d4ec775181545f46a782dc561524229, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdfa9bd0929500640a388a4266019886, type: 2}
     - target: {fileID: 919132149155446097, guid: 9d4ec775181545f46a782dc561524229, type: 3}
       propertyPath: m_Name
       value: Roof30_1 (3)
@@ -2631,6 +2707,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (34)
@@ -2767,6 +2847,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (4)
@@ -2837,6 +2921,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 27ca1ad2e44cf1f46813726e44163c56, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 27ca1ad2e44cf1f46813726e44163c56, type: 3}
       propertyPath: m_Name
       value: Wall_Roof15_1 (1)
@@ -3001,6 +3089,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (11)
@@ -3071,6 +3163,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (35)
@@ -3207,6 +3303,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (5)
@@ -3277,6 +3377,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (30)
@@ -3347,6 +3451,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (22)
@@ -3515,6 +3623,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (21)
@@ -3585,6 +3697,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c778b87e6d9acd8498600d469c7b5a62, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: c778b87e6d9acd8498600d469c7b5a62, type: 3}
       propertyPath: m_Name
       value: Wall_Roof30_1
@@ -3651,6 +3767,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (10)
@@ -3721,6 +3841,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9d4ec775181545f46a782dc561524229, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdfa9bd0929500640a388a4266019886, type: 2}
     - target: {fileID: 919132149155446097, guid: 9d4ec775181545f46a782dc561524229, type: 3}
       propertyPath: m_Name
       value: Roof30_1 (4)
@@ -3967,6 +4091,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (28)
@@ -4037,6 +4165,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (14)
@@ -4107,6 +4239,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c778b87e6d9acd8498600d469c7b5a62, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: c778b87e6d9acd8498600d469c7b5a62, type: 3}
       propertyPath: m_Name
       value: Wall_Roof30_1
@@ -4173,6 +4309,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9d4ec775181545f46a782dc561524229, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdfa9bd0929500640a388a4266019886, type: 2}
     - target: {fileID: 919132149155446097, guid: 9d4ec775181545f46a782dc561524229, type: 3}
       propertyPath: m_Name
       value: Roof30_1 (1)
@@ -4239,6 +4379,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9d4ec775181545f46a782dc561524229, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdfa9bd0929500640a388a4266019886, type: 2}
     - target: {fileID: 919132149155446097, guid: 9d4ec775181545f46a782dc561524229, type: 3}
       propertyPath: m_Name
       value: Roof30_1 (2)
@@ -4305,6 +4449,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 27ca1ad2e44cf1f46813726e44163c56, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 27ca1ad2e44cf1f46813726e44163c56, type: 3}
       propertyPath: m_Name
       value: Wall_Roof15_1
@@ -4371,6 +4519,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (33)
@@ -4523,6 +4675,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (15)
@@ -4593,6 +4749,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 9d4ec775181545f46a782dc561524229, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cdfa9bd0929500640a388a4266019886, type: 2}
     - target: {fileID: 919132149155446097, guid: 9d4ec775181545f46a782dc561524229, type: 3}
       propertyPath: m_Name
       value: Roof30_1 (1)
@@ -4659,6 +4819,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6df84ffe4c411d43b2a5c5601434c87, type: 2}
     - target: {fileID: 919132149155446097, guid: 6c0343588e4196c40871e1763d856a5e, type: 3}
       propertyPath: m_Name
       value: Cube_400x400 (13)
