@@ -84,6 +84,7 @@ public class PlayerController3D : MonoBehaviour
         StateMachine = new StateMachine(this, States);
 
         startMaxSpeedXZ = maxSpeedXZ;
+        Cursor.lockState = CursorLockMode.Confined;
 
 
     }
