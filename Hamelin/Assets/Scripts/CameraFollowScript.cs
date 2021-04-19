@@ -12,7 +12,7 @@ public class CameraFollowScript : MonoBehaviour
     private RaycastHit hitInfo;
     public float rotationX, rotationY;
     public LayerMask cameraCollisionMask;
-    private float cameraRadius = 0.1f;
+    private float cameraRadius = 0.01f;
 
     private void Start()
     {
@@ -38,7 +38,7 @@ public class CameraFollowScript : MonoBehaviour
         if (Physics.SphereCast(targetObject.transform.position, cameraRadius, offset.normalized, out hitInfo, offset.magnitude, cameraCollisionMask))
         {
 
-            offset = cameraOffset.normalized * hitInfo.distance;
+            offset = offset.normalized * hitInfo.distance;
 
         }
        transform.position = targetObject.transform.position + offset;
