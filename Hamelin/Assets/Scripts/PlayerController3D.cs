@@ -92,56 +92,100 @@ public class PlayerController3D : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
+        //Points på spelaren
+        point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
+        point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
+
+        //Update  velocity
         jumpPower = Vector3.up * jumpPowerVariable;
         gravityPower = Vector3.down * gravity * Time.deltaTime;
+
+        inputX = (Vector3.right * Input.GetAxisRaw("Horizontal")) * acceleration * Time.deltaTime;
+        inputZ = (Vector3.forward * Input.GetAxis("Vertical")) * acceleration * Time.deltaTime;
+
+
+
+        inputX = (Quaternion.Euler(0, rotationY, 0)) * inputX;
+        inputZ = (Quaternion.Euler(0, rotationY, 0)) * inputZ;
+        Vector3.ProjectOnPlane(inputZ, GroundNormal(point2));
+
+
+
+        velocity += inputX;
+        velocity += inputZ;
+
+        velocity += gravityPower;
+
+
+
+        //Kollision
+        collidingObjects = Physics.OverlapCapsule(point1,
+                            point2,
+                            collider.radius, collisionMask);
+
+        if (!(collidingObjects.Length == 0))
+        {
+            PreventCollision(collidingObjects);
+        }
+
+        transform.position += velocity;
+
+
+
+        //hämtad kamera rotation
         rotationY = camera.GetComponent<CameraFollowScript>().rotationY;
         rotationX = camera.GetComponent<CameraFollowScript>().rotationX;
 
 
-        //Variablar som beh�ver s�ttas varje update.
-        point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
-        point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
-
-        //input och gravitation / hoppkraft
-        //input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
+        // Grappling hook 
 
 
-        //f�rflyttning av kameran. Bara f�tt det att fungera n�golunda med en dynamisk kamera, men har problem att raycasta mot f�rem�l jag nuddar. 
 
-        //rotationX -= Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
-        //rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
-        //Vector3 offset = camera.transform.rotation * cameraOffset;
-        //rotationX = Mathf.Clamp(rotationX, -90, 90);
-
-
-        camera.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
         shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
 
-        Debug.DrawLine(transform.position, transform.position + velocity, Color.red);
-        Debug.DrawLine(transform.position, camera.transform.position);
-        /*
-        if (Physics.SphereCast(transform.position, 2f,offset + camera.transform.position.normalized, out hitInfo3,offset.magnitude,collisionMask))
+        if (hook == null && Input.GetKeyDown(KeyCode.G))
         {
-            Debug.DrawLine(transform.position, hitInfo3.point, Color.red);
-            camera.transform.position = hitInfo3.point + hitInfo3.normal * 2;
+            StopAllCoroutines();
+            pulling = false;
+            hook = Instantiate(hookPrefab, shootLocation.position, Quaternion.identity).GetComponent<Hook>();
+            hook.Initialize(this, shootLocation);
+            StartCoroutine(DestroyHookAfterLifetime());
+        }
+        //else if (hook != null && Input.GetMouseButtonDown(1))
+        else if (hook != null && Input.GetKeyDown(KeyCode.G))
+        {
+            DestroyHook();
+        }
+        if (pulling && hook != null)
+        {
+            Debug.Log("pulling");
+            if (Vector3.Distance(transform.position, hook.transform.position) <= hookDistanceStop)
+            {
+                DestroyHook();
+            }
+            else
+            {
 
+                Vector3 newVector = (hook.transform.position - transform.position).normalized * grapplingSpeed;
+                velocity += newVector;
+
+                if (velocity.magnitude > maxGrapplingSpeed)
+                {
+                    velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
+                }
+
+            }
         }
         else
         {
-            camera.transform.position = (offset + transform.position);
+            Debug.Log("not pulling");
         }
 
-        */
-        //kommentera ut det ovanf�r om det beh�vs testa med en simpel kamera. 
-        //camera.transform.position = (offset + transform.position);
+        //
 
 
 
-
-
-        // bugnet   offset funkar inte riktigt
-
-        //Debug.Log(bugNetOffset);
 
         if (netReady)
         {
@@ -219,110 +263,6 @@ public class PlayerController3D : MonoBehaviour
 
 
         }
-
-        inputX = (Vector3.right * Input.GetAxisRaw("Horizontal")) * acceleration * Time.deltaTime;
-        inputZ = (Vector3.forward * Input.GetAxis("Vertical")) * acceleration * Time.deltaTime;
-
-
-
-        inputX = (Quaternion.Euler(0, rotationY, 0)) * inputX;
-        inputZ = (Quaternion.Euler(0, rotationY, 0)) * inputZ;
-        Vector3.ProjectOnPlane(inputZ, GroundNormal(point2));
-
-
-
-        velocity += inputX;
-        velocity += inputZ;
-
-        velocity += gravityPower;
-        /*
-        if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
-        {
-            velocity += jumpPower;
-        }
-        */
-
-        //En array av alla object som min overlapcapsule returnerar, allts� de kolliderade med. 
-        
-
-        if (velocity.x > maxSpeedXZ)
-        {
-            velocity.x = maxSpeedXZ;
-        }
-        if (velocity.x < -maxSpeedXZ)
-        {
-            velocity.x = -maxSpeedXZ;
-        }
-
-        // har inte max speed f�r y positivt f�r att annars kan man inte hoppa 
-        if (velocity.y < -maxSpeedY)
-        {
-            velocity.y = -maxSpeedY;
-        }
-        if (velocity.z > maxSpeedXZ)
-        {
-            velocity.z = maxSpeedXZ;
-        }
-        if (velocity.z < -maxSpeedXZ)
-        {
-            velocity.z = -maxSpeedXZ;
-        }
-
-
-        // Grappling hook test
-        //if (hook == null && Input.GetMouseButtonDown(1))
-        if (hook == null && Input.GetKeyDown(KeyCode.G))
-        {
-            StopAllCoroutines();
-            pulling = false;
-            hook = Instantiate(hookPrefab, shootLocation.position, Quaternion.identity).GetComponent<Hook>();
-            hook.Initialize(this, shootLocation);
-            StartCoroutine(DestroyHookAfterLifetime());
-        }
-        //else if (hook != null && Input.GetMouseButtonDown(1))
-        else if (hook != null && Input.GetKeyDown(KeyCode.G))
-        {
-            DestroyHook();
-        }
-        if (pulling && hook != null)
-        {
-            Debug.Log("pulling");
-            if (Vector3.Distance(transform.position, hook.transform.position) <= hookDistanceStop)
-            {
-                DestroyHook();
-            }
-            else
-            {
-
-                Vector3 newVector = (hook.transform.position - transform.position).normalized * grapplingSpeed;
-                velocity += newVector;
-
-                if (velocity.magnitude > maxGrapplingSpeed)
-                {
-                    velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
-                }
-
-            }
-        }
-        else
-        {
-            Debug.Log("not pulling");
-        }
-
-        //
-        collidingObjects = Physics.OverlapCapsule(point1,
-                            point2,
-                            collider.radius, collisionMask);
-
-        //om n�gonting kolliderades med s� checkar den att karakt�ren inte �ker igenom det. 
-        if (!(collidingObjects.Length == 0))
-        {
-            PreventCollision(collidingObjects);
-        }
-
-        transform.position += velocity;
-
-
 
         StateMachine.RunUpdate();
     }

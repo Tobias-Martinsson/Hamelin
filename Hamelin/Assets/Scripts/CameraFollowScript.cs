@@ -12,6 +12,7 @@ public class CameraFollowScript : MonoBehaviour
     private RaycastHit hitInfo;
     public float rotationX, rotationY;
     public LayerMask cameraCollisionMask;
+    private float cameraRadius = 0.01f;
 
     private void Start()
     {
@@ -21,24 +22,28 @@ public class CameraFollowScript : MonoBehaviour
     {
         rotationX -= Input.GetAxisRaw("Mouse Y") * mouseSensitivity;
         rotationY += Input.GetAxisRaw("Mouse X") * mouseSensitivity;
-        Vector3 offset = transform.rotation * cameraOffset;
 
+        rotationX = Mathf.Clamp(rotationX,-89, 89);
+       
         transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
 
-        //transform.position = (targetObject.transform.position + offset);
-
-        if (Physics.SphereCast(targetObject.transform.position + new Vector3(0,1,0), 2f, offset + transform.position.normalized, out hitInfo, offset.magnitude, cameraCollisionMask))
-        {
-            Debug.DrawLine(transform.position, hitInfo.point, Color.red);
-            transform.position = hitInfo.point + hitInfo.normal * 2;
-
-        }
-        else
-        {
-            transform.position = (targetObject.transform.position + offset);
-        }
+       
 
     }
 
+    private void lateUpdate()
+    {
+        Vector3 offset = transform.rotation * cameraOffset;
+      
+        if (Physics.SphereCast(targetObject.transform.position, cameraRadius, offset.normalized, out hitInfo, offset.magnitude, cameraCollisionMask))
+        {
+
+            cameraOffset = cameraOffset.normalized * hitInfo.distance;
+
+        }
+        transform.position = (targetObject.transform.position + offset);
+      
+
+    }
 
 }
