@@ -7,8 +7,8 @@ public class PlayerController3D : MonoBehaviour
     //deklarering av variablar s� jag kan se dem i Unity och buggfixa.
     public float acceleration;
     public Vector3 velocity;
-    private Vector3 inputX;
-    private Vector3 inputZ;
+    private Vector3 input;
+
     private Vector3 inputCameraAdjust;
     public float maxSpeedXZ;
     private float startMaxSpeedXZ;
@@ -38,6 +38,8 @@ public class PlayerController3D : MonoBehaviour
     public Vector3 gravityPower;
     public Collider[] collidingObjects;
     RaycastHit hitInfo3;
+
+    private Vector3 normal;
 
     //bugnet test
     float netRotationX = 0;
@@ -98,24 +100,38 @@ public class PlayerController3D : MonoBehaviour
         point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
 
         //Update  velocity
-        jumpPower = Vector3.up * jumpPowerVariable;
-        gravityPower = Vector3.down * gravity * Time.deltaTime;
+      
+       
+        input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward* Input.GetAxisRaw("Vertical");
+      
+        if (input.magnitude > 1.0f) {
+            input.Normalize();
+        }
 
-        inputX = (Vector3.right * Input.GetAxisRaw("Horizontal")) * acceleration * Time.deltaTime;
-        inputZ = (Vector3.forward * Input.GetAxis("Vertical")) * acceleration * Time.deltaTime;
+        float inputMagnitude = input.magnitude;
 
+        
+        if (GroundCheck(point2))
+        {
+            normal = GroundNormal(point2);
+        }
+        else{
+            normal = Vector3.up;
+        }
 
+        input = Vector3.ProjectOnPlane(camera.transform.rotation * input, Vector3.Lerp(Vector3.up, normal, 0.5f).normalized * inputMagnitude);
 
-        inputX = (Quaternion.Euler(0, rotationY, 0)) * inputX;
-        inputZ = (Quaternion.Euler(0, rotationY, 0)) * inputZ;
-        Vector3.ProjectOnPlane(inputZ, GroundNormal(point2));
+        velocity += input * acceleration * Time.deltaTime;
+    
+        velocity += Vector3.down * gravity * Time.deltaTime;
 
+        if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
+        {
+            Debug.Log("Jumping");
+            velocity += Vector3.up * jumpPowerVariable;
+        }
 
-
-        velocity += inputX;
-        velocity += inputZ;
-
-        velocity += gravityPower;
+        ApplyAirResistance();
 
 
 
@@ -177,10 +193,7 @@ public class PlayerController3D : MonoBehaviour
 
             }
         }
-        else
-        {
-            Debug.Log("not pulling");
-        }
+     
 
         //
 
@@ -264,7 +277,7 @@ public class PlayerController3D : MonoBehaviour
 
         }
 
-        StateMachine.RunUpdate();
+    //    StateMachine.RunUpdate();
     }
 
 
@@ -367,7 +380,7 @@ public class PlayerController3D : MonoBehaviour
             velocity += normalForce;
 
             ApplyFriction(normalForce);
-            ApplyAirResistance();
+   
 
         }
 
