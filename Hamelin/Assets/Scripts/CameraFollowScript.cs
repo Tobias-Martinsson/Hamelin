@@ -12,7 +12,7 @@ public class CameraFollowScript : MonoBehaviour
     private RaycastHit hitInfo;
     public float rotationX, rotationY;
     public LayerMask cameraCollisionMask;
-    private float cameraRadius = 0.01f;
+    private float cameraRadius = 0.1f;
 
     private void Start()
     {
@@ -31,7 +31,7 @@ public class CameraFollowScript : MonoBehaviour
 
     }
 
-    private void lateUpdate()
+    private void LateUpdate()
     {
         Vector3 offset = transform.rotation * cameraOffset;
       
@@ -41,7 +41,7 @@ public class CameraFollowScript : MonoBehaviour
             cameraOffset = cameraOffset.normalized * hitInfo.distance;
 
         }
-        transform.position = (targetObject.transform.position + offset);
+       transform.position = targetObject.transform.position + offset;
       
 
     }
