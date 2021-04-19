@@ -38,7 +38,7 @@ public class CameraFollowScript : MonoBehaviour
         if (Physics.SphereCast(targetObject.transform.position, cameraRadius, offset.normalized, out hitInfo, offset.magnitude, cameraCollisionMask))
         {
 
-            cameraOffset = cameraOffset.normalized * hitInfo.distance;
+            offset = cameraOffset.normalized * hitInfo.distance;
 
         }
        transform.position = targetObject.transform.position + offset;
