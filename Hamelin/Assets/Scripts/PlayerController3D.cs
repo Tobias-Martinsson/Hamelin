@@ -91,17 +91,33 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    private bool grounded = false;
+    private float collisionMargin = 0.2f;
     // Update is called once per frame
     void Update()
     {
-      
+
+   
+
         //Points på spelaren
         point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
         point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
 
         //Update  velocity
-      
-       
+
+        RaycastHit hit;
+        grounded = Physics.CapsuleCast(
+            point1,
+            point2,
+            collider.radius,
+            Vector3.down,
+            out hit,
+            groundCheckDistance + collisionMargin,
+            collisionMask
+        );
+
+
+
         input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward* Input.GetAxisRaw("Vertical");
       
         if (input.magnitude > 1.0f) {
@@ -119,11 +135,47 @@ public class PlayerController3D : MonoBehaviour
             normal = Vector3.up;
         }
 
-        input = Vector3.ProjectOnPlane(camera.transform.rotation * input, Vector3.Lerp(Vector3.up, normal, 0.5f).normalized * inputMagnitude);
+        input = Vector3.ProjectOnPlane(camera.transform.rotation * input, Vector3.Lerp(Vector3.up, normal, 0.5f)).normalized * inputMagnitude;
+
+
 
         velocity += input * acceleration * Time.deltaTime;
     
         velocity += Vector3.down * gravity * Time.deltaTime;
+
+        if (velocity.x >= maxSpeedXZ)
+        {
+            velocity.x = maxSpeedXZ;
+        
+        }
+        if (velocity.z >= maxSpeedXZ)
+        {
+            velocity.z = maxSpeedXZ;
+
+        }
+
+        if (velocity.x <= -maxSpeedXZ)
+        {
+            velocity.x = -maxSpeedXZ;
+
+        }
+        if (velocity.z <= -maxSpeedXZ)
+        {
+            velocity.z = -maxSpeedXZ;
+
+        }
+
+        if (velocity.y >= maxSpeedY)
+        {
+            velocity.x = maxSpeedY;
+
+        }
+        if (velocity.y <= -maxSpeedY)
+        {
+            velocity.z = -maxSpeedY;
+
+        }
+
 
         if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
         {
