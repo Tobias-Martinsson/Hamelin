@@ -141,9 +141,9 @@ public class PlayerController3D : MonoBehaviour
 
 
 
-        velocity += input * acceleration * Time.deltaTime;
+        velocity += input * acceleration * Time.fixedDeltaTime;
     
-        velocity += Vector3.down * gravity * Time.deltaTime;
+        velocity += Vector3.down * gravity * Time.fixedDeltaTime;
         
         if (velocity.x >= maxSpeedXZ)
         {
@@ -182,6 +182,7 @@ public class PlayerController3D : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
         {
             Debug.Log("Jumping");
+            velocity.y = 0;
             velocity += Vector3.up * jumpPowerVariable;
         }
 
@@ -331,6 +332,7 @@ public class PlayerController3D : MonoBehaviour
 
         }
 
+        Debug.Log(velocity.y);
     //    StateMachine.RunUpdate();
     }
 
@@ -339,7 +341,7 @@ public class PlayerController3D : MonoBehaviour
     bool WaitTime(float seconds)
     {
 
-        timer += Time.deltaTime;
+        timer += Time.fixedDeltaTime;
 
         if (timer >= seconds)
         {
@@ -379,7 +381,7 @@ public class PlayerController3D : MonoBehaviour
     {
 
         //airResistance
-        velocity *= Mathf.Pow(airResistance, Time.deltaTime);
+        velocity *= Mathf.Pow(airResistance, Time.fixedDeltaTime);
 
     }
     //applicerar friktion p� karakt�ren.
