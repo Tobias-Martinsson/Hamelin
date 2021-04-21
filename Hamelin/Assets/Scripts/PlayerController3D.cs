@@ -78,6 +78,8 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Application.targetFrameRate = 60;
+
         //grappling hook test
         rigid = GetComponent<Rigidbody>();
         pulling = false;
@@ -94,7 +96,7 @@ public class PlayerController3D : MonoBehaviour
     private bool grounded = false;
     private float collisionMargin = 0.2f;
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
    
@@ -142,7 +144,7 @@ public class PlayerController3D : MonoBehaviour
         velocity += input * acceleration * Time.deltaTime;
     
         velocity += Vector3.down * gravity * Time.deltaTime;
-
+        
         if (velocity.x >= maxSpeedXZ)
         {
             velocity.x = maxSpeedXZ;
