@@ -44,7 +44,7 @@ public class PlayerController3D : MonoBehaviour
     //bugnet test
     float netRotationX = 0;
     public SphereCollider bugNet;
-    float netRotationSpeed = -0.8f;
+    float netRotationSpeed = -4f;
     Vector3 bugNetOffset = new Vector3(0, 4, 0);
     Vector3 bugNetStartOffset = new Vector3(1, 1, 0);
 
@@ -286,7 +286,7 @@ public class PlayerController3D : MonoBehaviour
 
             bugNet.transform.position = (netOffset + transform.position);
 
-            maxSpeedXZ = startMaxSpeedXZ / 5;
+            maxSpeedXZ = startMaxSpeedXZ / 3;
 
 
             if (Input.GetMouseButtonUp(0))
