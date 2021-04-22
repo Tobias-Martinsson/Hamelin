@@ -223,25 +223,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35798d0633677241b7b48792f071a80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 0.15
+  acceleration: 0.35
   velocity: {x: 0, y: 0, z: 0}
-  maxSpeedXZ: 0.05
-  maxSpeedY: 0.1
-  skinWidth: 0.15
+  maxSpeedXZ: 0.2
+  maxSpeedY: 0.5
+  skinWidth: 0.2
   collisionMask:
     serializedVersion: 2
     m_Bits: 64
-  gravity: 0.2
-  jumpPowerVariable: 0.07
-  groundCheckDistance: 0.5
+  gravity: 0.25
+  jumpPowerVariable: 0.2
+  groundCheckDistance: 0.2
   deceleration: 1
   rotationX: 0
   rotationY: 0
   mouseSensitivity: 3
   camera: {fileID: 8995250750210744110}
   cameraOffset: {x: 0, y: 1, z: -20}
-  staticFrictionCoefficient: 0.3
-  kineticFrictionCoefficient: 0.2
+  staticFrictionCoefficient: 0.7
+  kineticFrictionCoefficient: 0.55
   airResistance: 0.7
   States:
   - {fileID: 11400000, guid: 14d4b2fd3c839c84fae35e6d64f882c0, type: 2}
@@ -253,7 +253,7 @@ MonoBehaviour:
   collidingObjects: []
   bugNet: {fileID: 8995250750137365913}
   grapplingSpeed: 1.5
-  maxGrapplingSpeed: 0.31
+  maxGrapplingSpeed: 0.5
   hookDistanceStop: 4
   hookPrefab: {fileID: 7703645936239361278, guid: 3dd294b04e83c1a42b60cdc9cac1a0e1, type: 3}
   shootLocation: {fileID: 384245219}
@@ -483,11 +483,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetObject: {fileID: 8995250748122010109}
-  cameraOffset: {x: 0, y: 1, z: -20}
+  cameraOffset: {x: 0, y: 1, z: -15}
   smoothFactor: 0.5
   mouseSensitivity: 1
   rotationX: 0
   rotationY: 0
   cameraCollisionMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
