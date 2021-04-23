@@ -340,7 +340,7 @@ public class PlayerController3D : MonoBehaviour
 
         }
 
-        Debug.Log(velocity.y);
+        //Debug.Log(velocity.y);
     //    StateMachine.RunUpdate();
     }
 
