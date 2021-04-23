@@ -223,9 +223,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c35798d0633677241b7b48792f071a80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 0.35
+  acceleration: 0.7
   velocity: {x: 0, y: 0, z: 0}
-  maxSpeedXZ: 0.2
+  velocityXZ: {x: 0, y: 0, z: 0}
+  maxSpeedXZ: 0.15
   maxSpeedY: 0.5
   skinWidth: 0.2
   collisionMask:
@@ -240,8 +241,8 @@ MonoBehaviour:
   mouseSensitivity: 3
   camera: {fileID: 8995250750210744110}
   cameraOffset: {x: 0, y: 1, z: -20}
-  staticFrictionCoefficient: 0.7
-  kineticFrictionCoefficient: 0.55
+  staticFrictionCoefficient: 0.4
+  kineticFrictionCoefficient: 0.25
   airResistance: 0.7
   States:
   - {fileID: 11400000, guid: 14d4b2fd3c839c84fae35e6d64f882c0, type: 2}

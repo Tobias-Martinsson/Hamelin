@@ -8,6 +8,7 @@ public class PlayerController3D : MonoBehaviour
     public float acceleration;
     public Vector3 velocity;
     private Vector3 input;
+    public Vector3 velocityXZ;
 
     private Vector3 inputCameraAdjust;
     public float maxSpeedXZ;
@@ -140,33 +141,24 @@ public class PlayerController3D : MonoBehaviour
         input = Vector3.ProjectOnPlane(camera.transform.rotation * input, Vector3.Lerp(Vector3.up, normal, 0.5f)).normalized * inputMagnitude;
 
 
+        velocity += input * acceleration * Time.deltaTime;
 
-        velocity += input * acceleration * Time.fixedDeltaTime;
-    
-        velocity += Vector3.down * gravity * Time.fixedDeltaTime;
-        
-        if (velocity.x >= maxSpeedXZ)
-        {
-            velocity.x = maxSpeedXZ;
-        
-        }
-        if (velocity.z >= maxSpeedXZ)
-        {
-            velocity.z = maxSpeedXZ;
 
-        }
+        velocity += Vector3.down * gravity * Time.deltaTime;
 
-        if (velocity.x <= -maxSpeedXZ)
+
+        // Ser till att man inte rör sig över max speed i X och Z. Y är separat eftersom att hoppet 
+        velocityXZ = new Vector3(velocity.x, 0, velocity.z);
+
+        if (velocityXZ.magnitude >= maxSpeedXZ)
         {
-            velocity.x = -maxSpeedXZ;
+            velocityXZ = velocity.normalized * maxSpeedXZ;
+            velocity = new Vector3(velocityXZ.x, velocity.y, velocityXZ.z);
 
         }
-        if (velocity.z <= -maxSpeedXZ)
-        {
-            velocity.z = -maxSpeedXZ;
-
-        }
-
+      
+      
+        // en egen maxspeed för y hastigheten
         if (velocity.y >= maxSpeedY)
         {
             velocity.x = maxSpeedY;
@@ -185,6 +177,8 @@ public class PlayerController3D : MonoBehaviour
             velocity.y = 0;
             velocity += Vector3.up * jumpPowerVariable;
         }
+
+       
 
         ApplyAirResistance();
 
@@ -246,6 +240,19 @@ public class PlayerController3D : MonoBehaviour
                     velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
                 }
 
+
+            }
+        }
+        else {
+
+            // Deacceleration metoden här under anropas inte om grappling hooken är aktiv
+            if (input.x == 0)
+            {
+                velocity.x *= 0.1f;
+            }
+            if (input.z == 0)
+            {
+                velocity.z *= 0.1f;
             }
         }
      
@@ -341,7 +348,7 @@ public class PlayerController3D : MonoBehaviour
     bool WaitTime(float seconds)
     {
 
-        timer += Time.fixedDeltaTime;
+        timer += Time.deltaTime;
 
         if (timer >= seconds)
         {
@@ -381,7 +388,7 @@ public class PlayerController3D : MonoBehaviour
     {
 
         //airResistance
-        velocity *= Mathf.Pow(airResistance, Time.fixedDeltaTime);
+        velocity *= Mathf.Pow(airResistance, Time.deltaTime);
 
     }
     //applicerar friktion p� karakt�ren.
