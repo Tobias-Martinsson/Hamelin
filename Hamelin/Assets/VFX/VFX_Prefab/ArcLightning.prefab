@@ -87,8 +87,11 @@ VisualEffect:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: 2, y: 2, z: 0}
+      - m_Value: {x: 12, y: 2, z: 0}
         m_Name: LightningTargetr
+        m_Overridden: 1
+      - m_Value: {x: 12, y: 2, z: 0}
+        m_Name: LightningTarget
         m_Overridden: 1
     m_Vector4f:
       m_Array: []
@@ -175,7 +178,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Property:
-    m_Name: LightningTargetr
+    m_Name: LightningTarget
   Target: {fileID: 8156296961344329594}
 --- !u!1 &8156296961344329595
 GameObject:
