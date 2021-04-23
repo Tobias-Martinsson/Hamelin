@@ -227,6 +227,7 @@ public class PlayerController3D : MonoBehaviour
             Debug.Log("pulling");
             if (Vector3.Distance(transform.position, hook.transform.position) <= hookDistanceStop)
             {
+                maxSpeedXZ = startMaxSpeedXZ;
                 DestroyHook();
             }
             else
@@ -234,12 +235,12 @@ public class PlayerController3D : MonoBehaviour
 
                 Vector3 newVector = (hook.transform.position - transform.position).normalized * grapplingSpeed;
                 velocity += newVector;
+                maxSpeedXZ = maxGrapplingSpeed;
 
                 if (velocity.magnitude > maxGrapplingSpeed)
                 {
                     velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
                 }
-
 
             }
         }
