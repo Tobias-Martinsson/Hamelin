@@ -24,7 +24,4 @@ public class s_EnemyScoreCounter : MonoBehaviour
 
     }
 
-    private void AddScore()
-    {
-    }
 }
