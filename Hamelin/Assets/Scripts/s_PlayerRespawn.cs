@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Den här koden är tänkt att vara en respawn position som följer efter spelaren så länge den vidgör marken.
 public class s_PlayerRespawn : MonoBehaviour
 {
-
-    PlayerController3D player;
-
     public Transform target;
     public float smoothTime = 1f;
     public Vector3 velosity = Vector3.zero;    
