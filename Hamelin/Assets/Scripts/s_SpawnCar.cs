@@ -6,7 +6,6 @@ public class s_SpawnCar : MonoBehaviour
 {
     private Vector3 startPos;
     private float startTimer;
-    //private GameObject car;
 
     public float timer;
 
@@ -24,7 +23,7 @@ public class s_SpawnCar : MonoBehaviour
         if (timer > 0)
         {
             timer -= Time.deltaTime;
-            this.transform.Translate(Vector3.forward / 2);
+            this.transform.Translate(Vector3.forward / 4);
         }
         else if (timer <= 0)
         {
