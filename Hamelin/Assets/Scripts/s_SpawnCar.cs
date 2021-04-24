@@ -23,7 +23,7 @@ public class s_SpawnCar : MonoBehaviour
         if (timer > 0)
         {
             timer -= Time.deltaTime;
-            this.transform.Translate(Vector3.forward / 4);
+            this.transform.Translate(Vector3.forward / 6);
         }
         else if (timer <= 0)
         {
