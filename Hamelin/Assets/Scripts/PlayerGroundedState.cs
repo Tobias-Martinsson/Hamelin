@@ -19,11 +19,7 @@ public class PlayerGroundedState : State
     }
     public override void RunUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Debug.Log("Jumping");
-            Player.velocity += Player.jumpPower;
-        }
+      
 
 
         if (!Player.GroundCheck(Player.point2))
