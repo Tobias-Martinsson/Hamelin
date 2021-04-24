@@ -8,6 +8,7 @@ public class s_SpawnCar : MonoBehaviour
     private float startTimer;
 
     public float timer;
+    public float speed;
 
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,7 @@ public class s_SpawnCar : MonoBehaviour
         if (timer > 0)
         {
             timer -= Time.deltaTime;
-            this.transform.Translate(Vector3.forward / 6);
+            this.transform.Translate(Vector3.forward *speed);
         }
         else if (timer <= 0)
         {
