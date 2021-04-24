@@ -20,10 +20,7 @@ public class s_PlayerRespawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        
-            Follow();
-        
+        Follow();
     }
 
     private void Follow()
