@@ -5273,8 +5273,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965469216}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -20, y: 5, z: 10}
+  m_LocalRotation: {x: 0.0020342646, y: -0.9979604, z: 0.043438673, w: 0.046735197}
+  m_LocalPosition: {x: -19.174234, y: 5.501035, z: 12.318295}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5696,7 +5696,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1355484425}
   m_Layer: 0
-  m_Name: WaterStart
+  m_Name: EndPosistion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6054,7 +6054,7 @@ GameObject:
   - component: {fileID: 1664771245}
   - component: {fileID: 1664771244}
   m_Layer: 0
-  m_Name: Visual Effect
+  m_Name: WaterStream
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6111,6 +6111,7 @@ VFXRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6163,7 +6164,7 @@ VisualEffect:
         m_Overridden: 1
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0, y: 2.2208347, z: 4, w: 0}
+      - m_Value: {x: 1.5922079, y: 3.5225918, z: 5.0380316, w: 0}
         m_Name: WaterColor
         m_Overridden: 1
     m_Uint:

@@ -106,9 +106,6 @@
             "m_Id": "3e78ba92c1534443ace8b885a1aaf2c4"
         },
         {
-            "m_Id": "88af701391be41279c44f01462c01409"
-        },
-        {
             "m_Id": "1b530d6e00cc460f8d40d7ddf238a656"
         },
         {
@@ -324,20 +321,6 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "5b20055f8dac40d395271157a9f3e3a6"
-                },
-                "m_SlotId": 1
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "88af701391be41279c44f01462c01409"
-                },
-                "m_SlotId": 0
-            },
-            "m_InputSlot": {
-                "m_Node": {
-                    "m_Id": "a1e830d675a848b2a43208bcb54979ff"
                 },
                 "m_SlotId": 1
             }
@@ -585,7 +568,7 @@
     "m_Hidden": false,
     "m_ShaderOutputName": "X",
     "m_StageCapability": 3,
-    "m_Value": 0.20000000298023225,
+    "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
 }
@@ -1933,7 +1916,7 @@
     "m_StageCapability": 3,
     "m_Value": {
         "x": 1.0,
-        "y": 0.25
+        "y": 0.5
     },
     "m_DefaultValue": {
         "x": 0.0,
@@ -2188,7 +2171,7 @@
     "overrideHLSLDeclaration": false,
     "hlslDeclarationOverride": 2,
     "m_Hidden": false,
-    "m_Value": 1.0,
+    "m_Value": 0.0,
     "m_FloatType": 0,
     "m_RangeValues": {
         "x": 0.0,
@@ -2208,10 +2191,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1195.999755859375,
+            "x": -1196.0001220703125,
             "y": 382.0,
-            "width": 207.99998474121095,
-            "height": 301.9999694824219
+            "width": 208.0,
+            "height": 302.0
         }
     },
     "m_Slots": [
@@ -2243,56 +2226,6 @@
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Sine Time",
-    "m_StageCapability": 3,
-    "m_Value": 0.0,
-    "m_DefaultValue": 0.0,
-    "m_Labels": []
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
-    "m_ObjectId": "88af701391be41279c44f01462c01409",
-    "m_Group": {
-        "m_Id": ""
-    },
-    "m_Name": "Property",
-    "m_DrawState": {
-        "m_Expanded": true,
-        "m_Position": {
-            "serializedVersion": "2",
-            "x": -1641.0,
-            "y": -517.0000610351563,
-            "width": 175.00001525878907,
-            "height": 34.0
-        }
-    },
-    "m_Slots": [
-        {
-            "m_Id": "913a143ada2040ad9ef810dd842a8111"
-        }
-    ],
-    "synonyms": [],
-    "m_Precision": 0,
-    "m_PreviewExpanded": true,
-    "m_PreviewMode": 0,
-    "m_CustomColors": {
-        "m_SerializableColors": []
-    },
-    "m_Property": {
-        "m_Id": "5d17c7950f4648a8b6e7ac4efd48ea97"
-    }
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
-    "m_ObjectId": "913a143ada2040ad9ef810dd842a8111",
-    "m_Id": 0,
-    "m_DisplayName": "FlowingTurbolence",
-    "m_SlotType": 1,
-    "m_Hidden": false,
-    "m_ShaderOutputName": "Out",
     "m_StageCapability": 3,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
