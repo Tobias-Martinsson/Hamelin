@@ -208,7 +208,7 @@ public class PlayerController3D : MonoBehaviour
 
 
         shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-
+        /*
         if (hook == null && Input.GetKeyDown(KeyCode.G))
         {
             StopAllCoroutines();
@@ -216,23 +216,27 @@ public class PlayerController3D : MonoBehaviour
             hook = Instantiate(hookPrefab, shootLocation.position, Quaternion.identity).GetComponent<Hook>();
             hook.Initialize(this, shootLocation);
             StartCoroutine(DestroyHookAfterLifetime());
+         
         }
         //else if (hook != null && Input.GetMouseButtonDown(1))
         else if (hook != null && Input.GetKeyDown(KeyCode.G))
         {
-            DestroyHook();
+         //   DestroyHook();
         }
+        
         if (pulling && hook != null)
         {
+           
             Debug.Log("pulling");
             if (Vector3.Distance(transform.position, hook.transform.position) <= hookDistanceStop)
             {
                 maxSpeedXZ = startMaxSpeedXZ;
                 DestroyHook();
+          
             }
             else
             {
-
+          
                 Vector3 newVector = (hook.transform.position - transform.position).normalized * grapplingSpeed;
                 velocity += newVector;
                 maxSpeedXZ = maxGrapplingSpeed;
@@ -241,11 +245,12 @@ public class PlayerController3D : MonoBehaviour
                 {
                     velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
                 }
-
+            
             }
+            
         }
         else {
-
+        */
             // Deacceleration metoden här under anropas inte om grappling hooken är aktiv
             if (input.x == 0)
             {
@@ -255,7 +260,7 @@ public class PlayerController3D : MonoBehaviour
             {
                 velocity.z *= 0.1f;
             }
-        }
+      //  }
      
 
         //

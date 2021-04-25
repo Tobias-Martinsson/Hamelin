@@ -7,6 +7,9 @@ public class BugNetController : MonoBehaviour
     public SphereCollider collider;
     public RaycastHit hit;
     public float downwardCheckDistance = 1f;
+
+    private int score = 0;
+
     void Awake() => collider = GetComponent<SphereCollider>();
     // Start is called before the first frame update
     void Start()
@@ -26,11 +29,19 @@ public class BugNetController : MonoBehaviour
         {
             Destroy(collision.gameObject);
             //Ifall flying enemies
-       //      Destroy(collision.gameObject.GetComponentInParent<GameObject>().gameObject);
+            //      Destroy(collision.gameObject.GetComponentInParent<GameObject>().gameObject);
             //collision.gameObject.GetComponent<Renderer>().enabled = false;
+            
+            //incresse scorecount by 1.
+            AddScore();
         }
-
+        
 
         
     }
+
+    private void AddScore() => score++;
+
+    public int Score => score;
+
 }
