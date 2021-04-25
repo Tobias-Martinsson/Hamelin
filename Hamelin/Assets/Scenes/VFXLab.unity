@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 5461.8906, g: 3416.0273, b: 2435.8672, a: 1}
+  m_IndirectSpecularColor: {r: 5466.7734, g: 3419.4375, b: 2437.8047, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5710,7 +5710,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355484424}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: -10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1664771248}
@@ -6073,7 +6073,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Property:
-    m_Name: StartPosition
+    m_Name: EndPosition
   Target: {fileID: 1355484425}
 --- !u!114 &1664771245
 MonoBehaviour:
@@ -6155,8 +6155,11 @@ VisualEffect:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: -20, y: 10, z: 0}
+      - m_Value: {x: -20, y: 0, z: 0}
         m_Name: StartPosition
+        m_Overridden: 1
+      - m_Value: {x: -20, y: 0, z: 0}
+        m_Name: EndPosition
         m_Overridden: 1
     m_Vector4f:
       m_Array:
@@ -6185,7 +6188,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664771243}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20, y: 0, z: 0}
+  m_LocalPosition: {x: -20, y: 10, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1355484425}
