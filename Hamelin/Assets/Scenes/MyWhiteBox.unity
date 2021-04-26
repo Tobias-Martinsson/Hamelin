@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 4607.6123, g: 2944.2676, b: 2182.6836, a: 1}
+  m_IndirectSpecularColor: {r: 4608.376, g: 2944.7617, b: 2183.0664, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1965,6 +1965,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (13)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -1978,8 +1982,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1992,6 +2004,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -4523,6 +4539,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5a288f08285223a45ac1941d8d4acaa8, type: 3}
   m_PrefabInstance: {fileID: 138031657}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &140162445 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 29642778a63e83c47b7531fe6cd899cf, type: 3}
+  m_PrefabInstance: {fileID: 1968307319}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &140863204
 PrefabInstance:
@@ -9419,6 +9440,102 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6f24a1d8ee39cb042be51f01b57a359c, type: 3}
   m_PrefabInstance: {fileID: 346603296}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &347619755
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 347619756}
+  - component: {fileID: 347619759}
+  - component: {fileID: 347619758}
+  - component: {fileID: 347619757}
+  m_Layer: 6
+  m_Name: Cylinder (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &347619756
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347619755}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.4, z: 0}
+  m_LocalScale: {x: 1.5, y: 0.75, z: 1.5}
+  m_Children: []
+  m_Father: {fileID: 140162445}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &347619757
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347619755}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!23 &347619758
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347619755}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 72aa57eaa3798674c99346fb3911ead9, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &347619759
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 347619755}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &347842737
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12906,6 +13023,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (9)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -12919,8 +13040,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -12933,6 +13062,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -13694,6 +13827,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -13707,8 +13844,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13721,6 +13866,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -18216,6 +18365,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -18229,8 +18382,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18243,6 +18404,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -19362,6 +19527,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (8)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -19375,8 +19544,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -19389,6 +19566,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -22104,6 +22285,102 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5a288f08285223a45ac1941d8d4acaa8, type: 3}
   m_PrefabInstance: {fileID: 677945251}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &679653744
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 679653745}
+  - component: {fileID: 679653748}
+  - component: {fileID: 679653747}
+  - component: {fileID: 679653746}
+  m_Layer: 6
+  m_Name: Cylinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &679653745
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679653744}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.108, z: 0}
+  m_LocalScale: {x: 3, y: 1, z: 3}
+  m_Children: []
+  m_Father: {fileID: 140162445}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &679653746
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679653744}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!23 &679653747
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679653744}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 72aa57eaa3798674c99346fb3911ead9, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &679653748
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 679653744}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &680945088
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -28681,6 +28958,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (15)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -28694,8 +28975,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -28708,6 +28997,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -33085,6 +33378,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (11)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -33098,8 +33395,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -33112,6 +33417,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -40698,6 +41007,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -40711,8 +41024,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -40725,6 +41046,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -47966,6 +48291,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (12)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -47979,8 +48308,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -47993,6 +48330,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -53212,6 +53553,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (10)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -53225,8 +53570,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -53239,6 +53592,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -53434,6 +53791,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -53447,8 +53808,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -53461,6 +53830,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -53841,6 +54214,102 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1e8ccc6e01e000a4388f2cbd030102ee, type: 3}
   m_PrefabInstance: {fileID: 1718547794}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1718804288
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1718804289}
+  - component: {fileID: 1718804292}
+  - component: {fileID: 1718804291}
+  - component: {fileID: 1718804290}
+  m_Layer: 6
+  m_Name: Cylinder (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1718804289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718804288}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.5, z: 0}
+  m_LocalScale: {x: 4.5, y: 1, z: 4.5}
+  m_Children: []
+  m_Father: {fileID: 140162445}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &1718804290
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718804288}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  m_Radius: 0.5000001
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!23 &1718804291
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718804288}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 257
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 72aa57eaa3798674c99346fb3911ead9, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &1718804292
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1718804288}
+  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1720090570
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -61675,6 +62144,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -61688,8 +62161,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -61702,6 +62183,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -62120,7 +62605,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1955339929}
   - component: {fileID: 1955339928}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LightningWall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62793,9 +63278,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6088382770540900457, guid: 29642778a63e83c47b7531fe6cd899cf, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 29642778a63e83c47b7531fe6cd899cf, type: 3}
       propertyPath: m_Name
       value: WB_fountain
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 29642778a63e83c47b7531fe6cd899cf, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2786775903760438914, guid: 29642778a63e83c47b7531fe6cd899cf, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3240944141505195131, guid: 29642778a63e83c47b7531fe6cd899cf, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6892060493344021962, guid: 29642778a63e83c47b7531fe6cd899cf, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 29642778a63e83c47b7531fe6cd899cf, type: 3}
@@ -63557,6 +64062,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning (14)
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -63570,8 +64079,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -63584,6 +64101,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
@@ -66322,6 +66843,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ArcLightning
       objectReference: {fileID: 0}
+    - target: {fileID: 8156296960554896331, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238423, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
       value: -14.622202
@@ -66335,8 +66860,16 @@ PrefabInstance:
       value: -2.0275888
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238424, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961113238425, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -66349,6 +66882,10 @@ PrefabInstance:
     - target: {fileID: 8156296961344329594, guid: efecc57137f367c42ba68571feee79aa, type: 3}
       propertyPath: m_LocalPosition.z
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8156296961344329595, guid: efecc57137f367c42ba68571feee79aa, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efecc57137f367c42ba68571feee79aa, type: 3}
