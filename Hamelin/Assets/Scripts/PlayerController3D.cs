@@ -391,6 +391,8 @@ public class PlayerController3D : MonoBehaviour
     }
 
     void netSwiping() {
+        bugNet.isTrigger = false;
+
         maxSpeedXZ = startMaxSpeedXZ / newSwipeMovementDecrease;
         Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
 
@@ -408,6 +410,8 @@ public class PlayerController3D : MonoBehaviour
     }
 
     void netIdle() {
+        bugNet.isTrigger = true;
+
         Vector3 netOffset = bugNet.transform.rotation * bugNetStartOffset;
 
 
@@ -421,6 +425,7 @@ public class PlayerController3D : MonoBehaviour
     void netReset() {
         if (netRotationX >= 90)
         {
+            bugNet.isTrigger = true;
             if (WaitTime(0.5f))
             {
                 netRotationX = 0;
