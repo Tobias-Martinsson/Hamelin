@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController3D : MonoBehaviour
 {
@@ -215,12 +216,23 @@ public class PlayerController3D : MonoBehaviour
         }
      
 
-        // Grappling hook 
+    
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+
+            // Grappling hook 
 
 
 
-        shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+
+            shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+
+
         /*
+
         if (hook == null && Input.GetKeyDown(KeyCode.G))
         {
             StopAllCoroutines();
