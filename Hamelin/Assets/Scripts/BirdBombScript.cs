@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 public class BirdBombScript : MonoBehaviour
 {
     private Scene scene;
+    public float timeLeft = 5.0f;
+    public float originalTime;
 
     private void Start()
     {
@@ -16,7 +18,7 @@ public class BirdBombScript : MonoBehaviour
     {
         if(collision.gameObject.tag == "Geometry")
         {
-            Destroy(this);
+            gameObject.GetComponent<SphereCollider>().enabled = false;
             gameObject.GetComponent<Renderer>().enabled = false;
         }
 

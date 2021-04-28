@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class BirdAgent : SomeAgent
 {
-    public float timeLeft = 5.0f;
+    public float timeLeft;
     public float originalTime;
     public GameObject myPrefab;
     private StateMachine StateMachine;
@@ -29,7 +29,7 @@ public class BirdAgent : SomeAgent
         timeLeft -= Time.deltaTime;
         if (timeLeft < 0)
         {
-            Instantiate(myPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity);
+            Destroy(Instantiate(myPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity), 5f);
             timeLeft = originalTime;
         }
 
