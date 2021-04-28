@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController3D : MonoBehaviour
 {
@@ -41,19 +42,24 @@ public class PlayerController3D : MonoBehaviour
     RaycastHit hitInfo3;
 
     private Vector3 normal;
+  
+    private bool jumping = false;
 
     //bugnet test
     float netRotationX = 0;
     public SphereCollider bugNet;
-    float netRotationSpeed = -4f;
+    float netRotationSpeed = -10f;
     Vector3 bugNetOffset = new Vector3(0, 4, 0);
     Vector3 bugNetStartOffset = new Vector3(1, 1, 0);
+    private float netHoldMovementDecrease = 1.5f;
+    private float newSwipeMovementDecrease = 4f;
 
     bool netReady = true;
     bool netHolding = false;
     bool netSwipe = false;
 
     float timer = 0;
+
 
     //
 
@@ -170,15 +176,8 @@ public class PlayerController3D : MonoBehaviour
 
         }
 
+  
 
-        if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
-        {
-            Debug.Log("Jumping");
-            velocity.y = 0;
-            velocity += Vector3.up * jumpPowerVariable;
-        }
-
-       
 
         ApplyAirResistance();
 
@@ -203,12 +202,37 @@ public class PlayerController3D : MonoBehaviour
         rotationX = camera.GetComponent<CameraFollowScript>().rotationX;
 
 
-        // Grappling hook 
+
+        //net
+        if (netReady) {
+            netIdle();
+        }
+        if (netHolding) {
+            netHold();
+        }
+        if (netSwipe) {
+            netSwiping();
+            netReset();
+        }
+     
+
+    
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+
+            // Grappling hook 
 
 
 
-        shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+
+            shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+
+
         /*
+
         if (hook == null && Input.GetKeyDown(KeyCode.G))
         {
             StopAllCoroutines();
@@ -268,85 +292,50 @@ public class PlayerController3D : MonoBehaviour
 
 
 
-        if (netReady)
+
+        //Debug.Log(velocity.y);
+    //    StateMachine.RunUpdate();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
         {
-            Vector3 netOffset = bugNet.transform.rotation * bugNetStartOffset;
-
-
-            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
-
-
-            bugNet.transform.position = (netOffset + transform.position);
-
+            jumping = true;
+        }
+        else {
+            jumping = false;
         }
 
-        if (Input.GetMouseButtonDown(0))
-        {
-
-            netHolding = true;
-
-            netReady = false;
-
+        if (jumping)
+        {      
+            velocity.y = 0;
+            velocity += Vector3.up * jumpPowerVariable;
         }
 
-        if (netHolding)
+
+
+        if (Input.GetMouseButtonDown(0)){
+     
+            if (netReady)
+            {
+                netHolding = true;
+
+                netReady = false;
+            }
+        }
+
+        if (Input.GetMouseButtonUp(0))
         {
-            Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
-
-
-            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
-
-
-            bugNet.transform.position = (netOffset + transform.position);
-
-            maxSpeedXZ = startMaxSpeedXZ / 3;
-
-
-            if (Input.GetMouseButtonUp(0))
+        
+            if (netHolding)
             {
                 netSwipe = true;
                 netHolding = false;
             }
+        }  
 
-        }
-
-
-        if (netSwipe)
-        {
-
-            maxSpeedXZ = 0;
-            Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
-
-            netRotationX -= netRotationSpeed;
-
-            netRotationX = Mathf.Clamp(netRotationX, 0, 90);
-
-
-            bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
-
-
-            bugNet.transform.position = (netOffset + transform.position);
-
-
-        }
-
-        if (netRotationX >= 90)
-        {
-            if (WaitTime(0.5f))
-            {
-                netRotationX = 0;
-
-                maxSpeedXZ = startMaxSpeedXZ;
-
-                netReady = true;
-                netSwipe = false;
-            }
-
-
-        }
-
-        //Debug.Log(velocity.y);
-    //    StateMachine.RunUpdate();
+    
     }
 
 
@@ -386,9 +375,71 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    
+
+    void netHold()
+    {
+        Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
 
 
+        bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
 
+
+        bugNet.transform.position = (netOffset + transform.position);
+
+        maxSpeedXZ = startMaxSpeedXZ / netHoldMovementDecrease;
+    }
+
+    void netSwiping() {
+        bugNet.isTrigger = false;
+
+        maxSpeedXZ = startMaxSpeedXZ / newSwipeMovementDecrease;
+        Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
+
+        netRotationX -= netRotationSpeed;
+
+        netRotationX = Mathf.Clamp(netRotationX, 0, 90);
+
+
+        bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+
+
+        bugNet.transform.position = (netOffset + transform.position);
+
+
+    }
+
+    void netIdle() {
+        bugNet.isTrigger = true;
+
+        Vector3 netOffset = bugNet.transform.rotation * bugNetStartOffset;
+
+
+        bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
+
+
+        bugNet.transform.position = (netOffset + transform.position);
+
+    }
+
+    void netReset() {
+        if (netRotationX >= 90)
+        {
+            bugNet.isTrigger = true;
+            if (WaitTime(0.5f))
+            {
+                netRotationX = 0;
+
+                maxSpeedXZ = startMaxSpeedXZ;
+
+                netReady = true;
+                netSwipe = false;
+            }
+
+
+        }
+
+    }
 
     void ApplyAirResistance()
     {
