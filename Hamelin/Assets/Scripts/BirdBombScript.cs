@@ -5,13 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class BirdBombScript : MonoBehaviour
 {
-    private Scene scene;
+
     public float timeLeft = 5.0f;
     public float originalTime;
 
     private void Start()
     {
-        scene = SceneManager.GetActiveScene();
+
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -24,7 +24,7 @@ public class BirdBombScript : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene(scene.name);
+            collision.gameObject.GetComponent<PlayerController3D>().setDamageDealt(true);
         }
 
     }

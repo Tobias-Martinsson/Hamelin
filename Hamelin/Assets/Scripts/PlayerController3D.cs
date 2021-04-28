@@ -42,8 +42,14 @@ public class PlayerController3D : MonoBehaviour
     RaycastHit hitInfo3;
 
     private Vector3 normal;
-  
+
     private bool jumping = false;
+    private int health = 3;
+    private int maxHealth = 3;
+    private bool invincible = false;
+    private float invincibleTime = 1;
+    private Scene scene;
+    private bool damageDealt;
 
     //bugnet test
     float netRotationX = 0;
@@ -58,7 +64,12 @@ public class PlayerController3D : MonoBehaviour
     bool netHolding = false;
     bool netSwipe = false;
 
-    float timer = 0;
+    private bool catchCheck = false;
+
+    //timers
+    private float netTimer = 0;
+    private float damageTimer = 0;
+    private bool startDamageTimer = false;
 
 
     //
@@ -87,6 +98,8 @@ public class PlayerController3D : MonoBehaviour
     {
         Application.targetFrameRate = 60;
 
+        scene = SceneManager.GetActiveScene();
+
         //grappling hook test
         rigid = GetComponent<Rigidbody>();
         pulling = false;
@@ -106,7 +119,7 @@ public class PlayerController3D : MonoBehaviour
     void FixedUpdate()
     {
 
-   
+
 
         //Points på spelaren
         point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
@@ -127,20 +140,20 @@ public class PlayerController3D : MonoBehaviour
 
 
 
-        input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward* Input.GetAxisRaw("Vertical");
-      
+        input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
+
         if (input.magnitude > 1.0f) {
             input.Normalize();
         }
 
         float inputMagnitude = input.magnitude;
 
-        
+
         if (GroundCheck(point2))
         {
             normal = GroundNormal(point2);
         }
-        else{
+        else {
             normal = Vector3.up;
         }
 
@@ -162,8 +175,8 @@ public class PlayerController3D : MonoBehaviour
             velocity = new Vector3(velocityXZ.x, velocity.y, velocityXZ.z);
 
         }
-      
-      
+
+
         // en egen maxspeed för y hastigheten
         if (velocity.y >= maxSpeedY)
         {
@@ -176,7 +189,7 @@ public class PlayerController3D : MonoBehaviour
 
         }
 
-  
+
 
 
         ApplyAirResistance();
@@ -214,21 +227,38 @@ public class PlayerController3D : MonoBehaviour
             netSwiping();
             netReset();
         }
-     
 
-    
+
+
+        if (damageDealt) {
+
+            playerTakesDamage();
+            if (startDamageTimer)
+            {
+                damageWaitTime();
+
+            }
+        }
+
+
+
+
+
+
+
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
 
-            // Grappling hook 
+        // Grappling hook 
 
 
 
 
-            shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+        shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
 
 
         /*
@@ -275,17 +305,17 @@ public class PlayerController3D : MonoBehaviour
         }
         else {
         */
-            // Deacceleration metoden här under anropas inte om grappling hooken är aktiv
-            if (input.x == 0)
-            {
-                velocity.x *= 0.1f;
-            }
-            if (input.z == 0)
-            {
-                velocity.z *= 0.1f;
-            }
-      //  }
-     
+        // Deacceleration metoden här under anropas inte om grappling hooken är aktiv
+        if (input.x == 0)
+        {
+            velocity.x *= 0.1f;
+        }
+        if (input.z == 0)
+        {
+            velocity.z *= 0.1f;
+        }
+        //  }
+
 
         //
 
@@ -294,11 +324,13 @@ public class PlayerController3D : MonoBehaviour
 
 
         //Debug.Log(velocity.y);
-    //    StateMachine.RunUpdate();
+        //    StateMachine.RunUpdate();
     }
 
     void Update()
     {
+
+
         if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
         {
             jumping = true;
@@ -308,15 +340,15 @@ public class PlayerController3D : MonoBehaviour
         }
 
         if (jumping)
-        {      
+        {
             velocity.y = 0;
             velocity += Vector3.up * jumpPowerVariable;
         }
 
 
 
-        if (Input.GetMouseButtonDown(0)){
-     
+        if (Input.GetMouseButtonDown(0)) {
+
             if (netReady)
             {
                 netHolding = true;
@@ -327,37 +359,54 @@ public class PlayerController3D : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0))
         {
-        
+
             if (netHolding)
             {
                 netSwipe = true;
                 netHolding = false;
             }
-        }  
+        }
 
-    
+
     }
 
 
+    private bool damageWaitTime() {
+        Debug.Log("WAIT TIME CALLED");
 
-    bool WaitTime(float seconds)
-    {
+        damageTimer += Time.deltaTime;
 
-        timer += Time.deltaTime;
-
-        if (timer >= seconds)
+        if (damageTimer >= invincibleTime)
         {
-            timer = 0;
+            Debug.Log("TIMER COMPLETE AFTER: " + invincibleTime);
+            damageTimer = 0;
+            invincible = false;
+            startDamageTimer = false;
+            damageDealt = false;
             return true;
 
         }
 
         return false;
     }
+    private bool netWaitTime(float seconds)
+    {
 
 
 
 
+        netTimer += Time.deltaTime;
+
+        if (netTimer >= seconds)
+        {
+
+            netTimer = 0;
+            return true;
+
+        }
+
+        return false;
+    }
 
 
     //kalkylerar normalkraften med hj�lp av normalen fr�n overlapcapsule-kollisionerna.
@@ -375,7 +424,7 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    
+
 
     void netHold()
     {
@@ -391,7 +440,7 @@ public class PlayerController3D : MonoBehaviour
     }
 
     void netSwiping() {
-        bugNet.isTrigger = false;
+        bugNet.isTrigger = catchCheck;
 
         maxSpeedXZ = startMaxSpeedXZ / newSwipeMovementDecrease;
         Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
@@ -426,18 +475,24 @@ public class PlayerController3D : MonoBehaviour
         if (netRotationX >= 90)
         {
             bugNet.isTrigger = true;
-            if (WaitTime(0.5f))
+            if (netWaitTime(0.5f))
             {
                 netRotationX = 0;
 
                 maxSpeedXZ = startMaxSpeedXZ;
 
+                catchCheck = false;
                 netReady = true;
                 netSwipe = false;
             }
 
 
         }
+
+    }
+
+    public void setDamageDealt(bool b) {
+        damageDealt = b;
 
     }
 
@@ -465,6 +520,32 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    public void setCatchCheckTrue(){
+        catchCheck = true;
+
+}
+
+    private void playerTakesDamage()
+    {
+       
+        if (!invincible)
+        {
+            health = health - 1;
+
+            Debug.Log("took damage,current health: " + health);
+                if (health <= 0)
+                {
+                  Debug.Log("RESPAWN");
+                }
+
+            invincible = true;
+
+            startDamageTimer = true;
+        }
+        
+    }
+        
+   
     
     public bool GroundCheck(Vector3 point2)
     {
