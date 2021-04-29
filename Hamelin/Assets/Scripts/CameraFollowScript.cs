@@ -37,11 +37,23 @@ public class CameraFollowScript : MonoBehaviour
       
         if (Physics.SphereCast(targetObject.transform.position, cameraRadius, offset.normalized, out hitInfo, offset.magnitude, cameraCollisionMask))
         {
+            // Ignore camera collision with geometri with geometryCameraIgnore tag
+            if (hitInfo.collider != null)
+            {
+                if (hitInfo.transform.gameObject.layer != LayerMask.NameToLayer("geometryCameraIgnore"))
+                {
+                    offset = offset.normalized * hitInfo.distance;
+                }
 
-            offset = offset.normalized * hitInfo.distance;
+            }
+            //
+
+            // original before ignore tag
+            //offset = offset.normalized * hitInfo.distance;
 
         }
-       transform.position = targetObject.transform.position + offset;
+
+        transform.position = targetObject.transform.position + offset;
       
 
     }

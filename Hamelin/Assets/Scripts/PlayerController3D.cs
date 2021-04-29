@@ -77,6 +77,12 @@ public class PlayerController3D : MonoBehaviour
     //
 
 
+    // Jump Respawn test
+    public Transform jumpLocation;
+    public GameObject respawnPoint;
+    private bool falling;
+    //
+
     private StateMachine StateMachine;
     public CapsuleCollider collider;
     void Awake() => collider = GetComponent<CapsuleCollider>();
@@ -125,7 +131,18 @@ public class PlayerController3D : MonoBehaviour
             collisionMask
         );
 
+        // if hitting KillZone respawn
+        if (hit.collider != null)
+        {
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone"))
+            {
+                Debug.Log("RESPAWN");
+                velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
+                transform.position = jumpLocation.transform.position + new Vector3(0, 5, 0);
+            }
 
+        }
+        //
 
         input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward* Input.GetAxisRaw("Vertical");
       
@@ -139,9 +156,20 @@ public class PlayerController3D : MonoBehaviour
         if (GroundCheck(point2))
         {
             normal = GroundNormal(point2);
+            falling = false;
+
         }
         else{
             normal = Vector3.up;
+            //Set Respawn
+            if (!falling)
+            {
+                //jumpLocation = GameObject.Find("Player").transform;
+                //Debug.Log(jumpLocation.transform.position.x);
+                respawnPoint.transform.position = transform.position;
+            }
+            falling = true;
+            //
         }
 
         input = Vector3.ProjectOnPlane(camera.transform.rotation * input, Vector3.Lerp(Vector3.up, normal, 0.5f)).normalized * inputMagnitude;
@@ -299,9 +327,12 @@ public class PlayerController3D : MonoBehaviour
 
     void Update()
     {
+
+
         if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
         {
             jumping = true;
+            
         }
         else {
             jumping = false;
