@@ -8,20 +8,21 @@ public class AiAttack : State
 {
     public float AttackDistance;
     SomeAgent Agent;
-    public Transform Player;
-    private Scene scene;
-
+    public GameObject playerObject;
+    private Transform Player; 
+   
 
     protected override void Initialize()
     {
         Agent = (SomeAgent)Owner;
         Debug.Assert(Agent);
-        scene = SceneManager.GetActiveScene();
+    
     }
 
     public override void RunUpdate()
     {
-        SceneManager.LoadScene(scene.name);
+        Player = playerObject.transform;
+        Player.GetComponent<PlayerController3D>().setDamageDealt(true);
 
         
         if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > AttackDistance)
