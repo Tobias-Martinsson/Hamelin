@@ -76,7 +76,7 @@ public class PlayerController3D : MonoBehaviour
     private bool startDamageTimer = false;
 
     private float dashTimer = 0;
-    private float dashTime = 0.15f;
+    private float dashTime = 0.25f;
     private float dashCoolDown = 1f;
     private bool dashAllowed = true;
 
@@ -256,14 +256,6 @@ public class PlayerController3D : MonoBehaviour
         {
             PreventCollision(collidingObjects);
         }
-
-
-
-
-
-       
-
-
 
         transform.position += velocity;
 
@@ -633,7 +625,7 @@ public class PlayerController3D : MonoBehaviour
         if (dashAllowed)
         {
           
-                maxSpeedXZ = startMaxSpeedXZ * 4f;
+                maxSpeedXZ = startMaxSpeedXZ * 3f;
        
 
 
