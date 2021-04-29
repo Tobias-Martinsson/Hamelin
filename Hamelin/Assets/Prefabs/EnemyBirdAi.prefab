@@ -111,10 +111,10 @@ NavMeshAgent:
   m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 200
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
@@ -144,9 +144,8 @@ MonoBehaviour:
   - {fileID: 0}
   collider: {fileID: 0}
   States:
-  - {fileID: 11400000, guid: ec91d0aaed3e3db48ad2689f970f7502, type: 2}
-  - {fileID: 11400000, guid: 5dd56d7f153e978408b88b069058b9f5, type: 2}
-  - {fileID: 11400000, guid: b5e4933f8ac7e2f4d9213f1808f604cf, type: 2}
+  - {fileID: 11400000, guid: 755d3ad07a1cd7342804173c5f7fe804, type: 2}
+  - {fileID: 11400000, guid: 970693739499902478b0b14dd12057f3, type: 2}
   forwardCheckDistance: 0
   timeLeft: 5
   originalTime: 0
