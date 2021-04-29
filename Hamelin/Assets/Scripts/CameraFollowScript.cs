@@ -26,8 +26,17 @@ public class CameraFollowScript : MonoBehaviour
         rotationX = Mathf.Clamp(rotationX,-89, 89);
        
         transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+        if (Input.GetAxis("Mouse ScrollWheel") > 0)
+        {
+            cameraOffset.z += 1f;
+            cameraOffset.z = Mathf.Clamp(cameraOffset.z,-8f,-2f);
+        }
+        else if(Input.GetAxis("Mouse ScrollWheel") < 0)
+        {
+            cameraOffset.z -= 1f;
+            cameraOffset.z = Mathf.Clamp(cameraOffset.z, -8f, -2f);
+        }
 
-       
 
     }
 
