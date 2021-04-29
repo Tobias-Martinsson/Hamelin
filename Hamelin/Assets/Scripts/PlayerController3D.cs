@@ -9,6 +9,7 @@ public class PlayerController3D : MonoBehaviour
     public float acceleration;
     public Vector3 velocity;
     private Vector3 input;
+    private Vector3 inputVelocity;
     public Vector3 velocityXZ;
 
     private Vector3 inputCameraAdjust;
@@ -50,6 +51,11 @@ public class PlayerController3D : MonoBehaviour
     private float invincibleTime = 1;
     private Scene scene;
     private bool damageDealt;
+    private float dashPower = 5f;
+    private bool dashing = false;
+
+    private bool onGround;
+   
 
     //bugnet test
     float netRotationX = 0;
@@ -70,6 +76,11 @@ public class PlayerController3D : MonoBehaviour
     private float netTimer = 0;
     private float damageTimer = 0;
     private bool startDamageTimer = false;
+
+    private float dashTimer = 0;
+    private float dashTime = 0.15f;
+    private float dashCoolDown = 1f;
+    private bool dashAllowed = true;
 
 
     //
@@ -159,15 +170,28 @@ public class PlayerController3D : MonoBehaviour
 
         input = Vector3.ProjectOnPlane(camera.transform.rotation * input, Vector3.Lerp(Vector3.up, normal, 0.5f)).normalized * inputMagnitude;
 
+        inputVelocity = input * acceleration * Time.deltaTime;
 
-        velocity += input * acceleration * Time.deltaTime;
+        velocityXZ = new Vector3(velocity.x, 0, velocity.z);
 
+
+        // dashState sätts här innan input velocity updateras eftersom den ska stänga av input under dash
+        if (dashing)
+        {
+            dashState();
+        }
+        if (!dashAllowed) {
+            if (dashWaitTime(dashCoolDown)){
+                dashAllowed = true;
+            }
+        }
+
+        velocity += inputVelocity;
 
         velocity += Vector3.down * gravity * Time.deltaTime;
 
 
-        // Ser till att man inte rör sig över max speed i X och Z. Y är separat eftersom att hoppet 
-        velocityXZ = new Vector3(velocity.x, 0, velocity.z);
+        // Ser till att man inte rör sig över max speed i X och Z.
 
         if (velocityXZ.magnitude >= maxSpeedXZ)
         {
@@ -175,6 +199,7 @@ public class PlayerController3D : MonoBehaviour
             velocity = new Vector3(velocityXZ.x, velocity.y, velocityXZ.z);
 
         }
+
 
 
         // en egen maxspeed för y hastigheten
@@ -205,6 +230,14 @@ public class PlayerController3D : MonoBehaviour
         {
             PreventCollision(collidingObjects);
         }
+
+
+
+
+
+       
+
+
 
         transform.position += velocity;
 
@@ -329,18 +362,18 @@ public class PlayerController3D : MonoBehaviour
 
     void Update()
     {
+        bool onGround= GroundCheck(point2);
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && GroundCheck(point2))
+        if (Input.GetKeyDown(KeyCode.LeftShift) && onGround)
         {
-            jumping = true;
+         dodgeDash();
         }
-        else {
-            jumping = false;
-        }
+      
 
-        if (jumping)
+        if (Input.GetKeyDown(KeyCode.Space) && onGround)
         {
+         
             velocity.y = 0;
             velocity += Vector3.up * jumpPowerVariable;
         }
@@ -408,6 +441,22 @@ public class PlayerController3D : MonoBehaviour
         return false;
     }
 
+    private bool dashWaitTime(float seconds)
+    {
+
+        dashTimer += Time.deltaTime;
+
+        if (dashTimer >= seconds)
+        {
+        
+            dashTimer = 0;
+            return true;
+
+        }
+
+        return false;
+    }
+
 
     //kalkylerar normalkraften med hj�lp av normalen fr�n overlapcapsule-kollisionerna.
     Vector3 CalculateNormalForce(Vector3 velocity, Vector3 normal)
@@ -435,14 +484,21 @@ public class PlayerController3D : MonoBehaviour
 
 
         bugNet.transform.position = (netOffset + transform.position);
-
-        maxSpeedXZ = startMaxSpeedXZ / netHoldMovementDecrease;
+     
+        if (!dashing) {
+            maxSpeedXZ = startMaxSpeedXZ / netHoldMovementDecrease;
+    
+        }
+   
     }
 
     void netSwiping() {
         bugNet.isTrigger = catchCheck;
-
-        maxSpeedXZ = startMaxSpeedXZ / newSwipeMovementDecrease;
+    
+        if (!dashing)
+        {
+            maxSpeedXZ = startMaxSpeedXZ / newSwipeMovementDecrease;
+        }
         Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
 
         netRotationX -= netRotationSpeed;
@@ -544,8 +600,34 @@ public class PlayerController3D : MonoBehaviour
         }
         
     }
+
+
+    void dodgeDash() {
+        if (dashAllowed)
+        {
+          
+                maxSpeedXZ = startMaxSpeedXZ * 4f;
+       
+
+
+            velocity += input.normalized * dashPower;
+            dashing = true;
+        }
+    }
+    void dashState() {
+      
+        inputVelocity = new Vector3(0, 0, 0);
+        velocity.y = velocity.y * 0.9f;
+
+
+        if (dashWaitTime(dashTime))
+        {
+            maxSpeedXZ = startMaxSpeedXZ;
+            dashing = false;
+            dashAllowed = false;
+        }
         
-   
+    }
     
     public bool GroundCheck(Vector3 point2)
     {
