@@ -134,7 +134,7 @@ public class PlayerController3D : MonoBehaviour
         // if hitting KillZone respawn
         if (hit.collider != null)
         {
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone"))
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone") && respawnPoint)
             {
                 Debug.Log("RESPAWN");
                 velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
@@ -162,7 +162,7 @@ public class PlayerController3D : MonoBehaviour
         else{
             normal = Vector3.up;
             //Set Respawn
-            if (!falling)
+            if (!falling && respawnPoint)
             {
                 //jumpLocation = GameObject.Find("Player").transform;
                 //Debug.Log(jumpLocation.transform.position.x);

@@ -218,16 +218,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 33578731}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &52240559 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3897150110793522183, guid: 7d0885a87ebbec54ea1b0422c0a4b328, type: 3}
-  m_PrefabInstance: {fileID: 3897150110775508136}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &52240563 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3897150110793522203, guid: 7d0885a87ebbec54ea1b0422c0a4b328, type: 3}
-  m_PrefabInstance: {fileID: 3897150110775508136}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &77665787
 GameObject:
   m_ObjectHideFlags: 0
@@ -3560,6 +3550,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RespawnPoint
       objectReference: {fileID: 0}
+    - target: {fileID: 3897150110793522183, guid: 7d0885a87ebbec54ea1b0422c0a4b328, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3897150110793522203, guid: 7d0885a87ebbec54ea1b0422c0a4b328, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -3616,11 +3610,11 @@ PrefabInstance:
     - target: {fileID: 8995250748122010049, guid: 3f2fea6773e731041ac1e08fd7eff268, type: 3}
       propertyPath: jumpLocation
       value: 
-      objectReference: {fileID: 52240563}
+      objectReference: {fileID: 0}
     - target: {fileID: 8995250748122010049, guid: 3f2fea6773e731041ac1e08fd7eff268, type: 3}
       propertyPath: respawnPoint
       value: 
-      objectReference: {fileID: 52240559}
+      objectReference: {fileID: 0}
     - target: {fileID: 8995250748122010054, guid: 3f2fea6773e731041ac1e08fd7eff268, type: 3}
       propertyPath: m_Name
       value: Player
