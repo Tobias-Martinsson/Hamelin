@@ -27,8 +27,6 @@ public class PlayerController3D : MonoBehaviour
     public float mouseSensitivity;
     public Camera camera;
 
-
-    public Vector3 cameraOffset;
     public float staticFrictionCoefficient;
     public float kineticFrictionCoefficient;
     public float airResistance;

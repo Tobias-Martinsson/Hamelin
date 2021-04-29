@@ -11,6 +11,7 @@ public class AiBirdChasePlayer : State
     public float timeLeft;
     public float originalTime;
     public GameObject myPrefab;
+    float timer = 0;
 
     protected override void Initialize()
     {
@@ -31,9 +32,9 @@ public class AiBirdChasePlayer : State
         if (timeLeft < 0 && Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) < AttackDistance)
         {
             Destroy(Instantiate(myPrefab, new Vector3(Agent.transform.position.x, Agent.transform.position.y, Agent.transform.position.z), Quaternion.identity), 5f);
-            Destroy(Instantiate(myPrefab, new Vector3(Agent.transform.position.x, Agent.transform.position.y, Agent.transform.position.z), Quaternion.identity), 5f);
-            Destroy(Instantiate(myPrefab, new Vector3(Agent.transform.position.x, Agent.transform.position.y, Agent.transform.position.z), Quaternion.identity), 5f);
+
             timeLeft = originalTime;
+
         }
 
         if (Physics.Linecast(Agent.transform.position, Agent.PlayerPosition, Agent.CollisionLayer))
