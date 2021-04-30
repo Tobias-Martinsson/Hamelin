@@ -6,15 +6,22 @@ using UnityEngine;
 public class QuestGoal
 {
     public int requiredAmount;
-    public int currentAmount;
+    private int currentAmount;
 
-    public bool isReached()
+    public BugNetController bugNet;
+
+    void Start()
     {
-        return (currentAmount >= requiredAmount);
+        currentAmount = 0;
     }
 
-    public void EnemyCaught()
+    void Update()
     {
-        currentAmount++;
+        currentAmount = bugNet.Score;
+    }
+
+    public bool IsReached()
+    {
+        return (currentAmount >= requiredAmount);
     }
 }

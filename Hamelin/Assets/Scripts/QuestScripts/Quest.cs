@@ -14,10 +14,13 @@ public class Quest
     public QuestGoal goal;
     public GameObject levelTransition;
 
-    public void Complete()
+    void Update()
     {
-        isActive = false;
-        levelTransition.SetActive(true);
-        Debug.Log(title + " was completed");
+        if(goal.IsReached() == true) 
+        {
+            isActive = false;
+            levelTransition.SetActive(true);
+            Debug.Log(title + " was completed");
+        }
     }
 }
