@@ -8,8 +8,7 @@ public class AiBirdAttack : State
 {
     public float AttackDistance;
     SomeAgent Agent;
-    public Transform Player;
-    private Scene scene;
+    private Transform Player;
     public GameObject myPrefab;
 
 
@@ -17,12 +16,12 @@ public class AiBirdAttack : State
     {
         Agent = (SomeAgent)Owner;
         Debug.Assert(Agent);
-        scene = SceneManager.GetActiveScene();
+      
     }
 
     public override void RunUpdate()
     {
-        SceneManager.LoadScene(scene.name);
+        Agent.Player.transform.GetComponent<PlayerController3D>().setDamageDealt(true);
         Destroy(Instantiate(myPrefab, new Vector3(Agent.transform.position.x, Agent.transform.position.y, Agent.transform.position.z), Quaternion.identity), 5f);
         
 
