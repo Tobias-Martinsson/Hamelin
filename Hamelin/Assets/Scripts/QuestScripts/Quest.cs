@@ -7,6 +7,7 @@ public class Quest
 {
     public string title;
     public string description;
+    //The amount of enemies that are required to be caught
     public int enemyAmount;
 
     public bool isActive;

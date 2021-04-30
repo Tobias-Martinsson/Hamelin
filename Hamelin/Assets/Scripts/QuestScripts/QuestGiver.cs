@@ -7,13 +7,12 @@ public class QuestGiver : MonoBehaviour
 {
     public Quest quest;
 
-    //public Player player;
-
     public GameObject questWindow;
     public Text titleText;
     public Text descriptionText;
     public Text enemyAmountText;
 
+    //Activates quest window UI and assigns text to be whatever has been specified.
     public void OpenQuestWindow()
     {
         questWindow.SetActive(true);
@@ -22,6 +21,7 @@ public class QuestGiver : MonoBehaviour
         enemyAmountText.text = quest.enemyAmount.ToString();
     }
 
+    //Code to execute when a quest has been accepted. 
     public void AcceptQuest()
     {
         questWindow.SetActive(false);

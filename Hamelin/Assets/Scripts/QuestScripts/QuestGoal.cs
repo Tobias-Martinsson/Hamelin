@@ -8,6 +8,7 @@ public class QuestGoal
     public int requiredAmount;
     private int currentAmount;
 
+    //BugNetController is accessed so that the score (amount of enemies caught) can be accessed
     public BugNetController bugNet;
 
     void Start()
@@ -20,6 +21,7 @@ public class QuestGoal
         currentAmount = bugNet.Score;
     }
 
+    //Bool to check if enough enemies have been caught, when it returns true the quest is completed
     public bool IsReached()
     {
         return (currentAmount >= requiredAmount);
