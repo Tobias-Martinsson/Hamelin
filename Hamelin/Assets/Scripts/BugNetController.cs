@@ -5,8 +5,6 @@ using UnityEngine;
 public class BugNetController : MonoBehaviour
 {
     public SphereCollider collider;
-    public RaycastHit hit;
-    public float downwardCheckDistance = 1f;
 
     private int score = 0;
 
@@ -27,6 +25,7 @@ public class BugNetController : MonoBehaviour
         Debug.Log(collision.gameObject.tag);
         if(collision.gameObject.tag == "Enemy")
         {
+            Debug.Log("Rat hit");
             GetComponentInParent<PlayerController3D>().setCatchCheckTrue();
             Destroy(collision.gameObject);
             //Ifall flying enemies

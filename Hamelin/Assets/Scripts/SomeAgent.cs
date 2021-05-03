@@ -14,8 +14,6 @@ public class SomeAgent : MonoBehaviour
     public List<Transform> PatrolPoints;
     public CapsuleCollider collider;
     public State[] States; 
-    public float forwardCheckDistance;
-    public RaycastHit hit;
 
     private StateMachine StateMachine;
     public Transform GetPatrolPoint => PatrolPoints[Random.Range(0, PatrolPoints.Count)];
@@ -24,7 +22,7 @@ public class SomeAgent : MonoBehaviour
 
     private void Awake()
     {
-        collider = GetComponent<CapsuleCollider>();
+        collider = GetComponent <CapsuleCollider>();
         NavAgent = GetComponent<NavMeshAgent>();
         StateMachine = new StateMachine(this, States);
         //Player = GameObject.FindGameObjectWithTag("Player");
