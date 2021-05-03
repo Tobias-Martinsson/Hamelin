@@ -6,25 +6,41 @@ using UnityEngine.UI;
 public class QuestGiver : MonoBehaviour
 {
     public Quest quest;
+    public BugNetController bugNet;
 
     public GameObject questWindow;
+    public GameObject logWindow;
+
     public Text titleText;
+    public Text dialogueText;
     public Text descriptionText;
-    public Text enemyAmountText;
+    public Text logText;
 
     //Activates quest window UI and assigns text to be whatever has been specified.
-    public void OpenQuestWindow()
+    void Start()
     {
         questWindow.SetActive(true);
+        logWindow.SetActive(false);
         titleText.text = quest.title;
+        dialogueText.text = quest.dialogue;
         descriptionText.text = quest.description;
-        enemyAmountText.text = quest.enemyAmount.ToString();
+        logText.text = "";
     }
 
     //Code to execute when a quest has been accepted. 
-    public void AcceptQuest()
+    void Update()
     {
-        questWindow.SetActive(false);
-        quest.isActive = true;
+        if (Input.GetKeyDown(KeyCode.E)) {
+            questWindow.SetActive(false);
+            quest.isActive = true;
+
+            SetQuestLog();
+        }
+        logText.text = "Caught " + bugNet.Score.ToString() + "/" + quest.enemyAmount.ToString() + " pests.";
+    }
+
+    private void SetQuestLog()
+    {
+        logWindow.SetActive(true);
     }
 }
