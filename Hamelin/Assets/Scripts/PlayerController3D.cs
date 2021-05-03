@@ -43,7 +43,7 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 normal;
 
     private bool jumping = false;
-    private int health = 3;
+    private int health;
     private int maxHealth = 3;
     private bool invincible = false;
     private float invincibleTime = 1;
@@ -111,7 +111,8 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Application.targetFrameRate = 60;
+        // Application.targetFrameRate = 60;
+        health = maxHealth;
 
         scene = SceneManager.GetActiveScene();
 
