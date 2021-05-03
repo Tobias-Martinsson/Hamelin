@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 8033485564862905309}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 347.3952, y: 15.9, z: 737.66766}
-  m_LocalScale: {x: 2.1505, y: 0.15726, z: 3.0412}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8033485564862905309}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: -4771595053950185101, guid: ce5c5e0ab816e1541aef9bf9a7682304, type: 3}
 --- !u!23 &8033485564862905281
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -94,10 +94,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.88090324
+  m_Height: 1.7618065
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.00016975403, y: 0.32347488, z: -0.17244673}
 --- !u!195 &8033485564862905308
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -146,7 +146,6 @@ MonoBehaviour:
   States:
   - {fileID: 11400000, guid: 755d3ad07a1cd7342804173c5f7fe804, type: 2}
   - {fileID: 11400000, guid: 970693739499902478b0b14dd12057f3, type: 2}
-  forwardCheckDistance: 0
   timeLeft: 5
   originalTime: 0
   myPrefab: {fileID: 7958348940524017959, guid: 4d81b75c0d318aa4da1ccfc78f9d91b7, type: 3}
