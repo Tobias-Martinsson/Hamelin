@@ -418,12 +418,7 @@ public class PlayerController3D : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.O))
         {
-            if (climbing)
-            {
-                setAllowClimb(true);
-
-            }
-
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
 
 
@@ -493,9 +488,6 @@ public class PlayerController3D : MonoBehaviour
     }
     private bool netWaitTime(float seconds)
     {
-
-
-
 
         netTimer += Time.deltaTime;
 
