@@ -8,19 +8,19 @@ public class AiChasePlayer : State
     SomeAgent Agent;
     public float Speed;
     public float AttackDistance;
-    public float timeLeft = 30;
+    private float timeLeft = 1;
     private float originalTime;
+    private float dodgeRange = 6f;
 
     protected override void Initialize()
     {
-        
+        originalTime = timeLeft;
         Agent = (SomeAgent)Owner;
         Debug.Assert(Agent);
     }
 
     public override void Enter()
     {
-        originalTime = timeLeft;
         Agent.NavAgent.speed = Speed;
     }
 
@@ -31,7 +31,7 @@ public class AiChasePlayer : State
         Debug.Log(timeLeft);
         if(timeLeft < 0)
         {
-            if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) < 10f && Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > 9f)
+            if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) < dodgeRange && Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > dodgeRange-1)
             {
                 Debug.Log("Dodging");
                 timeLeft = originalTime;

@@ -15,28 +15,31 @@ public class AiDodgeState : State
         Debug.Assert(Agent);
     }
 
+    private int randomize(int x,int y)
+    {
+        return Random.Range(x, y);
+    }
+
     public override void RunUpdate()
     {
-            Vector3 tempVelocity = Agent.NavAgent.velocity;
-            random = Random.Range(1, 3);
+            random = randomize(1, 6);
+            Debug.Log(random);
             switch (random)
             {
                 case 1:
-                    Debug.Log("Random is 1. No dodging. ");
+                    Debug.Log("Random is 2. dashed left");
+                    Agent.NavAgent.velocity = (Agent.transform.right * 6) + Agent.transform.forward * 6;
                     StateMachine.ChangeState<AiChasePlayer>();
                     break;
                 case 2:
-                    tempVelocity.x += 10f;
-                    Debug.Log("Random is 2. dashed left");
-                    Agent.NavAgent.velocity = tempVelocity;
-                    StateMachine.ChangeState<AiChasePlayer>();
-                    break;
-                case 3:
-                    tempVelocity.x += -10f;
-                    Agent.NavAgent.velocity = tempVelocity;
                     Debug.Log("Random is 3. dashed right");
+                    Agent.NavAgent.velocity = -(Agent.transform.right * 6) + Agent.transform.forward * 6;
                     StateMachine.ChangeState<AiChasePlayer>();
                     break;
+            default:
+                StateMachine.ChangeState<AiChasePlayer>();
+                break;
+
             }
     }
 }

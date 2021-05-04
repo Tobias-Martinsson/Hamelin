@@ -659,7 +659,7 @@ public class PlayerController3D : MonoBehaviour
         {
             health = health - 1;
 
-            //Debug.Log("took damage,current health: " + health);
+            Debug.Log("took damage,current health: " + health);
                 if (health <= 0)
                 {
                  // Debug.Log("RESPAWN");
