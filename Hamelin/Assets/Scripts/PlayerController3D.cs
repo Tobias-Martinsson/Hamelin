@@ -57,8 +57,8 @@ public class PlayerController3D : MonoBehaviour
     private bool upOnRoof = false;
     private bool allowClimb = false;
 
-    private Vector3 ladderpoint1;
-    private Vector3 ladderpoint2;
+    private Vector3 ladderpointTop;
+    private Vector3 ladderpointBottom;
 
     private bool onGround;
    
@@ -405,10 +405,23 @@ public class PlayerController3D : MonoBehaviour
 
     void Update()
     {
+
+        bool onGround = GroundCheck(point2);
+
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (climbing)
+            if (climbing && !allowClimb && onGround)
             {
+                if (!upOnRoof)
+                {
+                    transform.position = ladderpointBottom;
+                }
+                else
+                {
+                    transform.position = ladderpointTop;
+                }
+               
+
                 setAllowClimb(true);
 
             }
@@ -416,7 +429,6 @@ public class PlayerController3D : MonoBehaviour
         }
 
 
-        bool onGround = GroundCheck(point2);
 
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && onGround)
@@ -477,9 +489,7 @@ public class PlayerController3D : MonoBehaviour
         return false;
     }
 
-    private void climb() { 
     
-    }
     private bool netWaitTime(float seconds)
     {
 
@@ -675,10 +685,36 @@ public class PlayerController3D : MonoBehaviour
 
             velocity  = Vector3.up * 4f * Time.deltaTime;
 
+            if (transform.position.y >= ladderpointTop.y) 
+            {
+                ExitClimb();
+            }
+
         }
         else
         {
-            transform.position += Vector3.down * 0.1f;
+            transform.position += Vector3.down * 4f * Time.deltaTime;
+
+            if (transform.position.y <= ladderpointBottom.y)
+            {
+                ExitClimb();
+            }
+
+        }
+   
+        void ExitClimb()
+        {
+            if (!upOnRoof)
+            {
+                upOnRoof = true;
+            }
+            else 
+            {
+                upOnRoof = false;
+            }
+
+            allowClimb = false;
+
         }
 
     }
@@ -715,6 +751,14 @@ public class PlayerController3D : MonoBehaviour
         climbing = b;
     }
 
+    public void setLadderPointBottom(Vector3 p) 
+    {
+        ladderpointBottom = p;
+    }
+    public void setLadderPointTop(Vector3 p)
+    {
+        ladderpointTop = p;
+    }
     public bool GroundCheck(Vector3 point2)
     {
 

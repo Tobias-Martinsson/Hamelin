@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LadderClimb : MonoBehaviour
 {
+    public Transform topPoint;
+    public Transform bottomPoint;
 
     void OnTriggerEnter(Collider collision)
     {
@@ -14,6 +16,8 @@ public class LadderClimb : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
+            collision.gameObject.GetComponent<PlayerController3D>().setLadderPointTop(topPoint.position);
+            collision.gameObject.GetComponent<PlayerController3D>().setLadderPointBottom(bottomPoint.position);
             collision.gameObject.GetComponent<PlayerController3D>().setClimbing(true);
 
         }
