@@ -11,6 +11,8 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 input;
     private Vector3 inputVelocity;
     public Vector3 velocityXZ;
+    private Vector3 gravityVelocity;
+    private Vector3 jumpingVelocity;
 
     private Vector3 inputCameraAdjust;
     public float maxSpeedXZ;
@@ -51,6 +53,12 @@ public class PlayerController3D : MonoBehaviour
     private bool damageDealt;
     private float dashPower = 5f;
     private bool dashing = false;
+    private bool climbing = false;
+    private bool upOnRoof = false;
+    private bool allowClimb = false;
+
+    private Vector3 ladderpoint1;
+    private Vector3 ladderpoint2;
 
     private bool onGround;
    
@@ -79,6 +87,7 @@ public class PlayerController3D : MonoBehaviour
     private float dashTime = 0.25f;
     private float dashCoolDown = 1f;
     private bool dashAllowed = true;
+    
 
 
     //
@@ -201,6 +210,9 @@ public class PlayerController3D : MonoBehaviour
 
         velocityXZ = new Vector3(velocity.x, 0, velocity.z);
 
+        gravityVelocity = Vector3.down * gravity * Time.deltaTime;
+
+        jumpingVelocity = Vector3.up * jumpPowerVariable;
 
         // dashState sätts här innan input velocity updateras eftersom den ska stänga av input under dash
         if (dashing)
@@ -213,8 +225,18 @@ public class PlayerController3D : MonoBehaviour
             }
         }
 
-        velocity += inputVelocity;
+        // state för climbimng
+        if (allowClimb)
+        {
+            climbingState();
+           
+        }
 
+
+
+
+        velocity += inputVelocity;
+        
         velocity += Vector3.down * gravity * Time.deltaTime;
 
 
@@ -258,8 +280,11 @@ public class PlayerController3D : MonoBehaviour
             PreventCollision(collidingObjects);
         }
 
-        transform.position += velocity;
 
+      
+            transform.position += velocity;
+
+      
 
 
         //hämtad kamera rotation
@@ -279,7 +304,6 @@ public class PlayerController3D : MonoBehaviour
             netSwiping();
             netReset();
         }
-
 
 
         if (damageDealt) {
@@ -381,25 +405,35 @@ public class PlayerController3D : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (climbing)
+            {
+                setAllowClimb(true);
 
-        bool onGround= GroundCheck(point2);
+            }
+
+        }
+
+
+        bool onGround = GroundCheck(point2);
 
 
         if (Input.GetKeyDown(KeyCode.LeftShift) && onGround)
         {
-         dodgeDash();
+            dodgeDash();
         }
-      
+
 
         if (Input.GetKeyDown(KeyCode.Space) && onGround)
         {
-         
+
             velocity.y = 0;
-            velocity += Vector3.up * jumpPowerVariable;
+            velocity += jumpingVelocity;
         }
-
-
-
+        
+        
+       
         if (Input.GetMouseButtonDown(0)) {
 
             if (netReady)
@@ -441,6 +475,10 @@ public class PlayerController3D : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void climb() { 
+    
     }
     private bool netWaitTime(float seconds)
     {
@@ -621,6 +659,30 @@ public class PlayerController3D : MonoBehaviour
         
     }
 
+    public void setAllowClimb(bool b) {
+
+        allowClimb = b;
+       
+    }
+
+    void climbingState() {
+        inputVelocity = new Vector3(0, 0, 0);
+        gravityVelocity = new Vector3(0, 0, 0);
+        jumpingVelocity = new Vector3(0, 0, 0);
+
+        if (!upOnRoof)
+        {
+
+            velocity  = Vector3.up * 4f * Time.deltaTime;
+
+        }
+        else
+        {
+            transform.position += Vector3.down * 0.1f;
+        }
+
+    }
+
 
     void dodgeDash() {
         if (dashAllowed)
@@ -649,6 +711,10 @@ public class PlayerController3D : MonoBehaviour
         
     }
     
+    public void setClimbing(bool b) {
+        climbing = b;
+    }
+
     public bool GroundCheck(Vector3 point2)
     {
 
@@ -696,6 +762,7 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    
     public void StartPull()
     {
         pulling = true;
