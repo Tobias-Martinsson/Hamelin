@@ -46,13 +46,12 @@ public class QuestGiver : MonoBehaviour
             SetQuestLog();
         }
 
-        if(anim != null)
-        {
-            if (questGoal.currentAmount == 9)
+      
+            if (questGoal.currentAmount == 9 && anim != null)
             {
                 anim.SetBool("IsParked", true);
             }
-        }
+        
         
 
         questGoal.currentAmount = bugNet.Score;
