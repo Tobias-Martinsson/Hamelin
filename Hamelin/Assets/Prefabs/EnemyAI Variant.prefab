@@ -14,22 +14,6 @@ CapsuleCollider:
   m_Height: 2.2614036
   m_Direction: 1
   m_Center: {x: 0, y: 0.527436, z: 0.108192325}
---- !u!114 &7769810372261986412
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4983939250970783708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16f38fcaea891274bbec5cf9932f48cf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clips:
-  - {fileID: 8300000, guid: ba328fb50e8b7264cbbdf2adbe277306, type: 3}
-  - {fileID: 8300000, guid: 4a93013f32f26ec45b409999c2df939b, type: 3}
-  - {fileID: 8300000, guid: 4d5a2da30e2902e4dba2d837ed0106a6, type: 3}
 --- !u!82 &2855857460848647019
 AudioSource:
   m_ObjectHideFlags: 0
@@ -86,7 +70,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -126,6 +110,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7769810372261986412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4983939250970783708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16f38fcaea891274bbec5cf9932f48cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: ba328fb50e8b7264cbbdf2adbe277306, type: 3}
+  - {fileID: 8300000, guid: 4a93013f32f26ec45b409999c2df939b, type: 3}
+  - {fileID: 8300000, guid: 4d5a2da30e2902e4dba2d837ed0106a6, type: 3}
 --- !u!1001 &6187184789921369271
 PrefabInstance:
   m_ObjectHideFlags: 0

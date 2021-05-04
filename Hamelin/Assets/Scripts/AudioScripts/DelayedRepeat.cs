@@ -7,8 +7,8 @@ public class DelayedRepeat : MonoBehaviour
 {
     private AudioSource source;
 
-    private float minDelay = 3.0f;
-    private float maxDelay = 15.0f;
+    private float minDelay = 1.0f;
+    private float maxDelay = 8.0f;
 
     public AudioClip[] clips;
 
