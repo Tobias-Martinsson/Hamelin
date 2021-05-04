@@ -3,43 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-[CreateAssetMenu()]
 public class AiDodgeState : State
 {
-    int random;
+    public float AttackDistance;
     SomeAgent Agent;
 
     protected override void Initialize()
     {
         Agent = (SomeAgent)Owner;
         Debug.Assert(Agent);
-    }
 
-    private int randomize(int x,int y)
-    {
-        return Random.Range(x, y);
     }
 
     public override void RunUpdate()
     {
-            random = randomize(1, 6);
-            Debug.Log(random);
-            switch (random)
-            {
-                case 1:
-                    Debug.Log("Random is 2. dashed left");
-                    Agent.NavAgent.velocity = (Agent.transform.right * 6) + Agent.transform.forward * 6;
-                    StateMachine.ChangeState<AiChasePlayer>();
-                    break;
-                case 2:
-                    Debug.Log("Random is 3. dashed right");
-                    Agent.NavAgent.velocity = -(Agent.transform.right * 6) + Agent.transform.forward * 6;
-                    StateMachine.ChangeState<AiChasePlayer>();
-                    break;
-            default:
-                StateMachine.ChangeState<AiChasePlayer>();
+        int random = Random.Range(1, 3);
+        switch (random)
+        {
+            case 1:
                 break;
+            case 2:
+                Agent.NavAgent.velocity += Vector3.left * 2;
+                Debug.Log("dashed left");
+                break;
+            case 3:
+                Agent.NavAgent.velocity += Vector3.right * 2;
+                Debug.Log("dashed right");
+                break;
+        }
 
-            }
+
+        if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > AttackDistance)
+        {
+            Debug.Log("Chase");
+            StateMachine.ChangeState<AiChasePlayer>();
+        }
+
     }
 }
