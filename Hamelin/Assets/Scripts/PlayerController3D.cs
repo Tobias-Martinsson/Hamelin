@@ -67,8 +67,8 @@ public class PlayerController3D : MonoBehaviour
     float netRotationX = 0;
     public SphereCollider bugNet;
     float netRotationSpeed = -10f;
-    Vector3 bugNetOffset = new Vector3(0.2f, 1.5f, 0);
-    Vector3 bugNetStartOffset = new Vector3(0.2f, 1, 0);
+    Vector3 bugNetOffset = new Vector3(0.2f, 2.5f, 0);
+    Vector3 bugNetStartOffset = new Vector3(0.2f, 1.5f, 0);
     private float netHoldMovementDecrease = 1.5f;
     private float newSwipeMovementDecrease = 4f;
 
