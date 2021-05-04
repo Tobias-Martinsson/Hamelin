@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class QuestGiver : MonoBehaviour
 {
     public Quest quest;
+    public QuestGoal questGoal;
     public BugNetController bugNet;
 
     public GameObject questWindow;
@@ -19,6 +20,7 @@ public class QuestGiver : MonoBehaviour
     //Activates quest window UI and assigns text to be whatever has been specified.
     void Start()
     {
+        questGoal.currentAmount = 0;
         questWindow.SetActive(true);
         logWindow.SetActive(false);
         titleText.text = quest.title;
@@ -36,6 +38,8 @@ public class QuestGiver : MonoBehaviour
 
             SetQuestLog();
         }
+        questGoal.currentAmount = bugNet.Score;
+        quest.QuestCompleted();
         logText.text = "Caught " + bugNet.Score.ToString() + "/" + quest.enemyAmount.ToString() + " pests.";
     }
 

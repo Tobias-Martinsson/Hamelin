@@ -8,17 +8,17 @@ public class Quest
     public string title;
     public string dialogue;
     public string description;
+    public QuestGiver questGiver;
     //The amount of enemies that are required to be caught
     public int enemyAmount;
 
     public bool isActive;
 
-    public QuestGoal goal;
     public GameObject levelTransition;
 
-    void Update()
+    public void QuestCompleted()
     {
-        if(goal.IsReached() == true) 
+        if(questGiver.questGoal.IsReached() == true) 
         {
             isActive = false;
             levelTransition.SetActive(true);
