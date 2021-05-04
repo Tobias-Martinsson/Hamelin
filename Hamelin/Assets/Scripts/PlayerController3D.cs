@@ -690,6 +690,7 @@ public class PlayerController3D : MonoBehaviour
 
             if (transform.position.y >= ladderpointTop.y) 
             {
+                velocity = Vector3.forward * 1f;
                 ExitClimb();
             }
 
