@@ -401,11 +401,22 @@ public class PlayerController3D : MonoBehaviour
 
         //Debug.Log(velocity.y);
         //    StateMachine.RunUpdate();
+
     }
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (climbing)
+            {
+                setAllowClimb(true);
+
+            }
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.O))
         {
             if (climbing)
             {
