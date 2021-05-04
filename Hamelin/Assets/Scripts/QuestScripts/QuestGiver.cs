@@ -22,7 +22,11 @@ public class QuestGiver : MonoBehaviour
     //Activates quest window UI and assigns text to be whatever has been specified.
     void Start()
     {
-        anim = anim.GetComponent<Animator>();
+        if(anim != null)
+        {
+            anim = anim.GetComponent<Animator>();
+        }
+        
         questGoal.currentAmount = 0;
         questWindow.SetActive(true);
         logWindow.SetActive(false);
@@ -42,10 +46,13 @@ public class QuestGiver : MonoBehaviour
             SetQuestLog();
         }
 
-        if(questGoal.currentAmount == 9)
-        {
-            anim.SetBool("IsParked", true);
-        }
+      
+            if (questGoal.currentAmount == 9 && anim != null)
+            {
+                anim.SetBool("IsParked", true);
+            }
+        
+        
 
         questGoal.currentAmount = bugNet.Score;
         quest.QuestCompleted();
