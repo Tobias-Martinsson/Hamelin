@@ -9,7 +9,7 @@ public class CarSound : MonoBehaviour
     public BugNetController bugNet;
 
     //How long the cars can be heard
-    public float waitTime = 3.0f;
+    public float waitTime = 5f;
 
     private bool turnedOn;
     private IEnumerator coroutine;

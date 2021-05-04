@@ -10,6 +10,12 @@ public class DelayedRepeat : MonoBehaviour
     private float minDelay = 1.0f;
     private float maxDelay = 8.0f;
 
+    private float minVol = 0.5f;
+    private float maxVol = 1.0f;
+
+    private float minPitch = 0.9f;
+    private float maxPitch = 1.1f;
+
     public AudioClip[] clips;
 
     void Start()
@@ -21,6 +27,9 @@ public class DelayedRepeat : MonoBehaviour
     {
         if (!source.isPlaying)
         {
+            source.volume = Random.Range(minVol, maxVol);
+            source.pitch = Random.Range(minPitch, maxPitch);
+
             int clipIndex = Random.Range(1, clips.Length);
             AudioClip clip = clips[clipIndex];
             source.clip = clip;
