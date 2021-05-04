@@ -168,7 +168,7 @@ public class PlayerController3D : MonoBehaviour
         {
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone") && respawnPoint)
             {
-                Debug.Log("RESPAWN");
+                //Debug.Log("RESPAWN");
                 velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
                 transform.position = jumpLocation.transform.position + new Vector3(0, 5, 0);
             }
@@ -477,13 +477,13 @@ public class PlayerController3D : MonoBehaviour
 
 
     private bool damageWaitTime() {
-        Debug.Log("WAIT TIME CALLED");
+        //Debug.Log("WAIT TIME CALLED");
 
         damageTimer += Time.deltaTime;
 
         if (damageTimer >= invincibleTime)
         {
-            Debug.Log("TIMER COMPLETE AFTER: " + invincibleTime);
+            //Debug.Log("TIMER COMPLETE AFTER: " + invincibleTime);
             damageTimer = 0;
             invincible = false;
             startDamageTimer = false;
@@ -659,10 +659,10 @@ public class PlayerController3D : MonoBehaviour
         {
             health = health - 1;
 
-            Debug.Log("took damage,current health: " + health);
+            //Debug.Log("took damage,current health: " + health);
                 if (health <= 0)
                 {
-                  Debug.Log("RESPAWN");
+                 // Debug.Log("RESPAWN");
                 }
 
             invincible = true;
