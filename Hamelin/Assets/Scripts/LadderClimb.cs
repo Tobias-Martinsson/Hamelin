@@ -6,7 +6,7 @@ public class LadderClimb : MonoBehaviour
 {
     public Transform topPoint;
     public Transform bottomPoint;
-
+    public Transform endPoint;
     void OnTriggerEnter(Collider collision)
     {
 
@@ -18,6 +18,7 @@ public class LadderClimb : MonoBehaviour
         {
             collision.gameObject.GetComponent<PlayerController3D>().setLadderPointTop(topPoint.position);
             collision.gameObject.GetComponent<PlayerController3D>().setLadderPointBottom(bottomPoint.position);
+            collision.gameObject.GetComponent<PlayerController3D>().setLadderPointEnd(endPoint.position);
             collision.gameObject.GetComponent<PlayerController3D>().setClimbing(true);
 
         }

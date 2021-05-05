@@ -59,6 +59,7 @@ public class PlayerController3D : MonoBehaviour
 
     private Vector3 ladderpointTop;
     private Vector3 ladderpointBottom;
+    private Vector3 ladderpointEnd;
 
     private bool onGround;
    
@@ -690,7 +691,7 @@ public class PlayerController3D : MonoBehaviour
 
             if (transform.position.y >= ladderpointTop.y) 
             {
-                velocity = Vector3.forward * 1f;
+                velocity = new Vector3(ladderpointEnd.x - transform.position.x,0, ladderpointEnd.z- transform.position.z) * 1f;
                 ExitClimb();
             }
 
@@ -763,6 +764,12 @@ public class PlayerController3D : MonoBehaviour
     {
         ladderpointTop = p;
     }
+
+    public void setLadderPointEnd(Vector3 p) 
+    {
+        ladderpointEnd = p;
+    }
+
     public bool GroundCheck(Vector3 point2)
     {
 
