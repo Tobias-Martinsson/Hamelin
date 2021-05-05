@@ -53,9 +53,9 @@ public class PlayerController3D : MonoBehaviour
     private bool damageDealt;
     private float dashPower = 5f;
     private bool dashing = false;
-    private bool climbing = false;
+    private bool climbReady = false;
     private bool upOnRoof = false;
-    private bool allowClimb = false;
+    private bool climbing = false;
 
     private Vector3 ladderpointTop;
     private Vector3 ladderpointBottom;
@@ -227,7 +227,7 @@ public class PlayerController3D : MonoBehaviour
         }
 
         // state för climbimng
-        if (allowClimb)
+        if (climbing)
         {
             climbingState();
            
@@ -412,7 +412,7 @@ public class PlayerController3D : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
-            if (climbing && !allowClimb && onGround)
+            if (climbReady && !climbing && onGround)
             {
                 if (!upOnRoof)
                 {
@@ -424,7 +424,7 @@ public class PlayerController3D : MonoBehaviour
                 }
                
 
-                setAllowClimb(true);
+                setClimbing(true);
 
             }
 
@@ -673,9 +673,9 @@ public class PlayerController3D : MonoBehaviour
         
     }
 
-    public void setAllowClimb(bool b) {
+    public void setClimbing(bool b) {
 
-        allowClimb = b;
+        climbing = b;
        
     }
 
@@ -718,7 +718,7 @@ public class PlayerController3D : MonoBehaviour
                 upOnRoof = false;
             }
 
-            allowClimb = false;
+            climbing = false;
 
         }
 
@@ -752,8 +752,8 @@ public class PlayerController3D : MonoBehaviour
         
     }
     
-    public void setClimbing(bool b) {
-        climbing = b;
+    public void setClimbReady(bool b) {
+        climbReady = b;
     }
 
     public void setLadderPointBottom(Vector3 p) 
