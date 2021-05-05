@@ -665,7 +665,7 @@ public class PlayerController3D : MonoBehaviour
             Debug.Log("took damage,current health: " + health);
                 if (health <= 0)
                 {
-                  Debug.Log("RESPAWN");
+                SceneManager.LoadScene(scene.name);
                 }
 
             invincible = true;
@@ -700,7 +700,7 @@ public class PlayerController3D : MonoBehaviour
         }
         else
         {
-            transform.position += Vector3.down * 4f * Time.deltaTime;
+            velocity = Vector3.down * 4f * Time.deltaTime;
 
             if (transform.position.y <= ladderpointBottom.y)
             {
