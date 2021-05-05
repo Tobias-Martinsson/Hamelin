@@ -54,8 +54,8 @@ public class PlayerController3D : MonoBehaviour
     private float dashPower = 5f;
     private bool dashing = false;
     private bool climbing = false;
-    private bool upOnRoof = false;
-    private bool allowClimb = false;
+    public bool upOnRoof = false;
+    public bool allowClimb = false;
 
     private Vector3 ladderpointTop;
     private Vector3 ladderpointBottom;

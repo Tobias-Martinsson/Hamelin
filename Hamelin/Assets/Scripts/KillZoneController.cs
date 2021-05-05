@@ -9,19 +9,23 @@ public class KillZoneController : MonoBehaviour
     public Transform killZoneSpawnLcation;
     private bool killZone = false;
 
+    public GameObject player;
+    private PlayerController3D playerController;
+
+
     void Start()
     {
-        
+        playerController = player.GetComponent<PlayerController3D>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.O) && !killZone)
+        if (playerController.upOnRoof && !killZone)
         {
             SpawnKillZone();
         }
 
-        if (Input.GetKeyDown(KeyCode.P) && killZone)
+        if (playerController.upOnRoof && playerController.allowClimb && killZone)
         {
             DestroyKillZone();
         }
