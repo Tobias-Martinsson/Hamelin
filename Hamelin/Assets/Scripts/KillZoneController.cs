@@ -25,7 +25,7 @@ public class KillZoneController : MonoBehaviour
             SpawnKillZone();
         }
 
-        if (playerController.upOnRoof && playerController.allowClimb && killZone)
+        if (playerController.upOnRoof && playerController.climbing && killZone)
         {
             DestroyKillZone();
         }
