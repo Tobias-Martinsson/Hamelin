@@ -58,6 +58,11 @@ public class PlayerController3D : MonoBehaviour
     public bool upOnRoof = false;
     public bool climbing = false;
 
+    public GameObject health1;
+    public GameObject health2;
+    public GameObject health3;
+
+
     private Vector3 ladderpointTop;
     private Vector3 ladderpointBottom;
     private Vector3 ladderpointEnd;
@@ -124,6 +129,9 @@ public class PlayerController3D : MonoBehaviour
     {
         // Application.targetFrameRate = 60;
         health = maxHealth;
+        health1.SetActive(true);
+        health2.SetActive(true);
+        health3.SetActive(true);
 
         scene = SceneManager.GetActiveScene();
 
@@ -671,6 +679,14 @@ public class PlayerController3D : MonoBehaviour
             invincible = true;
 
             startDamageTimer = true;
+            if(health == 2){
+                health3.SetActive(false);
+
+
+            }else if(health == 1){
+                health2.SetActive(false);
+
+            }
         }
         
     }
