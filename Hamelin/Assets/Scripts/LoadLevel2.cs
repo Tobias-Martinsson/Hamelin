@@ -7,7 +7,16 @@ using UnityEngine.SceneManagement;
 public class LoadLevel2 : MonoBehaviour
 {
     public BoxCollider col;
-    void Awake() => col = GetComponent<BoxCollider>();
+    private void Awake()
+    {
+       col = GetComponent<BoxCollider>();
+       gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
     // Start is called before the first frame update
 
     private void OnTriggerEnter(Collider other)
