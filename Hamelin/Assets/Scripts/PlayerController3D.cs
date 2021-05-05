@@ -46,7 +46,7 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 normal;
 
     private bool jumping = false;
-    private int health;
+    public int health;
     private int maxHealth = 3;
     private bool invincible = false;
     private float invincibleTime = 1;
@@ -171,6 +171,7 @@ public class PlayerController3D : MonoBehaviour
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone") && respawnPoint)
             {
                 Debug.Log("RESPAWN");
+                setDamageDealt(true);
                 velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
                 transform.position = jumpLocation.transform.position;
                
