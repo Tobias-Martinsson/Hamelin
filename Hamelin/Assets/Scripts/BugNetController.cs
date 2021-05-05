@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Main Author: Tim Agélii
+//Secondary Author: Tobias Martinsson
 public class BugNetController : MonoBehaviour
 {
     public SphereCollider collider;
@@ -9,16 +11,6 @@ public class BugNetController : MonoBehaviour
     private int score = 0;
 
     void Awake() => collider = GetComponent<SphereCollider>();
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -34,10 +26,7 @@ public class BugNetController : MonoBehaviour
             
             //incresse scorecount by 1.
             AddScore();
-        }
-        
-
-        
+        }  
     }
 
     private void AddScore() => score++;

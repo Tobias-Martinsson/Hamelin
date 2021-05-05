@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Main Author: My Karlén
 public class UIScript : MonoBehaviour
 {
     public Text questText;

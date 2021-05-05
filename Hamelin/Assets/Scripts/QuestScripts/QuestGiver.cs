@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Main Author: Freja Muruganand
+//Secondary Author: Tobias Martinsson
 public class QuestGiver : MonoBehaviour
 {
     public Quest quest;

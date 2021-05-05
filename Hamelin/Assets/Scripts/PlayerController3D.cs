@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Main Author: Tobias Martinsson, Henrik Rudén, Tim Agélii
 public class PlayerController3D : MonoBehaviour
 {
     //deklarering av variablar s� jag kan se dem i Unity och buggfixa.

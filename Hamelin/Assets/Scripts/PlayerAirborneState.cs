@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Main Author: Tobias Martinsson
 [CreateAssetMenu()]
 public class PlayerAirborneState : State
 {

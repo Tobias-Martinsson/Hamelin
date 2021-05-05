@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//Main Author: Tobias Martinsson
 public class BirdAgent : SomeAgent
 {
     public float timeLeft;

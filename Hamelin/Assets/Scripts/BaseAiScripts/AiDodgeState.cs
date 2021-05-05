@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Main Author: Tobias Martinsson
 [CreateAssetMenu()]
 public class AiDodgeState : State
 {
@@ -23,19 +24,16 @@ public class AiDodgeState : State
 
     public override void RunUpdate()
     {
-        random = randomize(2,4);
+        random = randomize(1,4);
         Debug.Log(random);
         switch (random)
         {
             case 1:
-                StateMachine.ChangeState<AiChasePlayer>();
-                break;
-            case 2:
                 Agent.NavAgent.velocity = (Agent.transform.right * 6) + Agent.transform.forward * 6;
                 StateMachine.ChangeState<AiChasePlayer>();
                 break;
-            case 3:
-                Debug.Log("Random is 3. dashed right");
+            case 2:
+                //Debug.Log("Random is 3. dashed right");
                 Agent.NavAgent.velocity = -(Agent.transform.right * 6) + Agent.transform.forward * 6;
                 StateMachine.ChangeState<AiChasePlayer>();
                 break;

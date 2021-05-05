@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Main Author: Henrik Rudén
 public class Hook : MonoBehaviour
 {
     public float hookForce = 25f;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Main Author: Andreas Scherman
 public class s_EnemyScoreCounter : MonoBehaviour
 {
 

@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public sealed class Mathfx
 {
     //Ease in out

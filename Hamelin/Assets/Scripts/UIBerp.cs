@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Main Author: Freja Muruganand
 public class UIBerp : MonoBehaviour
 {
     private float time;

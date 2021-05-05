@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Main author: Tim Agélii
 public class LadderClimb : MonoBehaviour
 {
     public Transform topPoint;

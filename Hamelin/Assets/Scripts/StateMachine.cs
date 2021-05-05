@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-
+//Main Author: Tobias Martinsson
 public class StateMachine 
 {
     private Dictionary<Type, State> InstantiatedStates = new Dictionary<Type, State>();

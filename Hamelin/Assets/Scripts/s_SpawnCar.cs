@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Main Author: Andreas Scherman
 public class s_SpawnCar : MonoBehaviour
 {
     private Vector3 startPos;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+//Main Author: Freja Muruganand
 public class RandomStart : MonoBehaviour
 {
     private AudioSource source;
