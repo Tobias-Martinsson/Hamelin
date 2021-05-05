@@ -29,7 +29,7 @@ public class LadderClimb : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             collision.gameObject.GetComponent<PlayerController3D>().setClimbing(false);
- 
+            collision.gameObject.GetComponent<PlayerController3D>().setClimbReady(false);
         }
     }
 }
