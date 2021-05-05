@@ -29,8 +29,13 @@ public class AiChasePlayer : State
     public override void RunUpdate()
     {
         Agent.NavAgent.SetDestination(Agent.PlayerPosition);
-        Debug.Log(timeLeft);
+        //Debug.Log(timeLeft);
         timeLeft -= Time.deltaTime;
+        if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) <= AttackDistance)
+        {
+            Debug.Log("Attack");
+            StateMachine.ChangeState<AiAttack>();
+        }
         if (timeLeft < 0)
         {
             if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) < dodgeRange && Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > dodgeRange - 1)
@@ -38,7 +43,6 @@ public class AiChasePlayer : State
                 Debug.Log("Dodging");
                 timeLeft = originalTime;
                 StateMachine.ChangeState<AiDodgeState>();
-
             }
         }
             
@@ -49,11 +53,7 @@ public class AiChasePlayer : State
             StateMachine.ChangeState<AiPatrolState>();
         }
 
-        if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) <= AttackDistance)
-        {
-            Debug.Log("Attack");
-            StateMachine.ChangeState<AiAttack>();
-        }
+        
 
     }
 }

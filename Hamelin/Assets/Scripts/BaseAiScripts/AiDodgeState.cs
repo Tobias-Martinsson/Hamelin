@@ -25,7 +25,7 @@ public class AiDodgeState : State
     public override void RunUpdate()
     {
         random = randomize(1,4);
-        Debug.Log(random);
+        //Debug.Log(random);
         switch (random)
         {
             case 1:
