@@ -172,8 +172,8 @@ public class PlayerController3D : MonoBehaviour
             {
                 Debug.Log("RESPAWN");
                 velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
-                transform.position = jumpLocation.transform.position + new Vector3(0, 5, 0);
-                Debug.Log(jumpLocation.transform.position + new Vector3(0, 5, 0));
+                transform.position = jumpLocation.transform.position;
+               
             }
 
         }
