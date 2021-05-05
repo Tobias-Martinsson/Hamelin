@@ -21,8 +21,6 @@ public class AiAttack : State
     {
      
         Agent.Player.GetComponent<PlayerController3D>().setDamageDealt(true);
-        Debug.Log("Attacking");
-
         
         if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > AttackDistance)
         {

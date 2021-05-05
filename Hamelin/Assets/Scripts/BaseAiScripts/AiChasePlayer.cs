@@ -26,7 +26,7 @@ public class AiChasePlayer : State
         Agent.NavAgent.speed = Speed;
     }
 
-    public override void RunUpdate()
+    public override void RunUpdate()    
     {
         Agent.NavAgent.SetDestination(Agent.PlayerPosition);
         //Debug.Log(timeLeft);
