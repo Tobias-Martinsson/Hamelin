@@ -94,10 +94,12 @@ public class PlayerController3D : MonoBehaviour
     private float dashTime = 0.25f;
     private float dashCoolDown = 1f;
     private bool dashAllowed = true;
-    
+
 
 
     //
+
+    public GameObject playerMesh;
 
     //Grapple Test
 
@@ -173,7 +175,8 @@ public class PlayerController3D : MonoBehaviour
             collisionMask
         );
 
-        transform.rotation = Quaternion.Euler(0, rotationY, 0);
+        // Rotate player. To keep or not to keep
+        playerMesh.transform.rotation = Quaternion.Euler(0, rotationY, 0);
 
         // if hitting KillZone respawn
         if (hit.collider != null)
