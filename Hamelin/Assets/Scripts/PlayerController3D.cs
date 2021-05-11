@@ -83,7 +83,7 @@ public class PlayerController3D : MonoBehaviour
     private float newSwipeMovementDecrease = 4f;
     private bool netReady = true;
     private bool netHolding = false;
-    //private bool netSwipe = false;
+    private bool netSwipe = false;
     private bool catchCheck = false;
 
     [Header("Timers")]
@@ -151,236 +151,16 @@ public class PlayerController3D : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        MovementSetup();
 
-        //Points på spelaren
-        point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
-        point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
+        AbilityHandler();
 
-        //Update velocity
+        UpdateMovement();
 
-        RaycastHit hit;
-        grounded = Physics.CapsuleCast(
-            point1,
-            point2,
-            collider.radius,
-            Vector3.down,
-            out hit,
-            groundCheckDistance + collisionMargin,
-            collisionMask
-        );
+        GetCameraRotation();
 
-        // Rotate player. To keep or not to keep
-        playerMesh.transform.rotation = Quaternion.Euler(0, rotationY, 0);
+        DamageHandler();
 
-        // if hitting KillZone respawn
-        if (hit.collider != null)
-        {
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone") && respawnPoint)
-            {
-                Debug.Log("RESPAWN");
-                setDamageDealt(true);
-                velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
-                transform.position = jumpLocation.transform.position;
-
-            }
-
-        }
-
-        input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
-
-        if (input.magnitude > 1.0f)
-        {
-            input.Normalize();
-        }
-
-        float inputMagnitude = input.magnitude;
-
-
-        if (GroundCheck(point2))
-        {
-            normal = GroundNormal(point2);
-            falling = false;
-
-        }
-        else
-        {
-            normal = Vector3.up;
-            //Set Respawn
-            if (!falling && respawnPoint)
-            {
-                //jumpLocation = GameObject.Find("Player").transform;
-                //Debug.Log(jumpLocation.transform.position.x);
-                respawnPoint.transform.position = transform.position;
-            }
-            falling = true;
-            //
-        }
-
-        input = Vector3.ProjectOnPlane(camera.transform.rotation * input, Vector3.Lerp(Vector3.up, normal, 0.5f)).normalized * inputMagnitude;
-
-        inputVelocity = input * acceleration * Time.deltaTime;
-
-        velocityXZ = new Vector3(velocity.x, 0, velocity.z);
-
-        gravityVelocity = Vector3.down * gravity * Time.deltaTime;
-
-        jumpingVelocity = Vector3.up * jumpPowerVariable;
-
-        // dashState sätts här innan input velocity updateras eftersom den ska stänga av input under dash
-        if (dashing)
-        {
-            dashState();
-        }
-        if (!dashAllowed)
-        {
-            if (dashWaitTime(dashCoolDown))
-            {
-                dashAllowed = true;
-            }
-        }
-
-        // state för climbimng
-        if (climbing)
-        {
-            climbingState();
-
-        }
-
-        velocity += inputVelocity;
-        velocity += Vector3.down * gravity * Time.deltaTime;
-
-
-        // Ser till att man inte rör sig över max speed i X och Z.
-
-        if (velocityXZ.magnitude >= maxSpeedXZ)
-        {
-            velocityXZ = velocity.normalized * maxSpeedXZ;
-            velocity = new Vector3(velocityXZ.x, velocity.y, velocityXZ.z);
-
-        }
-
-        // en egen maxspeed för y hastigheten
-        if (velocity.y >= maxSpeedY)
-        {
-            velocity.x = maxSpeedY;
-
-        }
-        if (velocity.y <= -maxSpeedY)
-        {
-            velocity.z = -maxSpeedY;
-
-        }
-
-        ApplyAirResistance();
-
-        //Kollision
-        collidingObjects = Physics.OverlapCapsule(point1,
-                            point2,
-                            collider.radius, collisionMask);
-
-        if (!(collidingObjects.Length == 0))
-        {
-            PreventCollision(collidingObjects);
-        }
-
-        transform.position += velocity;
-
-        //hämtad kamera rotation
-        rotationY = camera.GetComponent<CameraFollowScript>().rotationY;
-        rotationX = camera.GetComponent<CameraFollowScript>().rotationX;
-        if (damageDealt)
-        {
-
-            playerTakesDamage();
-            if (startDamageTimer)
-            {
-                damageWaitTime();
-
-            }
-        }
-        
-        //net
-        /*
-        if (netReady)
-        {
-            netIdle();
-        }
-        if (netHolding)
-        {
-            netHold();
-        }
-        if (netSwipe)
-        {
-            netSwiping();
-            netReset();
-        }
-        */
-
-        
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
-
-        // Grappling hook 
-        //shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-        /*
-
-        if (hook == null && Input.GetKeyDown(KeyCode.G))
-        {
-            StopAllCoroutines();
-            pulling = false;
-            hook = Instantiate(hookPrefab, shootLocation.position, Quaternion.identity).GetComponent<Hook>();
-            hook.Initialize(this, shootLocation);
-            StartCoroutine(DestroyHookAfterLifetime());
-         
-        }
-        //else if (hook != null && Input.GetMouseButtonDown(1))
-        else if (hook != null && Input.GetKeyDown(KeyCode.G))
-        {
-         //   DestroyHook();
-        }
-        
-        if (pulling && hook != null)
-        {
-           
-            Debug.Log("pulling");
-            if (Vector3.Distance(transform.position, hook.transform.position) <= hookDistanceStop)
-            {
-                maxSpeedXZ = startMaxSpeedXZ;
-                DestroyHook();
-          
-            }
-            else
-            {
-          
-                Vector3 newVector = (hook.transform.position - transform.position).normalized * grapplingSpeed;
-                velocity += newVector;
-                maxSpeedXZ = maxGrapplingSpeed;
-
-                if (velocity.magnitude > maxGrapplingSpeed)
-                {
-                    velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
-                }
-            
-            }
-            
-        }
-        else {
-        */
-        // Deacceleration metoden här under anropas inte om grappling hooken är aktiv
-        if (input.x == 0)
-        {
-            velocity.x *= 0.1f;
-        }
-        if (input.z == 0)
-        {
-            velocity.z *= 0.1f;
-        }
-        //  }
-
-        //    StateMachine.RunUpdate();
 
     }
 
@@ -388,6 +168,11 @@ public class PlayerController3D : MonoBehaviour
     {
 
         bool onGround = GroundCheck(point2);
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
@@ -431,7 +216,7 @@ public class PlayerController3D : MonoBehaviour
         }
 
 
-        /*
+
         if (Input.GetMouseButtonDown(0))
         {
 
@@ -452,11 +237,201 @@ public class PlayerController3D : MonoBehaviour
                 netHolding = false;
             }
         }
-        */
-
 
     }
 
+    private void DamageHandler()
+    {
+        if (damageDealt)
+        {
+
+            playerTakesDamage();
+            if (startDamageTimer)
+            {
+                damageWaitTime();
+
+            }
+        }
+    }
+    private void UpdateMovement()
+    {
+
+        if (!dashing)
+        {
+            if (input.x == 0)
+            {
+                velocity.x *= 0.1f;
+            }
+            if (input.z == 0)
+            {
+                velocity.z *= 0.1f;
+            }
+        }
+
+        velocity += inputVelocity;
+        velocity += Vector3.down * gravity * Time.deltaTime;
+
+
+        // Ser till att man inte rör sig över max speed i X och Z.
+
+        if (velocityXZ.magnitude >= maxSpeedXZ)
+        {
+            velocityXZ = velocity.normalized * maxSpeedXZ;
+            velocity = new Vector3(velocityXZ.x, velocity.y, velocityXZ.z);
+
+        }
+
+        // en egen maxspeed för y hastigheten
+        if (velocity.y >= maxSpeedY)
+        {
+            velocity.x = maxSpeedY;
+
+        }
+        if (velocity.y <= -maxSpeedY)
+        {
+            velocity.z = -maxSpeedY;
+
+        }
+
+        ApplyAirResistance();
+
+        //Kollision
+        collidingObjects = Physics.OverlapCapsule(point1,
+                            point2,
+                            collider.radius, collisionMask);
+
+        if (!(collidingObjects.Length == 0))
+        {
+            PreventCollision(collidingObjects);
+        }
+
+        transform.position += velocity;
+
+    }
+
+    private void AbilityHandler()
+    {
+        // dashState sätts här innan input velocity updateras eftersom den ska stänga av input under dash
+        if (dashing)
+        {
+            dashState();
+        }
+        if (!dashAllowed)
+        {
+            if (dashWaitTime(dashCoolDown))
+            {
+                dashAllowed = true;
+            }
+        }
+
+        // state för climbimng
+        if (climbing)
+        {
+            climbingState();
+
+        }
+
+        if (netReady)
+        {
+            netIdle();
+        }
+        if (netHolding)
+        {
+            netHold();
+        }
+        if (netSwipe)
+        {
+            netSwiping();
+        }
+    }
+
+    private void GetCameraRotation()
+    {
+
+        rotationY = camera.GetComponent<CameraFollowScript>().rotationY;
+        rotationX = camera.GetComponent<CameraFollowScript>().rotationX;
+
+    }
+
+    private void MovementSetup()
+    {
+
+        //Points på spelaren
+        point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
+        point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
+
+
+
+        //Update velocity
+
+        RaycastHit hit;
+        grounded = Physics.CapsuleCast(
+            point1,
+            point2,
+            collider.radius,
+            Vector3.down,
+            out hit,
+            groundCheckDistance + collisionMargin,
+            collisionMask
+        );
+
+        if (hit.collider != null)
+        {
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone") && respawnPoint)
+            {
+                Debug.Log("RESPAWN");
+                setDamageDealt(true);
+                velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
+                transform.position = jumpLocation.transform.position;
+
+            }
+
+        }
+
+        // Rotate player. To keep or not to keep
+        playerMesh.transform.rotation = Quaternion.Euler(0, rotationY, 0);
+
+        input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
+
+        if (input.magnitude > 1.0f)
+        {
+            input.Normalize();
+        }
+
+        float inputMagnitude = input.magnitude;
+
+
+        if (GroundCheck(point2))
+        {
+            normal = GroundNormal(point2);
+            falling = false;
+
+        }
+        else
+        {
+            normal = Vector3.up;
+            //Set Respawn
+            if (!falling && respawnPoint)
+            {
+                //jumpLocation = GameObject.Find("Player").transform;
+                //Debug.Log(jumpLocation.transform.position.x);
+                respawnPoint.transform.position = transform.position;
+            }
+            falling = true;
+            //
+        }
+
+        input = Vector3.ProjectOnPlane(camera.transform.rotation * input, Vector3.Lerp(Vector3.up, normal, 0.5f)).normalized * inputMagnitude;
+
+        inputVelocity = input * acceleration * Time.deltaTime;
+
+        velocityXZ = new Vector3(velocity.x, 0, velocity.z);
+
+        gravityVelocity = Vector3.down * gravity * Time.deltaTime;
+
+        jumpingVelocity = Vector3.up * jumpPowerVariable;
+
+    }
 
     private bool damageWaitTime()
     {
@@ -528,16 +503,9 @@ public class PlayerController3D : MonoBehaviour
     }
 
 
-    /*
+
     void netHold()
     {
-        Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
-
-
-        bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
-
-
-        bugNet.transform.position = (netOffset + transform.position);
 
         if (!dashing)
         {
@@ -555,56 +523,33 @@ public class PlayerController3D : MonoBehaviour
         {
             maxSpeedXZ = startMaxSpeedXZ / newSwipeMovementDecrease;
         }
-        Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
 
-        netRotationX -= netRotationSpeed;
-
-        netRotationX = Mathf.Clamp(netRotationX, 0, 90);
-
-
-        bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
-
-
-        bugNet.transform.position = (netOffset + transform.position);
-
-
+        if (netWaitTime(0.5f))
+        {
+            netReset();
+        }
     }
-
     void netIdle()
     {
         bugNet.isTrigger = true;
-
-        Vector3 netOffset = bugNet.transform.rotation * bugNetStartOffset;
-
-
-        bugNet.transform.rotation = Quaternion.Euler(netRotationX, rotationY, 0);
-
-
-        bugNet.transform.position = (netOffset + transform.position);
 
     }
 
     void netReset()
     {
-        if (netRotationX >= 90)
-        {
-            bugNet.isTrigger = true;
-            if (netWaitTime(0.5f))
-            {
-                netRotationX = 0;
 
-                maxSpeedXZ = startMaxSpeedXZ;
+        bugNet.isTrigger = true;
 
-                catchCheck = false;
-                netReady = true;
-                netSwipe = false;
-            }
+        maxSpeedXZ = startMaxSpeedXZ;
 
-
-        }
-
+        catchCheck = false;
+        netReady = true;
+        netSwipe = false;
     }
-    */
+
+
+
+
 
     public void setDamageDealt(bool b)
     {
@@ -823,8 +768,65 @@ public class PlayerController3D : MonoBehaviour
     }
 
 
+
     /*
-    public void StartPull()
+     private void UpdateHook(){
+    
+
+        // Grappling hook 
+        //shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
+      
+        if (hook == null && Input.GetKeyDown(KeyCode.G))
+        {
+            StopAllCoroutines();
+            pulling = false;
+            hook = Instantiate(hookPrefab, shootLocation.position, Quaternion.identity).GetComponent<Hook>();
+            hook.Initialize(this, shootLocation);
+            StartCoroutine(DestroyHookAfterLifetime());
+         
+        }
+        //else if (hook != null && Input.GetMouseButtonDown(1))
+        else if (hook != null && Input.GetKeyDown(KeyCode.G))
+        {
+         //   DestroyHook();
+        }
+        
+        if (pulling && hook != null)
+        {
+           
+            Debug.Log("pulling");
+            if (Vector3.Distance(transform.position, hook.transform.position) <= hookDistanceStop)
+            {
+                maxSpeedXZ = startMaxSpeedXZ;
+                DestroyHook();
+          
+            }
+            else
+            {
+          
+                Vector3 newVector = (hook.transform.position - transform.position).normalized * grapplingSpeed;
+                velocity += newVector;
+                maxSpeedXZ = maxGrapplingSpeed;
+
+                if (velocity.magnitude > maxGrapplingSpeed)
+                {
+                    velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
+                }
+            
+            }
+            
+        }
+        else {
+       
+    // Deacceleration metoden här under anropas inte om grappling hooken är aktiv
+
+    //  }
+
+    //    StateMachine.RunUpdate();
+}
+
+
+public void StartPull()
     {
         pulling = true;
     }
