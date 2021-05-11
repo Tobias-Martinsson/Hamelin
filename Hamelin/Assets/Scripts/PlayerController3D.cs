@@ -33,6 +33,10 @@ public class PlayerController3D : MonoBehaviour
     [SerializeField] private float kineticFrictionCoefficient;
     [SerializeField] private float airResistance;
     [SerializeField] private RaycastHit groundHit;
+    private Collider[] collidingObjects;
+    private RaycastHit hitInfo3;
+    private Vector3 normal;
+    private float collisionMargin = 0.2f;
     private new CapsuleCollider collider;
 
 
@@ -42,14 +46,7 @@ public class PlayerController3D : MonoBehaviour
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private new Camera camera;
 
-
-
-    [Header("Collision")]
     [SerializeField] private State[] States;
-    private Collider[] collidingObjects;
-    private RaycastHit hitInfo3;
-    private Vector3 normal;
-    private float collisionMargin = 0.2f;
 
     [Header("Player Variables")]
     [SerializeField] private float invincibleTime = 1;
@@ -86,7 +83,7 @@ public class PlayerController3D : MonoBehaviour
     private float newSwipeMovementDecrease = 4f;
     private bool netReady = true;
     private bool netHolding = false;
-    private bool netSwipe = false;
+    //private bool netSwipe = false;
     private bool catchCheck = false;
 
     [Header("Timers")]
@@ -434,7 +431,7 @@ public class PlayerController3D : MonoBehaviour
         }
 
 
-
+        /*
         if (Input.GetMouseButtonDown(0))
         {
 
@@ -455,6 +452,7 @@ public class PlayerController3D : MonoBehaviour
                 netHolding = false;
             }
         }
+        */
 
 
     }
@@ -530,7 +528,7 @@ public class PlayerController3D : MonoBehaviour
     }
 
 
-
+    /*
     void netHold()
     {
         Vector3 netOffset = bugNet.transform.rotation * bugNetOffset;
@@ -606,6 +604,7 @@ public class PlayerController3D : MonoBehaviour
         }
 
     }
+    */
 
     public void setDamageDealt(bool b)
     {
