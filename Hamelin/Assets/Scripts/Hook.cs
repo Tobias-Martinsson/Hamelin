@@ -39,7 +39,7 @@ public class Hook : MonoBehaviour
             rigid.useGravity = false;
             rigid.isKinematic = true;
 
-            grapple.StartPull();
+            //grapple.StartPull();
         }
     }
 }

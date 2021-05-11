@@ -9,7 +9,7 @@ public class s_EnemyScoreCounter : MonoBehaviour
 
     private Text scoreCounter;
 
-    public SphereCollider collider;
+    public new SphereCollider collider;
     public BugNetController bugNet;
 
     // Start is called before the first frame update

@@ -12,7 +12,6 @@ public class AiBirdChasePlayer : State
     public float timeLeft;
     public float originalTime;
     public GameObject myPrefab;
-    float timer = 0;
 
     protected override void Initialize()
     {

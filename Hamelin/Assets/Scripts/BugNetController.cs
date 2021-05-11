@@ -6,7 +6,7 @@ using UnityEngine;
 //Secondary Author: Tobias Martinsson
 public class BugNetController : MonoBehaviour
 {
-    public SphereCollider collider;
+    public new SphereCollider collider;
 
     private int score = 0;
 

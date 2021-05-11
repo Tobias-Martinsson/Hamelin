@@ -56,14 +56,13 @@ public class CameraFollowScript : MonoBehaviour
                 }
 
             }
-            //
 
             // original before ignore tag
             //offset = offset.normalized * hitInfo.distance;
 
         }
 
-        transform.position = targetObject.transform.position + offset;
+        transform.position = targetObject.transform.position + offset * 0.8f;
       
 
     }
