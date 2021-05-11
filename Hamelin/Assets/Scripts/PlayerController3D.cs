@@ -3,106 +3,106 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//Main Author: Tobias Martinsson, Henrik Rudén, Tim Agélii
+//Main Authors: Tobias Martinsson, Henrik Rudén, Tim Agélii
 public class PlayerController3D : MonoBehaviour
 {
-    //deklarering av variablar s� jag kan se dem i Unity och buggfixa.
-    public float acceleration;
-    public Vector3 velocity;
+    //Declaring variables 
+    [Header("Movement Variables")]
+    [SerializeField] private float acceleration;
+    [SerializeField] private float maxSpeedXZ;
+    [SerializeField] private float startMaxSpeedXZ;
+    [SerializeField] private float maxSpeedY;
+    [SerializeField] private float gravity;
+    [SerializeField] private float jumpPowerVariable;
+    [SerializeField] private float deceleration;
+    private Vector3 velocity;
     private Vector3 input;
     private Vector3 inputVelocity;
-    public Vector3 velocityXZ;
+    private Vector3 velocityXZ;
     private Vector3 gravityVelocity;
     private Vector3 jumpingVelocity;
+    private Vector3 jumpPower;
+    private Vector3 gravityPower;
 
-    private Vector3 inputCameraAdjust;
-    public float maxSpeedXZ;
-    private float startMaxSpeedXZ;
-    public float maxSpeedY;
-    public float skinWidth;
-    public LayerMask collisionMask;
-    public RaycastHit hit;
-    public float gravity;
-    public float jumpPowerVariable;
-    public float groundCheckDistance;
-    public float deceleration;
-    public float rotationX;
-    public float rotationY;
-    public float mouseSensitivity;
-    public Camera camera;
+    [Header("Collision")]
+    [SerializeField] private float skinWidth;
+    [SerializeField] private LayerMask collisionMask;
+    [SerializeField] private RaycastHit hit;
+    [SerializeField] private float groundCheckDistance;
+    [SerializeField] private float staticFrictionCoefficient;
+    [SerializeField] private float kineticFrictionCoefficient;
+    [SerializeField] private float airResistance;
+    [SerializeField] private RaycastHit groundHit;
+    private new CapsuleCollider collider;
 
-    public float staticFrictionCoefficient;
-    public float kineticFrictionCoefficient;
-    public float airResistance;
-    public RaycastHit groundHit;
-    public State[] States;
+
+    [Header("Camera Variables")]
+    private float rotationX;
+    private float rotationY;
+    [SerializeField] private float mouseSensitivity;
+    [SerializeField] private new Camera camera;
+
+
+
+    [Header("Collision")]
+    [SerializeField] private State[] States;
+    private Collider[] collidingObjects;
+    private RaycastHit hitInfo3;
+    private Vector3 normal;
+    private float collisionMargin = 0.2f;
+
+    [Header("Player Variables")]
+    [SerializeField] private float invincibleTime = 1;
+    [SerializeField] private float dashPower = 5f;
+    [SerializeField] private int maxHealth = 3;
+    private bool damageDealt;
     public Vector3 point1;
     public Vector3 point2;
-    public Vector3 jumpPower;
-    public Vector3 gravityPower;
-    public Collider[] collidingObjects;
-    RaycastHit hitInfo3;
-
-    private Vector3 normal;
-
-    private bool jumping = false;
     public int health;
-    private int maxHealth = 3;
     private bool invincible = false;
-    private float invincibleTime = 1;
-    private Scene scene;
-    private bool damageDealt;
-    private float dashPower = 5f;
     private bool dashing = false;
     private bool climbReady = false;
     public bool upOnRoof = false;
     public bool climbing = false;
 
+    [Header("UI Elements")]
     public GameObject health1;
     public GameObject health2;
     public GameObject health3;
+    private Scene scene;
 
-
+    [Header("Ladder Variables")]
     private Vector3 ladderpointTop;
     private Vector3 ladderpointBottom;
     private Vector3 ladderpointEnd;
 
-    private bool onGround;
-   
-
-    //bugnet test
-    float netRotationX = 0;
+    [Header("Bugnet Variables")]
+    private float netRotationX = 0;
     public SphereCollider bugNet;
-    float netRotationSpeed = -10f;
-    Vector3 bugNetOffset = new Vector3(0.2f, 2.5f, 0);
-    Vector3 bugNetStartOffset = new Vector3(0.2f, 1.5f, 0);
+    private float netRotationSpeed = -10f;
+    private Vector3 bugNetOffset = new Vector3(0.2f, 2.5f, 0);
+    private Vector3 bugNetStartOffset = new Vector3(0.2f, 1.5f, 0);
     private float netHoldMovementDecrease = 1.5f;
     private float newSwipeMovementDecrease = 4f;
-
-    bool netReady = true;
-    bool netHolding = false;
-    bool netSwipe = false;
-
+    private bool netReady = true;
+    private bool netHolding = false;
+    private bool netSwipe = false;
     private bool catchCheck = false;
 
-    //timers
+    [Header("Timers")]
     private float netTimer = 0;
     private float damageTimer = 0;
     private bool startDamageTimer = false;
-
     private float dashTimer = 0;
     private float dashTime = 0.25f;
     private float dashCoolDown = 1f;
     private bool dashAllowed = true;
 
+    [Header("Player Mesh")]
+    [SerializeField] private GameObject playerMesh;
 
-
-    //
-
-    public GameObject playerMesh;
-
-    //Grapple Test
-
+    //[Header("Unused Grapplinghook")]
+    /*
     public float grapplingSpeed = 0.5f;
     public float maxGrapplingSpeed = 20.0f;
     public float hookDistanceStop = 4f;
@@ -111,24 +111,24 @@ public class PlayerController3D : MonoBehaviour
 
     Hook hook;
     bool pulling;
+    
     Rigidbody rigid;
-    //
+    */
 
-
-    // Jump Respawn test
+    [Header("Killzone Respawn Variables")]
     public Transform jumpLocation;
     public GameObject respawnPoint;
     private bool falling;
-    //
 
-    private StateMachine StateMachine;
-    public CapsuleCollider collider;
+    //private StateMachine StateMachine;
+
     void Awake() => collider = GetComponent<CapsuleCollider>();
 
 
     // Start is called before the first frame update
     void Start()
     {
+
         // Application.targetFrameRate = 60;
         health = maxHealth;
         health1.SetActive(true);
@@ -138,31 +138,28 @@ public class PlayerController3D : MonoBehaviour
         scene = SceneManager.GetActiveScene();
 
         //grappling hook test
+        /*
         rigid = GetComponent<Rigidbody>();
         pulling = false;
-        //
+        */
 
-        StateMachine = new StateMachine(this, States);
+        //StateMachine = new StateMachine(this, States);
 
         startMaxSpeedXZ = maxSpeedXZ;
         Cursor.lockState = CursorLockMode.Confined;
-
-
     }
 
     private bool grounded = false;
-    private float collisionMargin = 0.2f;
+
     // Update is called once per frame
     void FixedUpdate()
     {
-
-
 
         //Points på spelaren
         point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
         point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
 
-        //Update  velocity
+        //Update velocity
 
         RaycastHit hit;
         grounded = Physics.CapsuleCast(
@@ -187,15 +184,15 @@ public class PlayerController3D : MonoBehaviour
                 setDamageDealt(true);
                 velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
                 transform.position = jumpLocation.transform.position;
-               
+
             }
 
         }
-        //
 
         input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
 
-        if (input.magnitude > 1.0f) {
+        if (input.magnitude > 1.0f)
+        {
             input.Normalize();
         }
 
@@ -208,7 +205,8 @@ public class PlayerController3D : MonoBehaviour
             falling = false;
 
         }
-        else {
+        else
+        {
             normal = Vector3.up;
             //Set Respawn
             if (!falling && respawnPoint)
@@ -236,8 +234,10 @@ public class PlayerController3D : MonoBehaviour
         {
             dashState();
         }
-        if (!dashAllowed) {
-            if (dashWaitTime(dashCoolDown)){
+        if (!dashAllowed)
+        {
+            if (dashWaitTime(dashCoolDown))
+            {
                 dashAllowed = true;
             }
         }
@@ -246,14 +246,10 @@ public class PlayerController3D : MonoBehaviour
         if (climbing)
         {
             climbingState();
-           
+
         }
 
-
-
-
         velocity += inputVelocity;
-        
         velocity += Vector3.down * gravity * Time.deltaTime;
 
 
@@ -265,8 +261,6 @@ public class PlayerController3D : MonoBehaviour
             velocity = new Vector3(velocityXZ.x, velocity.y, velocityXZ.z);
 
         }
-
-
 
         // en egen maxspeed för y hastigheten
         if (velocity.y >= maxSpeedY)
@@ -280,12 +274,7 @@ public class PlayerController3D : MonoBehaviour
 
         }
 
-
-
-
         ApplyAirResistance();
-
-
 
         //Kollision
         collidingObjects = Physics.OverlapCapsule(point1,
@@ -297,33 +286,13 @@ public class PlayerController3D : MonoBehaviour
             PreventCollision(collidingObjects);
         }
 
-
-      
-            transform.position += velocity;
-
-      
-
+        transform.position += velocity;
 
         //hämtad kamera rotation
         rotationY = camera.GetComponent<CameraFollowScript>().rotationY;
         rotationX = camera.GetComponent<CameraFollowScript>().rotationX;
-
-
-
-        //net
-        if (netReady) {
-            netIdle();
-        }
-        if (netHolding) {
-            netHold();
-        }
-        if (netSwipe) {
-            netSwiping();
-            netReset();
-        }
-
-
-        if (damageDealt) {
+        if (damageDealt)
+        {
 
             playerTakesDamage();
             if (startDamageTimer)
@@ -332,28 +301,33 @@ public class PlayerController3D : MonoBehaviour
 
             }
         }
+        
+        //net
+        /*
+        if (netReady)
+        {
+            netIdle();
+        }
+        if (netHolding)
+        {
+            netHold();
+        }
+        if (netSwipe)
+        {
+            netSwiping();
+            netReset();
+        }
+        */
 
-
-
-
-
-
-
+        
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
-
         // Grappling hook 
-
-
-
-
-        shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-
-
+        //shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
         /*
 
         if (hook == null && Input.GetKeyDown(KeyCode.G))
@@ -409,14 +383,6 @@ public class PlayerController3D : MonoBehaviour
         }
         //  }
 
-
-        //
-
-
-
-
-
-        //Debug.Log(velocity.y);
         //    StateMachine.RunUpdate();
 
     }
@@ -438,7 +404,7 @@ public class PlayerController3D : MonoBehaviour
                 {
                     transform.position = ladderpointTop;
                 }
-               
+
 
                 setClimbing(true);
 
@@ -466,10 +432,11 @@ public class PlayerController3D : MonoBehaviour
             velocity.y = 0;
             velocity += jumpingVelocity;
         }
-        
-        
-       
-        if (Input.GetMouseButtonDown(0)) {
+
+
+
+        if (Input.GetMouseButtonDown(0))
+        {
 
             if (netReady)
             {
@@ -493,7 +460,8 @@ public class PlayerController3D : MonoBehaviour
     }
 
 
-    private bool damageWaitTime() {
+    private bool damageWaitTime()
+    {
         Debug.Log("WAIT TIME CALLED");
 
         damageTimer += Time.deltaTime;
@@ -512,7 +480,7 @@ public class PlayerController3D : MonoBehaviour
         return false;
     }
 
-    
+
     private bool netWaitTime(float seconds)
     {
 
@@ -536,7 +504,7 @@ public class PlayerController3D : MonoBehaviour
 
         if (dashTimer >= seconds)
         {
-        
+
             dashTimer = 0;
             return true;
 
@@ -572,17 +540,19 @@ public class PlayerController3D : MonoBehaviour
 
 
         bugNet.transform.position = (netOffset + transform.position);
-     
-        if (!dashing) {
+
+        if (!dashing)
+        {
             maxSpeedXZ = startMaxSpeedXZ / netHoldMovementDecrease;
-    
+
         }
-   
+
     }
 
-    void netSwiping() {
+    void netSwiping()
+    {
         bugNet.isTrigger = catchCheck;
-    
+
         if (!dashing)
         {
             maxSpeedXZ = startMaxSpeedXZ / newSwipeMovementDecrease;
@@ -602,7 +572,8 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    void netIdle() {
+    void netIdle()
+    {
         bugNet.isTrigger = true;
 
         Vector3 netOffset = bugNet.transform.rotation * bugNetStartOffset;
@@ -615,7 +586,8 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    void netReset() {
+    void netReset()
+    {
         if (netRotationX >= 90)
         {
             bugNet.isTrigger = true;
@@ -635,7 +607,8 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    public void setDamageDealt(bool b) {
+    public void setDamageDealt(bool b)
+    {
         damageDealt = b;
 
     }
@@ -664,46 +637,52 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    public void setCatchCheckTrue(){
+    public void setCatchCheckTrue()
+    {
         catchCheck = true;
 
-}
+    }
 
     private void playerTakesDamage()
     {
-       
+
         if (!invincible)
         {
             health = health - 1;
 
             Debug.Log("took damage,current health: " + health);
-                if (health <= 0)
-                {
+            if (health <= 0)
+            {
                 SceneManager.LoadScene(scene.name);
-                }
+            }
 
             invincible = true;
 
             startDamageTimer = true;
-            if(health == 2){
+            if (health == 2)
+            {
                 health3.SetActive(false);
 
 
-            }else if(health == 1){
+            }
+            else if (health == 1)
+            {
                 health2.SetActive(false);
 
             }
         }
-        
+
     }
 
-    public void setClimbing(bool b) {
+    public void setClimbing(bool b)
+    {
 
         climbing = b;
-       
+
     }
 
-    void climbingState() {
+    void climbingState()
+    {
         inputVelocity = new Vector3(0, 0, 0);
         gravityVelocity = new Vector3(0, 0, 0);
         jumpingVelocity = new Vector3(0, 0, 0);
@@ -711,11 +690,11 @@ public class PlayerController3D : MonoBehaviour
         if (!upOnRoof)
         {
 
-            velocity  = Vector3.up * 4f * Time.deltaTime;
+            velocity = Vector3.up * 4f * Time.deltaTime;
 
-            if (transform.position.y >= ladderpointTop.y) 
+            if (transform.position.y >= ladderpointTop.y)
             {
-                velocity = new Vector3(ladderpointEnd.x - transform.position.x,0, ladderpointEnd.z- transform.position.z) * 1f;
+                velocity = new Vector3(ladderpointEnd.x - transform.position.x, 0, ladderpointEnd.z - transform.position.z) * 1f;
                 ExitClimb();
             }
 
@@ -730,14 +709,14 @@ public class PlayerController3D : MonoBehaviour
             }
 
         }
-   
+
         void ExitClimb()
         {
             if (!upOnRoof)
             {
                 upOnRoof = true;
             }
-            else 
+            else
             {
                 upOnRoof = false;
             }
@@ -749,20 +728,22 @@ public class PlayerController3D : MonoBehaviour
     }
 
 
-    void dodgeDash() {
+    void dodgeDash()
+    {
         if (dashAllowed)
         {
-          
-                maxSpeedXZ = startMaxSpeedXZ * 3f;
-       
+
+            maxSpeedXZ = startMaxSpeedXZ * 3f;
+
 
 
             velocity += input.normalized * dashPower;
             dashing = true;
         }
     }
-    void dashState() {
-      
+    void dashState()
+    {
+
         inputVelocity = new Vector3(0, 0, 0);
         velocity.y = velocity.y * 0.9f;
 
@@ -773,14 +754,15 @@ public class PlayerController3D : MonoBehaviour
             dashing = false;
             dashAllowed = false;
         }
-        
+
     }
-    
-    public void setClimbReady(bool b) {
+
+    public void setClimbReady(bool b)
+    {
         climbReady = b;
     }
 
-    public void setLadderPointBottom(Vector3 p) 
+    public void setLadderPointBottom(Vector3 p)
     {
         ladderpointBottom = p;
     }
@@ -789,7 +771,7 @@ public class PlayerController3D : MonoBehaviour
         ladderpointTop = p;
     }
 
-    public void setLadderPointEnd(Vector3 p) 
+    public void setLadderPointEnd(Vector3 p)
     {
         ladderpointEnd = p;
     }
@@ -800,7 +782,7 @@ public class PlayerController3D : MonoBehaviour
         return Physics.Raycast(point2, Vector3.down, collider.radius + skinWidth + groundCheckDistance, collisionMask);
 
     }
-    
+
 
 
     Vector3 GroundNormal(Vector3 point2)
@@ -828,7 +810,7 @@ public class PlayerController3D : MonoBehaviour
             velocity += normalForce;
 
             ApplyFriction(normalForce);
-   
+
 
         }
 
@@ -841,11 +823,13 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    
+
+    /*
     public void StartPull()
     {
         pulling = true;
     }
+    
 
     private void DestroyHook()
     {
@@ -862,4 +846,5 @@ public class PlayerController3D : MonoBehaviour
 
         DestroyHook();
     }
+    */
 }

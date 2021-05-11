@@ -13,7 +13,7 @@ public class SomeAgent : MonoBehaviour
     public Vector3 point2;
 
     public List<Transform> PatrolPoints;
-    public CapsuleCollider collider;
+    public new CapsuleCollider collider;
     public State[] States; 
 
     private StateMachine StateMachine;

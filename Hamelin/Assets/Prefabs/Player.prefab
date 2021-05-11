@@ -28,7 +28,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8995250748122010109}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: -27.92, y: 0, z: 0}
 --- !u!1 &4909174947148535359
 GameObject:
@@ -154,7 +154,6 @@ Transform:
   m_LocalPosition: {x: 294.88, y: 7.7, z: 715.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8995250750137365918}
   - {fileID: 8995250750210744105}
   - {fileID: 384245219}
   - {fileID: 8889883119751669818}
@@ -237,44 +236,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 0.7
-  velocity: {x: 0, y: 0, z: 0}
-  velocityXZ: {x: 0, y: 0, z: 0}
   maxSpeedXZ: 0.15
+  startMaxSpeedXZ: 0
   maxSpeedY: 0.5
+  gravity: 0.25
+  jumpPowerVariable: 0.2
+  deceleration: 1
   skinWidth: 0.2
   collisionMask:
     serializedVersion: 2
     m_Bits: 1600
-  gravity: 0.25
-  jumpPowerVariable: 0.2
   groundCheckDistance: 0.2
-  deceleration: 1
-  rotationX: 0
-  rotationY: 0
-  mouseSensitivity: 3
-  camera: {fileID: 8995250750210744110}
   staticFrictionCoefficient: 0.4
   kineticFrictionCoefficient: 0.25
   airResistance: 0.7
+  mouseSensitivity: 3
+  camera: {fileID: 8995250750210744110}
   States:
   - {fileID: 11400000, guid: 14d4b2fd3c839c84fae35e6d64f882c0, type: 2}
   - {fileID: 11400000, guid: 373f296490b8ab142a807e68785ae155, type: 2}
+  invincibleTime: 1
+  dashPower: 5
+  maxHealth: 3
   point1: {x: 0, y: 0, z: 0}
   point2: {x: 0, y: 0, z: 0}
-  jumpPower: {x: 0, y: 0, z: 0}
-  gravityPower: {x: 0, y: 0, z: 0}
-  collidingObjects: []
+  health: 0
   upOnRoof: 0
-  allowClimb: 0
+  climbing: 0
+  health1: {fileID: 0}
+  health2: {fileID: 0}
+  health3: {fileID: 0}
   bugNet: {fileID: 8995250750137365913}
-  grapplingSpeed: 1.5
-  maxGrapplingSpeed: 0.31
-  hookDistanceStop: 4
-  hookPrefab: {fileID: 7703645936239361278, guid: 3dd294b04e83c1a42b60cdc9cac1a0e1, type: 3}
-  shootLocation: {fileID: 384245219}
+  playerMesh: {fileID: 0}
   jumpLocation: {fileID: 3897150110793522203, guid: 7d0885a87ebbec54ea1b0422c0a4b328, type: 3}
   respawnPoint: {fileID: 3897150110793522183, guid: 7d0885a87ebbec54ea1b0422c0a4b328, type: 3}
-  collider: {fileID: 0}
 --- !u!1 &8995250750137365919
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,14 +298,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8995250750137365919}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.028, y: 1.99, z: -0.025}
-  m_LocalScale: {x: 1.2289902, y: 1.23963, z: 1.22458}
+  m_LocalRotation: {x: 0.52165884, y: 0.47735938, z: 0.47735944, w: 0.52165896}
+  m_LocalPosition: {x: 0.1, y: -0.055, z: 2.019}
+  m_LocalScale: {x: 1.2289902, y: 1.2396299, z: 1.2245802}
   m_Children:
   - {fileID: 8995250748589668176}
-  m_Father: {fileID: 8995250748122010109}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 1907669373863895484}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 5.078, y: 90, z: 90}
 --- !u!33 &8995250750137365915
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -433,7 +428,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8995250748122010109}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 27.675, y: 0, z: 0}
 --- !u!20 &8995250750210744110
 Camera:
@@ -516,7 +511,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: cae90b8a5d0372d45a72a73732b5511e, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: cae90b8a5d0372d45a72a73732b5511e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -584,5 +579,10 @@ GameObject:
 --- !u!4 &8889883119751669818 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cae90b8a5d0372d45a72a73732b5511e, type: 3}
+  m_PrefabInstance: {fileID: 8995250749025243089}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1907669373863895484 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -1824824446595371411, guid: cae90b8a5d0372d45a72a73732b5511e, type: 3}
   m_PrefabInstance: {fileID: 8995250749025243089}
   m_PrefabAsset: {fileID: 0}
