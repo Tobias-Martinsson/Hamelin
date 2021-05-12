@@ -20,10 +20,13 @@ public class DynamicFootsteps : MonoBehaviour
         colliderType = "";
     }
 
-    public void PlayDynamicFootstep(string colType)
+    void Update()
     {
-        colliderType = colType;
+        SetColliderType();
+    }
 
+    public void PlayDynamicFootstep()
+    {
         if (!source.isPlaying)
         {
             switch (colliderType)
@@ -58,5 +61,16 @@ public class DynamicFootsteps : MonoBehaviour
                     break;
             }
         }       
+    }
+
+    public void SetColliderType()
+    {
+        RaycastHit hit;
+        Ray terrainCheck = new Ray(transform.position, Vector3.down);
+
+        if(Physics.Raycast(terrainCheck, out hit))
+        {
+            colliderType = hit.collider.gameObject.GetComponent<SurfaceColliderType>().GetTerrainType();
+        }
     }
 }
