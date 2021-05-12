@@ -195,7 +195,7 @@ public class PlayerController3D : MonoBehaviour
         //dash
         if (Input.GetKeyDown(KeyCode.LeftShift) && onGround)
         {
-            dodgeDash();
+            DodgeDash();
         }
         //climb
         if (Input.GetKeyDown(KeyCode.E))
@@ -210,7 +210,7 @@ public class PlayerController3D : MonoBehaviour
                 {
                     transform.position = ladderpointTop;
                 }
-                setClimbing(true);
+                SetClimbing(true);
             }
 
         }
@@ -249,10 +249,10 @@ public class PlayerController3D : MonoBehaviour
         if (damageDealt)
         {
 
-            playerTakesDamage();
+            PlayerTakesDamage();
             if (startDamageTimer)
             {
-                damageWaitTime();
+                DamageWaitTime();
 
             }
         }
@@ -327,11 +327,11 @@ public class PlayerController3D : MonoBehaviour
         // dashState sätts här innan input velocity updateras eftersom den ska stänga av input under dash
         if (dashing)
         {
-            dashState();
+            DashState();
         }
         if (!dashAllowed)
         {
-            if (dashWaitTime(dashCoolDown))
+            if (DashWaitTime(dashCoolDown))
             {
                 dashAllowed = true;
             }
@@ -340,21 +340,21 @@ public class PlayerController3D : MonoBehaviour
         // state för climbimng
         if (climbing)
         {
-            climbingState();
+            ClimbingState();
 
         }
 
         if (netReady)
         {
-            netIdle();
+            NetIdle();
         }
         if (netHolding)
         {
-            netHold();
+            NetHold();
         }
         if (netSwipe)
         {
-            netSwiping();
+            NetSwiping();
         }
     }
 
@@ -417,7 +417,7 @@ public class PlayerController3D : MonoBehaviour
             if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone") && respawnPoint)
             {
                 Debug.Log("RESPAWN");
-                setDamageDealt(true);
+                SetDamageDealt(true);
                 velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
                 transform.position = jumpLocation.transform.position;
 
@@ -449,7 +449,7 @@ public class PlayerController3D : MonoBehaviour
         }
     }
 
-    private bool damageWaitTime()
+    private bool DamageWaitTime()
     {
         Debug.Log("WAIT TIME CALLED");
 
@@ -470,7 +470,7 @@ public class PlayerController3D : MonoBehaviour
     }
 
 
-    private bool netWaitTime(float seconds)
+    private bool NetWaitTime(float seconds)
     {
 
         netTimer += Time.deltaTime;
@@ -486,7 +486,7 @@ public class PlayerController3D : MonoBehaviour
         return false;
     }
 
-    private bool dashWaitTime(float seconds)
+    private bool DashWaitTime(float seconds)
     {
 
         dashTimer += Time.deltaTime;
@@ -520,7 +520,7 @@ public class PlayerController3D : MonoBehaviour
 
 
 
-    void netHold()
+    void NetHold()
     {
 
         if (!dashing)
@@ -531,7 +531,7 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    void netSwiping()
+    void NetSwiping()
     {
         bugNet.isTrigger = catchCheck;
 
@@ -540,18 +540,18 @@ public class PlayerController3D : MonoBehaviour
             maxSpeedXZ = startMaxSpeedXZ / newSwipeMovementDecrease;
         }
 
-        if (netWaitTime(0.5f))
+        if (NetWaitTime(0.5f))
         {
-            netReset();
+            NetReset();
         }
     }
-    void netIdle()
+    void NetIdle()
     {
         bugNet.isTrigger = true;
 
     }
 
-    void netReset()
+    void NetReset()
     {
 
         bugNet.isTrigger = true;
@@ -567,7 +567,7 @@ public class PlayerController3D : MonoBehaviour
 
 
 
-    public void setDamageDealt(bool b)
+    public void SetDamageDealt(bool b)
     {
         damageDealt = b;
 
@@ -597,13 +597,13 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    public void setCatchCheckTrue()
+    public void SetCatchCheckTrue()
     {
         catchCheck = true;
 
     }
 
-    private void playerTakesDamage()
+    private void PlayerTakesDamage()
     {
 
         if (!invincible)
@@ -634,14 +634,14 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    public void setClimbing(bool b)
+    public void SetClimbing(bool b)
     {
 
         climbing = b;
 
     }
 
-    void climbingState()
+    void ClimbingState()
     {
         inputVelocity = new Vector3(0, 0, 0);
         gravityVelocity = new Vector3(0, 0, 0);
@@ -689,7 +689,7 @@ public class PlayerController3D : MonoBehaviour
     }
 
 
-    void dodgeDash()
+    void DodgeDash()
     {
         if (dashAllowed)
         {
@@ -702,14 +702,14 @@ public class PlayerController3D : MonoBehaviour
             dashing = true;
         }
     }
-    void dashState()
+    void DashState()
     {
 
         inputVelocity = new Vector3(0, 0, 0);
         velocity.y = velocity.y * 0.9f;
 
 
-        if (dashWaitTime(dashTime))
+        if (DashWaitTime(dashTime))
         {
             maxSpeedXZ = startMaxSpeedXZ;
             dashing = false;
@@ -718,21 +718,21 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-    public void setClimbReady(bool b)
+    public void SetClimbReady(bool b)
     {
         climbReady = b;
     }
 
-    public void setLadderPointBottom(Vector3 p)
+    public void SetLadderPointBottom(Vector3 p)
     {
         ladderpointBottom = p;
     }
-    public void setLadderPointTop(Vector3 p)
+    public void SetLadderPointTop(Vector3 p)
     {
         ladderpointTop = p;
     }
 
-    public void setLadderPointEnd(Vector3 p)
+    public void SetLadderPointEnd(Vector3 p)
     {
         ladderpointEnd = p;
     }

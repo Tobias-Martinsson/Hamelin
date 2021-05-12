@@ -21,7 +21,7 @@ public class AiBirdAttack : State
 
     public override void RunUpdate()
     {
-        Agent.Player.transform.GetComponent<PlayerController3D>().setDamageDealt(true);
+        Agent.Player.transform.GetComponent<PlayerController3D>().SetDamageDealt(true);
         Destroy(Instantiate(myPrefab, new Vector3(Agent.transform.position.x, Agent.transform.position.y, Agent.transform.position.z), Quaternion.identity), 5f);
         
 

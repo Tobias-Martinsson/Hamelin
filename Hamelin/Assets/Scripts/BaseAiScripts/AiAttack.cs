@@ -20,7 +20,7 @@ public class AiAttack : State
     public override void RunUpdate()
     {
      
-        Agent.Player.GetComponent<PlayerController3D>().setDamageDealt(true);
+        Agent.Player.GetComponent<PlayerController3D>().SetDamageDealt(true);
         
         if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > AttackDistance)
         {

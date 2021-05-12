@@ -25,7 +25,7 @@ public class BirdBombScript : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerController3D>().setDamageDealt(true);
+            collision.gameObject.GetComponent<PlayerController3D>().SetDamageDealt(true);
         }
 
     }

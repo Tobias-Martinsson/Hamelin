@@ -17,10 +17,10 @@ public class LadderClimb : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerController3D>().setLadderPointTop(topPoint.position);
-            collision.gameObject.GetComponent<PlayerController3D>().setLadderPointBottom(bottomPoint.position);
-            collision.gameObject.GetComponent<PlayerController3D>().setLadderPointEnd(endPoint.position);
-            collision.gameObject.GetComponent<PlayerController3D>().setClimbReady(true);
+            collision.gameObject.GetComponent<PlayerController3D>().SetLadderPointTop(topPoint.position);
+            collision.gameObject.GetComponent<PlayerController3D>().SetLadderPointBottom(bottomPoint.position);
+            collision.gameObject.GetComponent<PlayerController3D>().SetLadderPointEnd(endPoint.position);
+            collision.gameObject.GetComponent<PlayerController3D>().SetClimbReady(true);
 
         }
     }
@@ -28,8 +28,8 @@ public class LadderClimb : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerController3D>().setClimbing(false);
-            collision.gameObject.GetComponent<PlayerController3D>().setClimbReady(false);
+            collision.gameObject.GetComponent<PlayerController3D>().SetClimbing(false);
+            collision.gameObject.GetComponent<PlayerController3D>().SetClimbReady(false);
         }
     }
 }
