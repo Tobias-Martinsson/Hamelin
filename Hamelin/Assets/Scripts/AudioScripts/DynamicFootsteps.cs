@@ -17,20 +17,13 @@ public class DynamicFootsteps : MonoBehaviour
     void Start()
     {
         source = GetComponent<AudioSource>();
+        colliderType = "";
     }
 
-    void OnCollisionEnter(Collision other)
+    public void PlayDynamicFootstep(string colType)
     {
-        SurfaceColliderType act = other.gameObject.GetComponent<Collider>().gameObject.GetComponent<SurfaceColliderType>();
+        colliderType = colType;
 
-        if (act)
-        {
-            colliderType = act.GetTerrainType();
-        }
-    }
-
-    public void PlayDynamicFootstep()
-    {
         if (!source.isPlaying)
         {
             switch (colliderType)
