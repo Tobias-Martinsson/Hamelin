@@ -169,11 +169,35 @@ public class PlayerController3D : MonoBehaviour
 
         bool onGround = GroundCheck(point2);
 
+        InputSceneChange();
+
+        InputAbilities(onGround);
+
+       
+
+    }
+    private void InputSceneChange() {
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
 
+
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
+    }
+
+    private void InputAbilities(bool onGround)
+    {
+        //dash
+        if (Input.GetKeyDown(KeyCode.LeftShift) && onGround)
+        {
+            dodgeDash();
+        }
+        //climb
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (climbReady && !climbing && onGround)
@@ -186,37 +210,18 @@ public class PlayerController3D : MonoBehaviour
                 {
                     transform.position = ladderpointTop;
                 }
-
-
                 setClimbing(true);
-
             }
 
         }
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
-
-
-
-
-        if (Input.GetKeyDown(KeyCode.LeftShift) && onGround)
-        {
-            dodgeDash();
-        }
-
-
+        //jump
         if (Input.GetKeyDown(KeyCode.Space) && onGround)
         {
 
             velocity.y = 0;
             velocity += jumpingVelocity;
         }
-
-
-
+        //Net
         if (Input.GetMouseButtonDown(0))
         {
 
@@ -237,7 +242,6 @@ public class PlayerController3D : MonoBehaviour
                 netHolding = false;
             }
         }
-
     }
 
     private void DamageHandler()
@@ -256,6 +260,32 @@ public class PlayerController3D : MonoBehaviour
     private void UpdateMovement()
     {
 
+        StopInputDuringDash();
+
+        velocity += inputVelocity;
+        velocity += Vector3.down * gravity * Time.deltaTime;
+
+
+       
+        LimitMaxSpeed();
+
+        ApplyAirResistance();
+
+        //collision
+        collidingObjects = Physics.OverlapCapsule(point1,
+                            point2,
+                            collider.radius, collisionMask);
+
+        if (!(collidingObjects.Length == 0))
+        {
+            PreventCollision(collidingObjects);
+        }
+
+        transform.position += velocity;
+
+    }
+
+    private void StopInputDuringDash() {
         if (!dashing)
         {
             if (input.x == 0)
@@ -267,11 +297,9 @@ public class PlayerController3D : MonoBehaviour
                 velocity.z *= 0.1f;
             }
         }
+    }
 
-        velocity += inputVelocity;
-        velocity += Vector3.down * gravity * Time.deltaTime;
-
-
+    private void LimitMaxSpeed() {
         // Ser till att man inte rör sig över max speed i X och Z.
 
         if (velocityXZ.magnitude >= maxSpeedXZ)
@@ -292,21 +320,6 @@ public class PlayerController3D : MonoBehaviour
             velocity.z = -maxSpeedY;
 
         }
-
-        ApplyAirResistance();
-
-        //Kollision
-        collidingObjects = Physics.OverlapCapsule(point1,
-                            point2,
-                            collider.radius, collisionMask);
-
-        if (!(collidingObjects.Length == 0))
-        {
-            PreventCollision(collidingObjects);
-        }
-
-        transform.position += velocity;
-
     }
 
     private void AbilityHandler()
@@ -355,15 +368,11 @@ public class PlayerController3D : MonoBehaviour
 
     private void MovementSetup()
     {
-
-        //Points på spelaren
+       //Points på spelaren
         point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
         point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
 
-
-
         //Update velocity
-
         RaycastHit hit;
         grounded = Physics.CapsuleCast(
             point1,
@@ -375,18 +384,7 @@ public class PlayerController3D : MonoBehaviour
             collisionMask
         );
 
-        if (hit.collider != null)
-        {
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone") && respawnPoint)
-            {
-                Debug.Log("RESPAWN");
-                setDamageDealt(true);
-                velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
-                transform.position = jumpLocation.transform.position;
-
-            }
-
-        }
+        CheckKillZoneCollision(hit);
 
         // Rotate player. To keep or not to keep
         playerMesh.transform.rotation = Quaternion.Euler(0, rotationY, 0);
@@ -400,6 +398,35 @@ public class PlayerController3D : MonoBehaviour
 
         float inputMagnitude = input.magnitude;
 
+        UpdateGroundNormal();
+
+        input = Vector3.ProjectOnPlane(camera.transform.rotation * input, Vector3.Lerp(Vector3.up, normal, 0.5f)).normalized * inputMagnitude;
+
+        inputVelocity = input * acceleration * Time.deltaTime;
+
+        velocityXZ = new Vector3(velocity.x, 0, velocity.z);
+
+        gravityVelocity = Vector3.down * gravity * Time.deltaTime;
+
+        jumpingVelocity = Vector3.up * jumpPowerVariable;
+
+    }
+    private void CheckKillZoneCollision(RaycastHit hit) {
+        if (hit.collider != null)
+        {
+            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone") && respawnPoint)
+            {
+                Debug.Log("RESPAWN");
+                setDamageDealt(true);
+                velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
+                transform.position = jumpLocation.transform.position;
+
+            }
+
+        }
+    }
+
+    private void UpdateGroundNormal() {
 
         if (GroundCheck(point2))
         {
@@ -420,17 +447,6 @@ public class PlayerController3D : MonoBehaviour
             falling = true;
             //
         }
-
-        input = Vector3.ProjectOnPlane(camera.transform.rotation * input, Vector3.Lerp(Vector3.up, normal, 0.5f)).normalized * inputMagnitude;
-
-        inputVelocity = input * acceleration * Time.deltaTime;
-
-        velocityXZ = new Vector3(velocity.x, 0, velocity.z);
-
-        gravityVelocity = Vector3.down * gravity * Time.deltaTime;
-
-        jumpingVelocity = Vector3.up * jumpPowerVariable;
-
     }
 
     private bool damageWaitTime()
@@ -638,7 +654,8 @@ public class PlayerController3D : MonoBehaviour
 
             if (transform.position.y >= ladderpointTop.y)
             {
-                velocity = new Vector3(ladderpointEnd.x - transform.position.x, 0, ladderpointEnd.z - transform.position.z) * 1f;
+                velocity = new Vector3(0,0,0);
+                transform.position = ladderpointEnd;
                 ExitClimb();
             }
 
