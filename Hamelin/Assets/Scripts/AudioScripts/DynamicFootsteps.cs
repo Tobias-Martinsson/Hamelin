@@ -63,14 +63,17 @@ public class DynamicFootsteps : MonoBehaviour
         }       
     }
 
-    public void SetColliderType()
+    private void SetColliderType()
     {
         RaycastHit hit;
         Ray terrainCheck = new Ray(transform.position, Vector3.down);
 
         if(Physics.Raycast(terrainCheck, out hit))
         {
-            colliderType = hit.collider.gameObject.GetComponent<SurfaceColliderType>().GetTerrainType();
+            if(hit.collider.gameObject.GetComponent<SurfaceColliderType>() != null) 
+            {
+                colliderType = hit.collider.gameObject.GetComponent<SurfaceColliderType>().GetTerrainType();
+            }
         }
     }
 }
