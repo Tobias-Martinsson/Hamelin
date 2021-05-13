@@ -233,15 +233,7 @@ public class PlayerController3D : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-
-            if (netHolding)
-            {
-                netSwipe = true;
-                netHolding = false;
-            }
-        }
+        
     }
 
     private void DamageHandler()
@@ -529,6 +521,10 @@ public class PlayerController3D : MonoBehaviour
 
         }
 
+        if (NetWaitTime(0.50f)){
+            netSwipe = true;
+            netHolding = false;
+        }
     }
 
     void NetSwiping()
@@ -540,7 +536,7 @@ public class PlayerController3D : MonoBehaviour
             maxSpeedXZ = startMaxSpeedXZ / newSwipeMovementDecrease;
         }
 
-        if (NetWaitTime(0.5f))
+        if (NetWaitTime(0.30f))
         {
             NetReset();
         }
@@ -553,14 +549,15 @@ public class PlayerController3D : MonoBehaviour
 
     void NetReset()
     {
-
-        bugNet.isTrigger = true;
-
         maxSpeedXZ = startMaxSpeedXZ;
-
-        catchCheck = false;
-        netReady = true;
-        netSwipe = false;
+    
+            bugNet.isTrigger = true;
+            catchCheck = false;
+            netReady = true;
+            netSwipe = false;
+        
+       
+       
     }
 
 
