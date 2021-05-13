@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Main Author: Henrik Rudén
+//Main Author: Henrik Rudï¿½n
 public class KillZoneController : MonoBehaviour
 {
 
     public GameObject killZonePrefab;
+    public GameObject clouds;
     public Transform killZoneSpawnLcation;
     private bool killZone = false;
 
@@ -36,6 +37,8 @@ public class KillZoneController : MonoBehaviour
     {
         Debug.Log("Create Killzone");
         Instantiate(killZonePrefab, killZoneSpawnLcation);
+        //turns on clouds / My
+        clouds.SetActive(true);
         killZone = true;
         //Instantiate(killZonePrefab, new Vector3(0, 0, 0), Quaternion.identity, killZoneSpawnLcation);
     }
@@ -46,6 +49,8 @@ public class KillZoneController : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
+        //turns of clouds / My
+        clouds.SetActive(false);
         killZone = false;
         //Destroy(hook.gameObject);
     }
