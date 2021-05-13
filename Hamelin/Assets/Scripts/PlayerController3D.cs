@@ -61,6 +61,7 @@ public class PlayerController3D : MonoBehaviour
     private bool climbReady = false;
     public bool upOnRoof = false;
     public bool climbing = false;
+    private bool onGround;
 
     [Header("UI Elements")]
     public GameObject health1;
@@ -98,6 +99,8 @@ public class PlayerController3D : MonoBehaviour
     [Header("Player Mesh")]
     [SerializeField] private GameObject playerMesh;
 
+
+    
     //[Header("Unused Grapplinghook")]
     /*
     public float grapplingSpeed = 0.5f;
@@ -167,7 +170,7 @@ public class PlayerController3D : MonoBehaviour
     void Update()
     {
 
-        bool onGround = GroundCheck(point2);
+        onGround = GroundCheck(point2);
 
         InputSceneChange();
 
@@ -253,9 +256,9 @@ public class PlayerController3D : MonoBehaviour
     {
 
         StopInputDuringDash();
-
+        
         velocity += inputVelocity;
-        velocity += Vector3.down * gravity * Time.deltaTime;
+        velocity += gravityVelocity;
 
 
        
@@ -629,6 +632,10 @@ public class PlayerController3D : MonoBehaviour
             }
         }
 
+    }
+
+    public bool GetOnGround() {
+        return onGround;
     }
 
     public void SetClimbing(bool b)
