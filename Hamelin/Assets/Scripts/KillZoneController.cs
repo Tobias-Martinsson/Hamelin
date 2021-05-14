@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Main Author: Henrik Rud�n
+
+/*
 public class KillZoneController : MonoBehaviour
 {
 
@@ -55,3 +57,4 @@ public class KillZoneController : MonoBehaviour
         //Destroy(hook.gameObject);
     }
 }
+*/
