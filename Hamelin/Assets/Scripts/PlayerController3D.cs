@@ -23,6 +23,7 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 jumpingVelocity;
     private Vector3 jumpPower;
     private Vector3 gravityPower;
+    private float gravityBonus = 1.4f;
 
     [Header("Collision")]
     [SerializeField] private float skinWidth;
@@ -401,7 +402,7 @@ public class PlayerController3D : MonoBehaviour
 
         velocityXZ = new Vector3(velocity.x, 0, velocity.z);
 
-        gravityVelocity = Vector3.down * gravity * Time.deltaTime;
+        gravityVelocity = Vector3.down * gravity * Time.deltaTime * gravityBonus;
 
         jumpingVelocity = Vector3.up * jumpPowerVariable;
 
