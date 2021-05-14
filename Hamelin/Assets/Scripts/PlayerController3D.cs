@@ -64,6 +64,7 @@ public class PlayerController3D : MonoBehaviour
     private bool ladderStartPointBottom;
     public bool climbing = false;
     private bool onGround;
+    private float fallDamageSpeed = -0.4f; 
 
     [Header("UI Elements")]
     public GameObject health1;
@@ -259,6 +260,8 @@ public class PlayerController3D : MonoBehaviour
 
         StopInputDuringDash();
 
+        FallDamage();
+
         velocity += inputVelocity;
         velocity += gravityVelocity;
 
@@ -280,6 +283,8 @@ public class PlayerController3D : MonoBehaviour
 
         transform.position += velocity;
 
+
+       
     }
 
     private void StopInputDuringDash() {
@@ -294,6 +299,7 @@ public class PlayerController3D : MonoBehaviour
                 velocity.z *= 0.1f;
             }
         }
+
     }
 
     private void LimitMaxSpeed() {
@@ -431,6 +437,15 @@ public class PlayerController3D : MonoBehaviour
         }
     }
     */
+
+    private void FallDamage() {
+        if (velocity.y <= fallDamageSpeed && onGround) {
+            SetDamageDealt(true);
+            velocity = new Vector3(0, 0, 0);
+            transform.position = jumpLocation.transform.position;
+        }
+    
+    }
     private void UpdateGroundNormal() {
 
         if (GroundCheck(point2))
