@@ -407,7 +407,7 @@ public class PlayerController3D : MonoBehaviour
         velocityXZ = new Vector3(velocity.x, 0, velocity.z);
 
         //Falling Speed
-        /*
+        
         if (GroundCheck(point2) == false && velocity.y < 0)
         {
             gravity = fallingGravity;
@@ -417,7 +417,8 @@ public class PlayerController3D : MonoBehaviour
         {
             gravity = originalGravity;
         }
-        */
+        
+        //
 
         gravityVelocity = Vector3.down * gravity * Time.deltaTime;
 
