@@ -24,8 +24,11 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 jumpPower;
     private Vector3 gravityPower;
 
-    private float originalGravity;
-    [SerializeField] private float fallingGravity = 0.5f;
+    //falling speed
+    private float originalGravityBonus;
+    [SerializeField] private float newGravityBonus = 1.4f;
+    private float gravityBonus = 1f;
+    //
 
     [Header("Collision")]
     [SerializeField] private float skinWidth;
@@ -132,7 +135,7 @@ public class PlayerController3D : MonoBehaviour
     void Start()
     {
 
-        originalGravity = gravity;
+        originalGravityBonus = gravityBonus;
 
         // Application.targetFrameRate = 60;
         health = maxHealth;
@@ -410,17 +413,20 @@ public class PlayerController3D : MonoBehaviour
         
         if (GroundCheck(point2) == false && velocity.y < 0)
         {
-            gravity = fallingGravity;
+            gravityBonus = newGravityBonus;
 
         }
         else if (GroundCheck(point2) == true)
         {
-            gravity = originalGravity;
+            gravityBonus = originalGravityBonus;
         }
-        
+
         //
 
-        gravityVelocity = Vector3.down * gravity * Time.deltaTime;
+
+
+
+        gravityVelocity = Vector3.down * gravity * Time.deltaTime * gravityBonus;
 
         jumpingVelocity = Vector3.up * jumpPowerVariable;
 
