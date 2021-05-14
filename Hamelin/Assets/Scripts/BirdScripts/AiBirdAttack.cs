@@ -8,27 +8,39 @@ public class AiBirdAttack : State
 {
     public float AttackDistance;
     SomeAgent Agent;
-    private Transform Player;
     public GameObject myPrefab;
+    public float timeLeft;
+    private float originalTime;
+    private int counter = 0;
+    public int maxBombs;
 
 
     protected override void Initialize()
     {
         Agent = (SomeAgent)Owner;
         Debug.Assert(Agent);
+        originalTime = timeLeft;
       
+    }
+
+    public override void Enter()
+    {
+        timeLeft = originalTime;
     }
 
     public override void RunUpdate()
     {
-        Agent.Player.transform.GetComponent<PlayerController3D>().SetDamageDealt(true);
-        Destroy(Instantiate(myPrefab, new Vector3(Agent.transform.position.x, Agent.transform.position.y, Agent.transform.position.z), Quaternion.identity), 5f);
-        
-
-        if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > AttackDistance)
+        timeLeft -= Time.deltaTime;
+        if (timeLeft < 0)
         {
-            Debug.Log("Chase");
-            StateMachine.ChangeState<AiBirdChasePlayer>();
+            Destroy(Instantiate(myPrefab, new Vector3(Agent.transform.position.x, Agent.transform.position.y, Agent.transform.position.z), Quaternion.identity), 2.5f);
+            counter++;
+            timeLeft = originalTime;
+            if(counter == maxBombs)
+            {
+                counter = 0;
+                StateMachine.ChangeState<AiBirdChasePlayer>();
+            }
         }
 
     }

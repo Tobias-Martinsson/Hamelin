@@ -6,15 +6,7 @@ using UnityEngine.AI;
 //Main Author: Tobias Martinsson
 public class BirdAgent : SomeAgent
 {
-    public float timeLeft;
-    public float originalTime;
-    public GameObject myPrefab;
     private StateMachine StateMachine;
-
-    private void Start()
-    {
-        originalTime = timeLeft;
-    }
 
     private void Awake()
     {
@@ -23,19 +15,8 @@ public class BirdAgent : SomeAgent
         StateMachine = new StateMachine(this, States);
     }
 
-
-
     private void Update()
     {
-        /*
-        timeLeft -= Time.deltaTime;
-        if (timeLeft < 0)
-        {
-            Destroy(Instantiate(myPrefab, new Vector3(transform.position.x, transform.position.y, transform.position.z), Quaternion.identity), 5f);
-            timeLeft = originalTime;
-        }
-
-        */
         StateMachine.RunUpdate();
     }
 
