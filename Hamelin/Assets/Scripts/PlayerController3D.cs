@@ -24,6 +24,9 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 jumpPower;
     private Vector3 gravityPower;
 
+    private float originalGravity;
+    [SerializeField] private float fallingGravity = 0.5f;
+
     [Header("Collision")]
     [SerializeField] private float skinWidth;
     [SerializeField] private LayerMask collisionMask;
@@ -128,6 +131,8 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        originalGravity = gravity;
 
         // Application.targetFrameRate = 60;
         health = maxHealth;
@@ -400,6 +405,19 @@ public class PlayerController3D : MonoBehaviour
         inputVelocity = input * acceleration * Time.deltaTime;
 
         velocityXZ = new Vector3(velocity.x, 0, velocity.z);
+
+        //Falling Speed
+        /*
+        if (GroundCheck(point2) == false && velocity.y < 0)
+        {
+            gravity = fallingGravity;
+
+        }
+        else if (GroundCheck(point2) == true)
+        {
+            gravity = originalGravity;
+        }
+        */
 
         gravityVelocity = Vector3.down * gravity * Time.deltaTime;
 
