@@ -24,6 +24,7 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 jumpPower;
     private Vector3 gravityPower;
     private float gravityBonus = 1.4f;
+    private float gravityFallBonus = 2.4f;
 
     [Header("Collision")]
     [SerializeField] private float skinWidth;
@@ -364,7 +365,7 @@ public class PlayerController3D : MonoBehaviour
 
     private void MovementSetup()
     {
-       //Points på spelaren
+        //Points på spelaren
         point1 = transform.position + collider.center + Vector3.up * (collider.height / 2 - collider.radius);
         point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
 
@@ -402,11 +403,19 @@ public class PlayerController3D : MonoBehaviour
 
         velocityXZ = new Vector3(velocity.x, 0, velocity.z);
 
-        gravityVelocity = Vector3.down * gravity * Time.deltaTime * gravityBonus;
+     
+        if (velocity.y < 0.1)
+        {
+            gravityVelocity = Vector3.down * gravity * Time.deltaTime * gravityFallBonus;
+        }
+        else {
+            gravityVelocity = Vector3.down * gravity * Time.deltaTime * gravityBonus;
+        }
 
         jumpingVelocity = Vector3.up * jumpPowerVariable;
 
     }
+
     private void CheckKillZoneCollision(RaycastHit hit) {
         if (hit.collider != null)
         {
