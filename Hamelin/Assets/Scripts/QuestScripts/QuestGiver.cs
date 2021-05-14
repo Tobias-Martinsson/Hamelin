@@ -57,7 +57,7 @@ public class QuestGiver : MonoBehaviour
 
         questGoal.currentAmount = bugNet.Score;
         quest.QuestCompleted();
-        logText.text = "Caught " + bugNet.Score.ToString() + " /" + quest.enemyAmount.ToString() + " pests.";
+        logText.text = "Caught " + bugNet.Score.ToString() + " / " + quest.enemyAmount.ToString() + " pests.";
     }
 
     private void SetQuestLog()
