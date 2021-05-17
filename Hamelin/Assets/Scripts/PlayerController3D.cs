@@ -410,7 +410,7 @@ public class PlayerController3D : MonoBehaviour
         velocityXZ = new Vector3(velocity.x, 0, velocity.z);
 
 
-        if (velocity.y < 0.1)
+        if (velocity.y < 0.1 && !onGround)
         {
             gravityVelocity = Vector3.down * gravity * Time.deltaTime * gravityFallBonus;
         }
