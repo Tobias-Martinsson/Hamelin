@@ -61,9 +61,10 @@ public class PlayerController3D : MonoBehaviour
     private bool invincible = false;
     private bool dashing = false;
     private bool climbReady = false;
-    public bool upOnRoof = false;
+    private bool ladderStartPointBottom;
     public bool climbing = false;
     private bool onGround;
+    private float fallDamageSpeed = -0.4f; 
 
     [Header("UI Elements")]
     public GameObject health1;
@@ -102,7 +103,7 @@ public class PlayerController3D : MonoBehaviour
     [SerializeField] private GameObject playerMesh;
 
 
-    
+
     //[Header("Unused Grapplinghook")]
     /*
     public float grapplingSpeed = 0.5f;
@@ -178,7 +179,7 @@ public class PlayerController3D : MonoBehaviour
 
         InputAbilities(onGround);
 
-       
+
 
     }
     private void InputSceneChange() {
@@ -207,7 +208,7 @@ public class PlayerController3D : MonoBehaviour
         {
             if (climbReady && !climbing && onGround)
             {
-                if (!upOnRoof)
+                if (ladderStartPointBottom)
                 {
                     transform.position = ladderpointBottom;
                 }
@@ -238,7 +239,7 @@ public class PlayerController3D : MonoBehaviour
             }
         }
 
-        
+
     }
 
     private void DamageHandler()
@@ -258,12 +259,14 @@ public class PlayerController3D : MonoBehaviour
     {
 
         StopInputDuringDash();
-        
+
+        FallDamage();
+
         velocity += inputVelocity;
         velocity += gravityVelocity;
 
 
-       
+
         LimitMaxSpeed();
 
         ApplyAirResistance();
@@ -280,6 +283,8 @@ public class PlayerController3D : MonoBehaviour
 
         transform.position += velocity;
 
+
+       
     }
 
     private void StopInputDuringDash() {
@@ -294,6 +299,7 @@ public class PlayerController3D : MonoBehaviour
                 velocity.z *= 0.1f;
             }
         }
+
     }
 
     private void LimitMaxSpeed() {
@@ -381,7 +387,7 @@ public class PlayerController3D : MonoBehaviour
             collisionMask
         );
 
-        CheckKillZoneCollision(hit);
+        //CheckKillZoneCollision(hit);
 
         // Rotate player. To keep or not to keep
         playerMesh.transform.rotation = Quaternion.Euler(0, rotationY, 0);
@@ -403,7 +409,7 @@ public class PlayerController3D : MonoBehaviour
 
         velocityXZ = new Vector3(velocity.x, 0, velocity.z);
 
-     
+
         if (velocity.y < 0.1)
         {
             gravityVelocity = Vector3.down * gravity * Time.deltaTime * gravityFallBonus;
@@ -415,7 +421,7 @@ public class PlayerController3D : MonoBehaviour
         jumpingVelocity = Vector3.up * jumpPowerVariable;
 
     }
-
+    /*
     private void CheckKillZoneCollision(RaycastHit hit) {
         if (hit.collider != null)
         {
@@ -430,7 +436,16 @@ public class PlayerController3D : MonoBehaviour
 
         }
     }
+    */
 
+    private void FallDamage() {
+        if (velocity.y <= fallDamageSpeed && onGround) {
+            SetDamageDealt(true);
+            velocity = new Vector3(0, 0, 0);
+            transform.position = jumpLocation.transform.position;
+        }
+    
+    }
     private void UpdateGroundNormal() {
 
         if (GroundCheck(point2))
@@ -534,7 +549,7 @@ public class PlayerController3D : MonoBehaviour
 
         }
 
-        if (NetWaitTime(0.50f)){
+        if (NetWaitTime(0.50f)) {
             netSwipe = true;
             netHolding = false;
         }
@@ -563,14 +578,14 @@ public class PlayerController3D : MonoBehaviour
     void NetReset()
     {
         maxSpeedXZ = startMaxSpeedXZ;
-    
-            bugNet.isTrigger = true;
-            catchCheck = false;
-            netReady = true;
-            netSwipe = false;
-        
-       
-       
+
+        bugNet.isTrigger = true;
+        catchCheck = false;
+        netReady = true;
+        netSwipe = false;
+
+
+
     }
 
 
@@ -661,14 +676,14 @@ public class PlayerController3D : MonoBehaviour
         gravityVelocity = new Vector3(0, 0, 0);
         jumpingVelocity = new Vector3(0, 0, 0);
 
-        if (!upOnRoof)
+        if (ladderStartPointBottom)
         {
 
             velocity = Vector3.up * 4f * Time.deltaTime;
 
             if (transform.position.y >= ladderpointTop.y)
             {
-                velocity = new Vector3(0,0,0);
+                velocity = new Vector3(0, 0, 0);
                 transform.position = ladderpointEnd;
                 ExitClimb();
             }
@@ -687,14 +702,6 @@ public class PlayerController3D : MonoBehaviour
 
         void ExitClimb()
         {
-            if (!upOnRoof)
-            {
-                upOnRoof = true;
-            }
-            else
-            {
-                upOnRoof = false;
-            }
 
             climbing = false;
 
@@ -751,6 +758,12 @@ public class PlayerController3D : MonoBehaviour
         ladderpointEnd = p;
     }
 
+    public void SetLadderStartPointBottom(bool b) {
+        if (climbing == false) {
+            ladderStartPointBottom = b;
+        }
+    }
+
     public bool GroundCheck(Vector3 point2)
     {
 
@@ -758,7 +771,7 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-
+    
 
     Vector3 GroundNormal(Vector3 point2)
     {
