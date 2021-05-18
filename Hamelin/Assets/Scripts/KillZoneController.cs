@@ -4,7 +4,7 @@ using UnityEngine;
 
 //Main Author: Henrik Rud�n
 
-/*
+
 public class KillZoneController : MonoBehaviour
 {
 
@@ -24,12 +24,12 @@ public class KillZoneController : MonoBehaviour
 
     void Update()
     {
-        if (playerController.upOnRoof && !killZone)
+        if (playerController.getUpOnRoof() && !killZone)
         {
             SpawnKillZone();
         }
 
-        if (playerController.upOnRoof && playerController.climbing && killZone)
+        if (playerController.getUpOnRoof() && playerController.climbing && killZone)
         {
             DestroyKillZone();
         }
@@ -57,4 +57,3 @@ public class KillZoneController : MonoBehaviour
         //Destroy(hook.gameObject);
     }
 }
-*/

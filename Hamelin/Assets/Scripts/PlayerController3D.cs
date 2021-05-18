@@ -25,6 +25,7 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 gravityPower;
     private float gravityBonus = 1.4f;
     private float gravityFallBonus = 2.4f;
+    private bool upOnRoof = false;
 
     [Header("Collision")]
     [SerializeField] private float skinWidth;
@@ -674,14 +675,16 @@ public class PlayerController3D : MonoBehaviour
             {
                 velocity = new Vector3(0, 0, 0);
                 transform.position = ladderpointEnd;
+                upOnRoof = true;
                 ExitClimb();
             }
 
         }
         else
         {
+            
             velocity = Vector3.down * 4f * Time.deltaTime;
-
+            upOnRoof = false;
             if (transform.position.y <= ladderpointBottom.y)
             {
                 ExitClimb();
@@ -760,6 +763,10 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    public bool getUpOnRoof() {
+
+        return upOnRoof;
+    }
     
 
     Vector3 GroundNormal(Vector3 point2)
