@@ -248,6 +248,21 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9bf0aec74f0f44047ad3b9161b122d4e, type: 3}
   - {fileID: 8300000, guid: 5ba3f2cd5c1542d43afbd6f92cb3e29a, type: 3}
   - {fileID: 8300000, guid: f0f62fd13cfd762469f6ccaf6f63a892, type: 3}
+  player: {fileID: 8995250748122010049}
+--- !u!114 &7405142763622572844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8076332044847313536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4679b0d9e17500c468da5ff201fa80d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  player: {fileID: 8995250748122010049}
 --- !u!1 &8995250748122010054
 GameObject:
   m_ObjectHideFlags: 0
@@ -386,7 +401,6 @@ MonoBehaviour:
   point1: {x: 0, y: 0, z: 0}
   point2: {x: 0, y: 0, z: 0}
   health: 0
-  upOnRoof: 0
   climbing: 0
   health1: {fileID: 0}
   health2: {fileID: 0}
