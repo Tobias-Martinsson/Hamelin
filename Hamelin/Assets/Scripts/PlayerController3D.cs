@@ -385,7 +385,6 @@ public class PlayerController3D : MonoBehaviour
             collisionMask
         );
 
-        CheckKillZoneCollision(hit);
 
         // Rotate player. To keep or not to keep
         playerMesh.transform.rotation = Quaternion.Euler(0, rotationY, 0);
@@ -420,19 +419,13 @@ public class PlayerController3D : MonoBehaviour
 
     }
     
-    private void CheckKillZoneCollision(RaycastHit hit) {
-        if (hit.collider != null)
-        {
-            if (hit.transform.gameObject.layer == LayerMask.NameToLayer("killZone") && respawnPoint)
-            {
+    public void KillZoneCollision() {
+
                 Debug.Log("RESPAWN");
                 SetDamageDealt(true);
                 velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
                 transform.position = jumpLocation.transform.position;
 
-            }
-
-        }
     }
     
 
