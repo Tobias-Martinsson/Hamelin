@@ -14,10 +14,13 @@ public class DynamicFootsteps : MonoBehaviour
     public AudioClip[] grassSteps;
     public AudioClip[] carSteps;
 
+    public PlayerController3D player;
+
     void Start()
     {
         source = GetComponent<AudioSource>();
         colliderType = "";
+        player = player.GetComponent<PlayerController3D>();
     }
 
     void Update()
@@ -27,7 +30,7 @@ public class DynamicFootsteps : MonoBehaviour
 
     public void PlayDynamicFootstep()
     {
-        if (!source.isPlaying)
+        if (!source.isPlaying && player.GetOnGround() == true)
         {
             switch (colliderType)
             {
