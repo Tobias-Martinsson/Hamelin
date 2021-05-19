@@ -313,12 +313,12 @@ public class PlayerController3D : MonoBehaviour
         // en egen maxspeed för y hastigheten
         if (velocity.y >= maxSpeedY)
         {
-            velocity.x = maxSpeedY;
+            velocity.y = maxSpeedY;
 
         }
         if (velocity.y <= -maxSpeedY)
         {
-            velocity.z = -maxSpeedY;
+            velocity.y = -maxSpeedY;
 
         }
     }
