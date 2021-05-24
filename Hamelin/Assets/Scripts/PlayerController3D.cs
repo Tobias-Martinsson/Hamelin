@@ -198,6 +198,22 @@ public class PlayerController3D : MonoBehaviour
 
     private void InputAbilities(bool onGround)
     {
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            SaveSystem.SavePlayer(this);
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            PlayerData data = SaveSystem.LoadPlayer();
+            health = data.health;
+            Vector3 position;
+            position.x = data.position[0];
+            position.y = data.position[1];
+            position.z = data.position[2];
+            transform.position = position;
+            
+        }
+
         //dash
         if (Input.GetKeyDown(KeyCode.LeftShift) && onGround)
         {
