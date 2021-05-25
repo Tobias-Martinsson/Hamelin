@@ -12,9 +12,11 @@ public class SomeAgent : MonoBehaviour
     public Vector3 point1;
     public Vector3 point2;
 
+    public Transform agentTransform;
+
     public List<Transform> PatrolPoints;
     public new CapsuleCollider collider;
-    public State[] States; 
+    public State[] States;
 
     private StateMachine StateMachine;
     public Transform GetPatrolPoint => PatrolPoints[Random.Range(0, PatrolPoints.Count)];
@@ -23,10 +25,17 @@ public class SomeAgent : MonoBehaviour
 
     private void Awake()
     {
-        collider = GetComponent <CapsuleCollider>();
+        collider = GetComponent<CapsuleCollider>();
         NavAgent = GetComponent<NavMeshAgent>();
         StateMachine = new StateMachine(this, States);
+
+        agentTransform = GetComponent<Transform>();
+
+        
+
         //Player = GameObject.FindGameObjectWithTag("Player");
+
+
     }
 
     private void Update()
@@ -36,7 +45,12 @@ public class SomeAgent : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-       
+
+    }
+
+    
+    public void resetTransform(Transform t) {
+        agentTransform = t;
     }
 
 }
