@@ -15,4 +15,26 @@ public class MainMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void OnNewGame()
+    {
+
+    }
+    public void OnLoadGame()
+    {
+
+    }
+    public void OnOptions()
+    {
+
+    }
+
+    public void OnCredits()
+    {
+
+    }
+    public void OnHowToPlay()
+    {
+
+    }
 }
