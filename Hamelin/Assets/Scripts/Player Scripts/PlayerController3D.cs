@@ -184,10 +184,10 @@ public class PlayerController3D : MonoBehaviour
     }
     private void InputSceneChange() {
 
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
+        //if (Input.GetKeyDown(KeyCode.Escape))
+        //{
+        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+       // }
 
 
         if (Input.GetKeyDown(KeyCode.O))
