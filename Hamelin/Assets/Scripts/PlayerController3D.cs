@@ -131,7 +131,7 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        SaveSystem.SavePlayer(this);
         // Application.targetFrameRate = 60;
         health = maxHealth;
         health1.SetActive(true);
