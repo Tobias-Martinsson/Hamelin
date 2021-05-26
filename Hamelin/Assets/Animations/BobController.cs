@@ -1,21 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
+//Main author: Andreas Scherman
+//Secondary author: Freja Muruganand
 public class BobController : MonoBehaviour
 {
+    public AudioClip attackSound;
+    public AudioClip[] ladderSounds;
+
     private Animator anim;
+    private AudioSource source;
 
     private float speed;
     private float direction;
 
-    // Start is called before the first frame update
+    private float minPitch = 0.7f;
+    private float maxPitch = 1.2f;
+
     void Start()
     {       
         anim = gameObject.GetComponent<Animator>();
+        source = gameObject.GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         speed = Input.GetAxis("Vertical");
@@ -25,7 +34,9 @@ public class BobController : MonoBehaviour
         anim.SetFloat("Direction", direction);
 
         if (Input.GetButtonDown("Fire1"))
-            anim.SetBool("Attack",true);
+        {
+            anim.SetBool("Attack", true);
+        }
         if (Input.GetButtonUp("Fire1"))
             anim.SetBool("Attack", false);
         if (Input.GetButtonDown("Fire2"))
@@ -34,6 +45,20 @@ public class BobController : MonoBehaviour
             anim.SetTrigger("Jump");
         if (Input.GetButtonDown("Fire3"))
             anim.SetTrigger("Taunt");
+    }
 
+    public void PlayAttackSound()
+    {
+        source.pitch = Random.Range(minPitch, maxPitch);
+        source.PlayOneShot(attackSound);
+    }
+
+    public void PlayLadderSound()
+    {
+        int clipIndex = Random.Range(1, ladderSounds.Length);
+        AudioClip clip = ladderSounds[clipIndex];
+        source.PlayOneShot(clip);
+        ladderSounds[clipIndex] = ladderSounds[0];
+        ladderSounds[0] = clip;
     }
 }
