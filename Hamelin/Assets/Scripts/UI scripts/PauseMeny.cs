@@ -9,6 +9,7 @@ public class PauseMeny : MonoBehaviour
     public GameObject convoPanel;
     public GameObject popupPanel;
     public GameObject questPanel;
+    public GameObject hTPPanel;
     public bool conversationPanelActivation;
     public bool popupPanelActivation;
     // Start is called before the first frame update
@@ -100,6 +101,18 @@ public class PauseMeny : MonoBehaviour
         }
 
     }
+
+    public void howToPlay(){
+        hTPPanel.SetActive(true);
+        pauseMeny.SetActive(false);
+
+    }
+
+    public void backToMenu(){
+        hTPPanel.SetActive(false);
+        pauseMeny.SetActive(true);
+    }
+
 
 
 
