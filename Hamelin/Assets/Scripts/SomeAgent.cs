@@ -13,6 +13,8 @@ public class SomeAgent : MonoBehaviour
     public Vector3 point2;
 
     public Transform agentTransform;
+    private Vector3 agentSavePosition;
+    private Quaternion agentSaveRotation;
 
     public List<Transform> PatrolPoints;
     public new CapsuleCollider collider;
@@ -31,7 +33,7 @@ public class SomeAgent : MonoBehaviour
 
         agentTransform = GetComponent<Transform>();
 
-        
+        AllAgents.AddAgent(this);
 
         //Player = GameObject.FindGameObjectWithTag("Player");
 
@@ -40,6 +42,7 @@ public class SomeAgent : MonoBehaviour
 
     private void Update()
     {
+       
         StateMachine.RunUpdate();
     }
 
@@ -48,9 +51,18 @@ public class SomeAgent : MonoBehaviour
 
     }
 
-    
-    public void resetTransform(Transform t) {
-        agentTransform = t;
+    public void AgentSaveTransform() {
+        
+        agentSavePosition = agentTransform.position;
+        agentSaveRotation = agentTransform.rotation;
+        Debug.Log(agentSavePosition+ " IS SAVED" );
+    }
+   
+    public void AgentResetTransform() {
+
+        NavAgent.Warp(agentSavePosition);
+        NavAgent.transform.rotation = agentSaveRotation;
+        Debug.Log(NavAgent.transform.position + ""+  agentSavePosition + " SHOULD BE RESET");
     }
 
 }

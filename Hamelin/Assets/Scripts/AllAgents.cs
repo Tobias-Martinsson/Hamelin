@@ -6,7 +6,6 @@ public static class AllAgents
 {
     private static List<SomeAgent> allAgents = new List<SomeAgent>();
 
-    private static int counter = 0;
     private static int listSize = 0;
     public static void AddAgent(SomeAgent a) {
         allAgents.Add(a);
@@ -16,22 +15,32 @@ public static class AllAgents
         Debug.Log(listSize);
     }
 
-    public static List<SomeAgent> GetList() {
-
-        return allAgents;
+    public static void SaveTransforms() {
+        foreach (SomeAgent agent in allAgents)
+        {
+            if (agent != null)
+            {
+                agent.AgentSaveTransform();
+            }
+            else {
+               
+            }
+        }
     }
-
     public static void ResetEnemies() {
         
         foreach (SomeAgent agent in allAgents) {
 
-            for (int i = 0; i > listSize; i++)
+            if (agent != null)
             {
-                if (agent.Equals(allAgents[counter])){
-                    agent.resetTransform(allAgents[counter].transform);
-                }
-        
+                agent.AgentResetTransform();
             }
+            else
+            {
+               
+            }
+
+
         }
         
         }

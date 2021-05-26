@@ -18,7 +18,6 @@ public class BirdAgent : SomeAgent
         agentTransform = GetComponent<Transform>();
 
         AllAgents.AddAgent(this);
-
     }
 
     private void Update()

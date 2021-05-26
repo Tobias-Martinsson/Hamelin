@@ -201,6 +201,8 @@ public class PlayerController3D : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
         {
             SaveSystem.SavePlayer(this);
+
+            AllAgents.SaveTransforms();
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
