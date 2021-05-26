@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PausMeny : MonoBehaviour
+public class PauseMeny : MonoBehaviour
 {
     public GameObject pauseMeny;
     // Start is called before the first frame update
