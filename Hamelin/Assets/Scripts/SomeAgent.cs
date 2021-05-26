@@ -35,22 +35,27 @@ public class SomeAgent : MonoBehaviour
 
         AllAgents.AddAgent(this);
 
-        //Player = GameObject.FindGameObjectWithTag("Player");
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
 
 
     }
 
     private void Update()
     {
-       
         StateMachine.RunUpdate();
     }
 
-    void OnTriggerEnter(Collider other)
+    public void SetPatrolPoints(List<Transform> pPoints)
     {
-
+        PatrolPoints = pPoints;
     }
 
+    private void OnDestroy()
+    {
+        Debug.Log("Removed rat from list");
+        AllAgents.removeAgent(this);
+        //AllAgents.allAgentSaveData.Remove(this);
+    }
     public void AgentSaveTransform() {
         
         agentSavePosition = agentTransform.position;
