@@ -29,6 +29,17 @@ public class BugNetController : MonoBehaviour
         }  
     }
 
+    public int getScore()
+    {
+        return score;
+    }
+
+    public void setScore(int savedScore)
+    {
+        score = savedScore;
+    }
+
+
     private void AddScore() => score++;
 
     public int Score => score;

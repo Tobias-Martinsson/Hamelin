@@ -7,14 +7,14 @@ public class PlayerData
     public int health;
     public float[] position;
     public List<EnemySaveData> enemySaveData = new List<EnemySaveData>();
-
+    public int score;
+    public bool onRoof;
 
     public PlayerData(PlayerController3D player)
     {
-
+        score = player.GetComponentInChildren<BugNetController>().getScore();
         enemySaveData = AllAgents.convertToSaveData();
-        Debug.Log(health);
-        Debug.Log("Current health: " + player.health);
+        onRoof = player.getUpOnRoof();
         health = player.health;
         position = new float[3];
 
