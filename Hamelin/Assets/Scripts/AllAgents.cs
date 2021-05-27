@@ -12,9 +12,6 @@ public static class AllAgents
     public static void AddAgent(SomeAgent a) {
         allAgents.Add(a);
         listSize++;
-
-        Debug.Log(a.transform.position);
-        Debug.Log(listSize);
     }
 
     public static List<EnemySaveData> convertToSaveData()

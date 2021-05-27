@@ -52,7 +52,6 @@ public class SomeAgent : MonoBehaviour
 
     private void OnDestroy()
     {
-        Debug.Log("Removed rat from list");
         AllAgents.removeAgent(this);
         //AllAgents.allAgentSaveData.Remove(this);
     }
@@ -60,7 +59,7 @@ public class SomeAgent : MonoBehaviour
         
         agentSavePosition = agentTransform.position;
         agentSaveRotation = agentTransform.rotation;
-        Debug.Log(agentSavePosition+ " IS SAVED" );
+        //Debug.Log(agentSavePosition+ " IS SAVED" );
     }
    
     public void AgentResetTransform() {
