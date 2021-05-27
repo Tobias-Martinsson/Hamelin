@@ -32,9 +32,8 @@ public class LadderClimb : MonoBehaviour
   
        
         void OnTriggerEnter(Collider collision)
-    {
+        {
         
-        Debug.Log("ENTER");
         //input for ladder
 
         if (collision.gameObject.tag == "Player")

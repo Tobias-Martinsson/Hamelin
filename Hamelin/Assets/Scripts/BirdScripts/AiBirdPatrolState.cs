@@ -16,6 +16,7 @@ public class AiBirdPatrolState : State
     {
         Agent = (SomeAgent)Owner;
         Debug.Assert(Agent);
+        
     }
 
     public override void Enter()
@@ -26,6 +27,9 @@ public class AiBirdPatrolState : State
     }
     public override void RunUpdate()
     {
+       
+        
+
         if (Agent.NavAgent.remainingDistance < 2.0f)
         {
             CurrentPatrol = Agent.GetPatrolPoint;
