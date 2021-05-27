@@ -12,9 +12,13 @@ public class SomeAgent : MonoBehaviour
     public Vector3 point1;
     public Vector3 point2;
 
+    public Transform agentTransform;
+    private Vector3 agentSavePosition;
+    private Quaternion agentSaveRotation;
+
     public List<Transform> PatrolPoints;
     public new CapsuleCollider collider;
-    public State[] States; 
+    public State[] States;
 
     private StateMachine StateMachine;
     public Transform GetPatrolPoint => PatrolPoints[Random.Range(0, PatrolPoints.Count)];
@@ -23,10 +27,17 @@ public class SomeAgent : MonoBehaviour
 
     private void Awake()
     {
-        collider = GetComponent <CapsuleCollider>();
+        collider = GetComponent<CapsuleCollider>();
         NavAgent = GetComponent<NavMeshAgent>();
         StateMachine = new StateMachine(this, States);
-        //Player = GameObject.FindGameObjectWithTag("Player");
+
+        agentTransform = GetComponent<Transform>();
+
+        AllAgents.AddAgent(this);
+
+        Player = GameObject.FindGameObjectWithTag("Player").transform;
+
+
     }
 
     private void Update()
@@ -34,9 +45,28 @@ public class SomeAgent : MonoBehaviour
         StateMachine.RunUpdate();
     }
 
-    void OnTriggerEnter(Collider other)
+    public void SetPatrolPoints(List<Transform> pPoints)
     {
-       
+        PatrolPoints = pPoints;
+    }
+
+    private void OnDestroy()
+    {
+        AllAgents.removeAgent(this);
+        //AllAgents.allAgentSaveData.Remove(this);
+    }
+    public void AgentSaveTransform() {
+        
+        agentSavePosition = agentTransform.position;
+        agentSaveRotation = agentTransform.rotation;
+        //Debug.Log(agentSavePosition+ " IS SAVED" );
+    }
+   
+    public void AgentResetTransform() {
+
+        NavAgent.Warp(agentSavePosition);
+        NavAgent.transform.rotation = agentSaveRotation;
+        Debug.Log(NavAgent.transform.position + ""+  agentSavePosition + " SHOULD BE RESET");
     }
 
 }
