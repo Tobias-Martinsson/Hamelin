@@ -237,6 +237,8 @@ public class PlayerController3D : MonoBehaviour
                 enemyRotation.y = e.rotation[2];
                 enemyRotation.z = e.rotation[3];
 
+                SetUIHealth();
+
                 Debug.Log(data.enemySaveData[0].name);
 
                 if (e.name.Contains("Variant"))
@@ -684,19 +686,36 @@ public class PlayerController3D : MonoBehaviour
             invincible = true;
 
             startDamageTimer = true;
-            if (health == 2)
-            {
-                health3.SetActive(false);
-
-
-            }
-            else if (health == 1)
-            {
-                health2.SetActive(false);
-
-            }
+            SetUIHealth();
         }
 
+    }
+
+    public void SetUIHealth()
+    {
+        if(health == 3)
+        {
+            health1.SetActive(true);
+            health2.SetActive(true);
+            health3.SetActive(true);
+        }
+        else if (health == 2)
+        {
+            health3.SetActive(false);
+            health2.SetActive(true);
+            health1.SetActive(true);
+
+        }
+        else if (health == 1)
+        {
+            health3.SetActive(false);
+            health2.SetActive(false);
+            health1.SetActive(true);
+        }
+        else if (health == 0)
+        {
+            health1.SetActive(false);
+        }
     }
 
     public bool GetOnGround() {

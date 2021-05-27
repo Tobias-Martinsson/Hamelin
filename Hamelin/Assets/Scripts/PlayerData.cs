@@ -11,7 +11,10 @@ public class PlayerData
 
     public PlayerData(PlayerController3D player)
     {
+
         enemySaveData = AllAgents.convertToSaveData();
+        Debug.Log(health);
+        Debug.Log("Current health: " + player.health);
         health = player.health;
         position = new float[3];
 
