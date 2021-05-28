@@ -8,6 +8,7 @@ public class LadderClimb : MonoBehaviour
     public Transform topPoint;
     public Transform bottomPoint;
     public Transform endPoint;
+    public Transform ladderTransform;
 
     private void OnTriggerStay(Collider collision)
     {
@@ -43,7 +44,7 @@ public class LadderClimb : MonoBehaviour
             collision.gameObject.GetComponent<PlayerController3D>().SetLadderPointBottom(bottomPoint.position);
             collision.gameObject.GetComponent<PlayerController3D>().SetLadderPointEnd(endPoint.position);
             collision.gameObject.GetComponent<PlayerController3D>().SetClimbReady(true);
-
+            collision.gameObject.GetComponent<PlayerController3D>().SetLadderRotation(ladderTransform.rotation);
         }
             
         }

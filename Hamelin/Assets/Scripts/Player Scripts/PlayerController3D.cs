@@ -76,6 +76,7 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 ladderpointTop;
     private Vector3 ladderpointBottom;
     private Vector3 ladderpointEnd;
+    private Quaternion ladderRotation;
 
     [Header("Bugnet Variables")]
     private float netRotationX = 0;
@@ -272,10 +273,12 @@ public class PlayerController3D : MonoBehaviour
                 if (ladderStartPointBottom)
                 {
                     transform.position = ladderpointBottom;
+      
                 }
                 else
                 {
                     transform.position = ladderpointTop;
+                
                 }
                 SetClimbing(true);
             }
@@ -448,8 +451,14 @@ public class PlayerController3D : MonoBehaviour
 
 
         // Rotate player. To keep or not to keep
-        playerMesh.transform.rotation = Quaternion.Euler(0, rotationY, 0);
-
+        if (climbing == false)
+        {
+            playerMesh.transform.rotation = Quaternion.Euler(0, rotationY, 0);
+        }
+        else {
+          
+            playerMesh.transform.rotation = ladderRotation;
+        }
         input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
 
         if (input.magnitude > 1.0f)
@@ -724,6 +733,10 @@ public class PlayerController3D : MonoBehaviour
         return onGround;
     }
 
+    public void SetLadderRotation(Quaternion q) {
+        ladderRotation = Quaternion.Euler(q.x, q.y, q.z);
+    }
+
     public void SetClimbing(bool b)
     {
 
@@ -767,7 +780,6 @@ public class PlayerController3D : MonoBehaviour
         {
 
             climbing = false;
-
         }
 
     }
