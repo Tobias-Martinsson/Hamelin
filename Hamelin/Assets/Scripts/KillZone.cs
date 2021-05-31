@@ -29,7 +29,7 @@ public class KillZone : MonoBehaviour
 
         }
 
-        if (!playerController.getUpOnRoof() && killZone)
+        if (playerController.climbing && killZone)
         {
             DestroyKillZone();
 
