@@ -225,10 +225,6 @@ public class PlayerController3D : MonoBehaviour
             position.z = data.position[2];
             transform.position = position;
 
-            upOnRoof = data.onRoof;
-            GetComponentInChildren<BugNetController>().setScore(data.score);
-            SetUIHealth();
-
             foreach (EnemySaveData e in data.enemySaveData)
             {
                 Vector3 enemyPosition;
@@ -242,7 +238,9 @@ public class PlayerController3D : MonoBehaviour
                 enemyRotation.y = e.rotation[2];
                 enemyRotation.z = e.rotation[3];
 
-                
+                SetUIHealth();
+
+                Debug.Log(data.enemySaveData[0].name);
 
                 if (e.name.Contains("Variant"))
                 {
