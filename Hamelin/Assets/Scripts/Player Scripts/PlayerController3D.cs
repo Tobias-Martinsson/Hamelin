@@ -723,10 +723,6 @@ public class PlayerController3D : MonoBehaviour
             health2.SetActive(false);
             health1.SetActive(true);
         }
-        else if (health == 0)
-        {
-            health1.SetActive(false);
-        }
     }
 
     public bool GetOnGround() {
