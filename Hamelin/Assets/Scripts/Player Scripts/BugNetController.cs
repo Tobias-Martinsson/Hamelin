@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 //Main Author: Tim Agélii
 //Secondary Author: Tobias Martinsson
@@ -8,9 +9,21 @@ public class BugNetController : MonoBehaviour
 {
     public new SphereCollider collider;
 
+    public AudioClip catchSound;
+
+    private AudioSource source;
+
+    private float minPitch = 0.7f;
+    private float maxPitch = 0.9f;
+
     private int score = 0;
 
     void Awake() => collider = GetComponent<SphereCollider>();
+
+    void Start()
+    {
+        source = GetComponent<AudioSource>();
+    }
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -26,6 +39,7 @@ public class BugNetController : MonoBehaviour
             
             //incresse scorecount by 1.
             AddScore();
+            PlayCatchSound();
         }  
     }
 
@@ -39,8 +53,13 @@ public class BugNetController : MonoBehaviour
         score = savedScore;
     }
 
-
     private void AddScore() => score++;
+
+    private void PlayCatchSound()
+    {
+        source.pitch = Random.Range(minPitch, maxPitch);
+        source.PlayOneShot(catchSound);
+    }
 
     public int Score => score;
 
