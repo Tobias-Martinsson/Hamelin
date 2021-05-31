@@ -40,6 +40,7 @@ public class MainMenu : MonoBehaviour
     //When player push the new game button
     public void OnNewGame()
     {
+        PlayerPrefs.SetInt("loaded", 0);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
 
     }
@@ -47,7 +48,7 @@ public class MainMenu : MonoBehaviour
     //When player push the load game button
     public void OnLoadGame()
     {
-
+        SceneManager.LoadScene(currentScene);
     }
 
     // when player push the options buttonm
