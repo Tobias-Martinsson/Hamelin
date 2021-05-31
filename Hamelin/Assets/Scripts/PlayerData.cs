@@ -9,6 +9,8 @@ public class PlayerData
     public List<EnemySaveData> enemySaveData = new List<EnemySaveData>();
     public int score;
     public bool onRoof;
+    public int currentScene;
+    public bool loaded;
 
     public PlayerData(PlayerController3D player)
     {
@@ -16,6 +18,8 @@ public class PlayerData
         enemySaveData = AllAgents.convertToSaveData();
         onRoof = player.getUpOnRoof();
         health = player.health;
+        currentScene = player.currentScene;
+        loaded = player.loaded;
         position = new float[3];
 
         position[0] = player.transform.position.x;

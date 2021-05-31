@@ -65,6 +65,8 @@ public class PlayerController3D : MonoBehaviour
     private bool ladderStartPointBottom;
     public bool climbing = false;
     private bool onGround;
+    public int currentScene;
+    public bool loaded;
 
     [Header("UI Elements")]
     public GameObject health1;
@@ -107,6 +109,7 @@ public class PlayerController3D : MonoBehaviour
     public GameObject myRatPrefab;
     public GameObject myBirdPrefab;
 
+    
 
     //[Header("Unused Grapplinghook")]
     /*
@@ -135,12 +138,43 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SaveSystem.SavePlayer(this);
-        // Application.targetFrameRate = 60;
-        health = maxHealth;
+        startMaxSpeedXZ = maxSpeedXZ;
+        Cursor.lockState = CursorLockMode.Confined;
         health1.SetActive(true);
         health2.SetActive(true);
         health3.SetActive(true);
+
+
+        if (PlayerPrefs.HasKey("loaded") == false){
+            PlayerPrefs.SetInt("loaded", 0);
+        }
+     
+
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        if (PlayerPrefs.GetInt("loaded") == 1)
+        {
+            LoadGame();
+        }
+        else{
+            Debug.Log(health);
+            health = maxHealth;
+
+            SaveGame();
+        }
+
+
+
+
+
+
+
+        currentScene = SceneManager.GetActiveScene().buildIndex;
+
+
+        SaveSystem.SavePlayer(this);
+        // Application.targetFrameRate = 60;
+      
 
         scene = SceneManager.GetActiveScene();
 
@@ -152,8 +186,7 @@ public class PlayerController3D : MonoBehaviour
 
         //StateMachine = new StateMachine(this, States);
 
-        startMaxSpeedXZ = maxSpeedXZ;
-        Cursor.lockState = CursorLockMode.Confined;
+     
     }
 
     private bool grounded = false;
@@ -200,66 +233,62 @@ public class PlayerController3D : MonoBehaviour
         }
     }
 
+    public void SaveGame() {
+        PlayerPrefs.SetInt("loaded", 1);
+        SaveSystem.SavePlayer(this);
+
+        AllAgents.SaveTransforms();
+    }
+    private void LoadGame() {
+        PlayerData data = SaveSystem.LoadPlayer();
+        foreach (GameObject a in GameObject.FindGameObjectsWithTag("Enemy"))
+        {
+            Destroy(a);
+        }
+
+        health = data.health;
+        Vector3 position;
+
+        position.x = data.position[0];
+        position.y = data.position[1];
+        position.z = data.position[2];
+        transform.position = position;
+
+        upOnRoof = data.onRoof;
+        GetComponentInChildren<BugNetController>().setScore(data.score);
+        SetUIHealth();
+
+        foreach (EnemySaveData e in data.enemySaveData)
+        {
+            Vector3 enemyPosition;
+            enemyPosition.x = e.position[0];
+            enemyPosition.y = e.position[1];
+            enemyPosition.z = e.position[2];
+
+            Quaternion enemyRotation;
+            enemyRotation.w = e.rotation[0];
+            enemyRotation.x = e.rotation[1];
+            enemyRotation.y = e.rotation[2];
+            enemyRotation.z = e.rotation[3];
+
+
+
+            if (e.name.Contains("Variant"))
+            {
+                Instantiate(myRatPrefab, enemyPosition, enemyRotation);
+            }
+
+            else if (e.name.Contains("Bird"))
+            {
+                Instantiate(myBirdPrefab, enemyPosition, enemyRotation);
+            }
+
+
+        }
+    }
     private void InputAbilities(bool onGround)
     {
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            SaveSystem.SavePlayer(this);
-
-            AllAgents.SaveTransforms();
-        }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            
-            PlayerData data = SaveSystem.LoadPlayer();
-            foreach (GameObject a in GameObject.FindGameObjectsWithTag("Enemy"))
-            {
-                Destroy(a);
-            }
-
-            health = data.health;
-            Vector3 position;
-            
-            position.x = data.position[0];
-            position.y = data.position[1];
-            position.z = data.position[2];
-            transform.position = position;
-
-            upOnRoof = data.onRoof;
-            GetComponentInChildren<BugNetController>().setScore(data.score);
-            SetUIHealth();
-
-            foreach (EnemySaveData e in data.enemySaveData)
-            {
-                Vector3 enemyPosition;
-                enemyPosition.x = e.position[0];
-                enemyPosition.y = e.position[1];
-                enemyPosition.z = e.position[2];
-
-                Quaternion enemyRotation;
-                enemyRotation.w = e.rotation[0];
-                enemyRotation.x = e.rotation[1];
-                enemyRotation.y = e.rotation[2];
-                enemyRotation.z = e.rotation[3];
-
-                
-
-                if (e.name.Contains("Variant"))
-                {
-                    Instantiate(myRatPrefab, enemyPosition, enemyRotation);
-                }
-                    
-                else if (e.name.Contains("Bird"))
-                {
-                    Instantiate(myBirdPrefab, enemyPosition, enemyRotation);
-                }
-            
-                
-            }
-
-            //AllAgents.ResetEnemies();
-        }
-
+      
         //dash
         if (Input.GetKeyDown(KeyCode.LeftShift) && onGround)
         {
@@ -691,6 +720,7 @@ public class PlayerController3D : MonoBehaviour
             Debug.Log("took damage,current health: " + health);
             if (health <= 0)
             {
+                PlayerPrefs.SetInt("loaded", 0);
                 SceneManager.LoadScene(scene.name);
             }
 
