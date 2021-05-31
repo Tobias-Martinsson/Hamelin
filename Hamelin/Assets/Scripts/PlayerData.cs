@@ -12,9 +12,13 @@ public class PlayerData
 
     public PlayerData(PlayerController3D player)
     {
+<<<<<<< HEAD
         score = player.GetComponentInChildren<BugNetController>().getScore();
         enemySaveData = AllAgents.convertToSaveData();
         onRoof = player.getUpOnRoof();
+=======
+        enemySaveData = AllAgents.convertToSaveData();
+>>>>>>> parent of aaec707 (Health UI Fix)
         health = player.health;
         position = new float[3];
 

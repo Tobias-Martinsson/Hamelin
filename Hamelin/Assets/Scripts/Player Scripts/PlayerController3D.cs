@@ -242,7 +242,11 @@ public class PlayerController3D : MonoBehaviour
                 enemyRotation.y = e.rotation[2];
                 enemyRotation.z = e.rotation[3];
 
+<<<<<<< HEAD:Hamelin/Assets/Scripts/Player Scripts/PlayerController3D.cs
                 
+=======
+                Debug.Log(data.enemySaveData[0].name);
+>>>>>>> parent of aaec707 (Health UI Fix):Hamelin/Assets/Scripts/PlayerController3D.cs
 
                 if (e.name.Contains("Variant"))
                 {
@@ -697,36 +701,19 @@ public class PlayerController3D : MonoBehaviour
             invincible = true;
 
             startDamageTimer = true;
-            SetUIHealth();
+            if (health == 2)
+            {
+                health3.SetActive(false);
+
+
+            }
+            else if (health == 1)
+            {
+                health2.SetActive(false);
+
+            }
         }
 
-    }
-
-    public void SetUIHealth()
-    {
-        if(health == 3)
-        {
-            health1.SetActive(true);
-            health2.SetActive(true);
-            health3.SetActive(true);
-        }
-        else if (health == 2)
-        {
-            health3.SetActive(false);
-            health2.SetActive(true);
-            health1.SetActive(true);
-
-        }
-        else if (health == 1)
-        {
-            health3.SetActive(false);
-            health2.SetActive(false);
-            health1.SetActive(true);
-        }
-        else if (health == 0)
-        {
-            health1.SetActive(false);
-        }
     }
 
     public bool GetOnGround() {
