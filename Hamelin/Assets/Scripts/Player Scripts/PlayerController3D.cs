@@ -138,6 +138,13 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        startMaxSpeedXZ = maxSpeedXZ;
+        Cursor.lockState = CursorLockMode.Confined;
+        health1.SetActive(true);
+        health2.SetActive(true);
+        health3.SetActive(true);
+
+
         if (PlayerPrefs.HasKey("loaded") == false){
             PlayerPrefs.SetInt("loaded", 0);
         }
@@ -193,6 +200,9 @@ public class PlayerController3D : MonoBehaviour
             }
         }
         else{
+            Debug.Log(health);
+            health = maxHealth;
+       
             SaveSystem.SavePlayer(this);
             AllAgents.SaveTransforms();
         }
@@ -208,10 +218,7 @@ public class PlayerController3D : MonoBehaviour
 
         SaveSystem.SavePlayer(this);
         // Application.targetFrameRate = 60;
-        health = maxHealth;
-        health1.SetActive(true);
-        health2.SetActive(true);
-        health3.SetActive(true);
+      
 
         scene = SceneManager.GetActiveScene();
 
@@ -223,8 +230,7 @@ public class PlayerController3D : MonoBehaviour
 
         //StateMachine = new StateMachine(this, States);
 
-        startMaxSpeedXZ = maxSpeedXZ;
-        Cursor.lockState = CursorLockMode.Confined;
+     
     }
 
     private bool grounded = false;
