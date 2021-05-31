@@ -76,7 +76,7 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 ladderpointTop;
     private Vector3 ladderpointBottom;
     private Vector3 ladderpointEnd;
-    private Quaternion ladderRotation;
+    private float ladderRotationY;
 
     [Header("Bugnet Variables")]
     private float netRotationX = 0;
@@ -457,7 +457,7 @@ public class PlayerController3D : MonoBehaviour
         }
         else {
           
-            playerMesh.transform.rotation = ladderRotation;
+          
         }
         input = Vector3.right * Input.GetAxisRaw("Horizontal") + Vector3.forward * Input.GetAxisRaw("Vertical");
 
@@ -729,8 +729,10 @@ public class PlayerController3D : MonoBehaviour
         return onGround;
     }
 
-    public void SetLadderRotation(Quaternion q) {
-        ladderRotation = Quaternion.Euler(q.x, q.y, q.z);
+    public void SetLadderRotation(float y) {
+
+        ladderRotationY = y;
+        Debug.Log(ladderRotationY);
     }
 
     public void SetClimbing(bool b)
@@ -745,6 +747,10 @@ public class PlayerController3D : MonoBehaviour
         inputVelocity = new Vector3(0, 0, 0);
         gravityVelocity = new Vector3(0, 0, 0);
         jumpingVelocity = new Vector3(0, 0, 0);
+
+        playerMesh.transform.rotation = Quaternion.Euler(0, ladderRotationY, 0);
+        Debug.Log(ladderRotationY);
+        Debug.Log(playerMesh.transform.rotation);
 
         if (ladderStartPointBottom)
         {

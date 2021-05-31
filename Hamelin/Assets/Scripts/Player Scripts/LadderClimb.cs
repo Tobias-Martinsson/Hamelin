@@ -9,13 +9,15 @@ public class LadderClimb : MonoBehaviour
     public Transform bottomPoint;
     public Transform endPoint;
     public Transform ladderTransform;
+   
+   
 
     private void OnTriggerStay(Collider collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             float yPos = collision.gameObject.transform.position.y;
-        Debug.Log((Mathf.Abs(yPos - topPoint.position.y)) + "   " + (Mathf.Abs(yPos - bottomPoint.position.y)));
+    
       
         
 
@@ -44,7 +46,12 @@ public class LadderClimb : MonoBehaviour
             collision.gameObject.GetComponent<PlayerController3D>().SetLadderPointBottom(bottomPoint.position);
             collision.gameObject.GetComponent<PlayerController3D>().SetLadderPointEnd(endPoint.position);
             collision.gameObject.GetComponent<PlayerController3D>().SetClimbReady(true);
-            collision.gameObject.GetComponent<PlayerController3D>().SetLadderRotation(ladderTransform.rotation);
+
+            
+            collision.gameObject.GetComponent<PlayerController3D>().SetLadderRotation(ladderTransform.rotation.eulerAngles.y);
+            Debug.Log(ladderTransform.rotation.eulerAngles.y);
+        
+        
         }
             
         }
