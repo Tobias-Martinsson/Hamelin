@@ -103,9 +103,6 @@ public class PlayerController3D : MonoBehaviour
     [Header("Player Mesh")]
     [SerializeField] private GameObject playerMesh;
 
-    //TEMP FOR TESTING OF SAVING
-    public GameObject myRatPrefab;
-    public GameObject myBirdPrefab;
 
 
     //[Header("Unused Grapplinghook")]
@@ -205,57 +202,17 @@ public class PlayerController3D : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
         {
             SaveSystem.SavePlayer(this);
-
-            AllAgents.SaveTransforms();
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            
             PlayerData data = SaveSystem.LoadPlayer();
-            foreach (GameObject a in GameObject.FindGameObjectsWithTag("Enemy"))
-            {
-                Destroy(a);
-            }
-
             health = data.health;
             Vector3 position;
-            
             position.x = data.position[0];
             position.y = data.position[1];
             position.z = data.position[2];
             transform.position = position;
-
-            foreach (EnemySaveData e in data.enemySaveData)
-            {
-                Vector3 enemyPosition;
-                enemyPosition.x = e.position[0];
-                enemyPosition.y = e.position[1];
-                enemyPosition.z = e.position[2];
-
-                Quaternion enemyRotation;
-                enemyRotation.w = e.rotation[0];
-                enemyRotation.x = e.rotation[1];
-                enemyRotation.y = e.rotation[2];
-                enemyRotation.z = e.rotation[3];
-
-                SetUIHealth();
-
-                Debug.Log(data.enemySaveData[0].name);
-
-                if (e.name.Contains("Variant"))
-                {
-                    Instantiate(myRatPrefab, enemyPosition, enemyRotation);
-                }
-                    
-                else if (e.name.Contains("Bird"))
-                {
-                    Instantiate(myBirdPrefab, enemyPosition, enemyRotation);
-                }
             
-                
-            }
-
-            //AllAgents.ResetEnemies();
         }
 
         //dash
@@ -695,36 +652,19 @@ public class PlayerController3D : MonoBehaviour
             invincible = true;
 
             startDamageTimer = true;
-            SetUIHealth();
+            if (health == 2)
+            {
+                health3.SetActive(false);
+
+
+            }
+            else if (health == 1)
+            {
+                health2.SetActive(false);
+
+            }
         }
 
-    }
-
-    public void SetUIHealth()
-    {
-        if(health == 3)
-        {
-            health1.SetActive(true);
-            health2.SetActive(true);
-            health3.SetActive(true);
-        }
-        else if (health == 2)
-        {
-            health3.SetActive(false);
-            health2.SetActive(true);
-            health1.SetActive(true);
-
-        }
-        else if (health == 1)
-        {
-            health3.SetActive(false);
-            health2.SetActive(false);
-            health1.SetActive(true);
-        }
-        else if (health == 0)
-        {
-            health1.SetActive(false);
-        }
     }
 
     public bool GetOnGround() {
