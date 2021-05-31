@@ -103,9 +103,6 @@ public class PlayerController3D : MonoBehaviour
     [Header("Player Mesh")]
     [SerializeField] private GameObject playerMesh;
 
-    //TEMP FOR TESTING OF SAVING
-    public GameObject myRatPrefab;
-    public GameObject myBirdPrefab;
 
 
     //[Header("Unused Grapplinghook")]
@@ -205,25 +202,17 @@ public class PlayerController3D : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.N))
         {
             SaveSystem.SavePlayer(this);
-
-            AllAgents.SaveTransforms();
         }
         if (Input.GetKeyDown(KeyCode.M))
         {
-            
             PlayerData data = SaveSystem.LoadPlayer();
-            foreach (GameObject a in GameObject.FindGameObjectsWithTag("Enemy"))
-            {
-                Destroy(a);
-            }
-
             health = data.health;
             Vector3 position;
-            
             position.x = data.position[0];
             position.y = data.position[1];
             position.z = data.position[2];
             transform.position = position;
+<<<<<<< HEAD
 
             upOnRoof = data.onRoof;
             GetComponentInChildren<BugNetController>().setScore(data.score);
@@ -257,11 +246,9 @@ public class PlayerController3D : MonoBehaviour
                 {
                     Instantiate(myBirdPrefab, enemyPosition, enemyRotation);
                 }
+=======
+>>>>>>> parent of 2e5fbc7 (Merge branch 'SemiCompleteSaveSystem_Tobias' into main)
             
-                
-            }
-
-            //AllAgents.ResetEnemies();
         }
 
         //dash
