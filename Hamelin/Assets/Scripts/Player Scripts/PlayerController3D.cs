@@ -109,6 +109,8 @@ public class PlayerController3D : MonoBehaviour
     public GameObject myRatPrefab;
     public GameObject myBirdPrefab;
 
+    
+
     //[Header("Unused Grapplinghook")]
     /*
     public float grapplingSpeed = 0.5f;
@@ -136,14 +138,14 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        loaded = false;
+        if (PlayerPrefs.HasKey("loaded") == false){
+            PlayerPrefs.SetInt("loaded", 0);
+        }
+     
 
         PlayerData data = SaveSystem.LoadPlayer();
 
-
-        loaded = data.loaded;
-
-        if (loaded == true)
+        if (PlayerPrefs.GetInt("loaded") == 1)
         {
             foreach (GameObject a in GameObject.FindGameObjectsWithTag("Enemy"))
             {
@@ -273,7 +275,7 @@ public class PlayerController3D : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
-            loaded = true;
+            PlayerPrefs.SetInt("loaded", 1);
             SaveSystem.SavePlayer(this);
 
             AllAgents.SaveTransforms();
@@ -761,6 +763,7 @@ public class PlayerController3D : MonoBehaviour
             Debug.Log("took damage,current health: " + health);
             if (health <= 0)
             {
+                PlayerPrefs.SetInt("loaded", 0);
                 SceneManager.LoadScene(scene.name);
             }
 
