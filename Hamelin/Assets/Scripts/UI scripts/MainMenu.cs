@@ -8,14 +8,29 @@ public class MainMenu : MonoBehaviour
 {
     public GameObject mainMeny;
     public GameObject optionsMeny;
+    public int currentScene;
     //public void OnPlay()
     //{
     //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    
+
     //}
 
-    
-    
+    private void Start()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+        currentScene = data.currentScene;
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Debug.Log("Load Scene" + currentScene);
+            SceneManager.LoadScene(currentScene);
+        }
+    }
+
     //When player push the quit button
     public void OnExit()
     {

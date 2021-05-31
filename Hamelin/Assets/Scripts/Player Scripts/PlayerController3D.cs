@@ -65,6 +65,8 @@ public class PlayerController3D : MonoBehaviour
     private bool ladderStartPointBottom;
     public bool climbing = false;
     private bool onGround;
+    public int currentScene;
+    public bool loaded;
 
     [Header("UI Elements")]
     public GameObject health1;
@@ -107,7 +109,6 @@ public class PlayerController3D : MonoBehaviour
     public GameObject myRatPrefab;
     public GameObject myBirdPrefab;
 
-
     //[Header("Unused Grapplinghook")]
     /*
     public float grapplingSpeed = 0.5f;
@@ -135,6 +136,74 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        loaded = false;
+
+        PlayerData data = SaveSystem.LoadPlayer();
+
+
+        loaded = data.loaded;
+
+        if (loaded == true)
+        {
+            foreach (GameObject a in GameObject.FindGameObjectsWithTag("Enemy"))
+            {
+                Destroy(a);
+            }
+
+            health = data.health;
+            Vector3 position;
+
+            position.x = data.position[0];
+            position.y = data.position[1];
+            position.z = data.position[2];
+            transform.position = position;
+
+            upOnRoof = data.onRoof;
+            GetComponentInChildren<BugNetController>().setScore(data.score);
+            SetUIHealth();
+
+            foreach (EnemySaveData e in data.enemySaveData)
+            {
+                Vector3 enemyPosition;
+                enemyPosition.x = e.position[0];
+                enemyPosition.y = e.position[1];
+                enemyPosition.z = e.position[2];
+
+                Quaternion enemyRotation;
+                enemyRotation.w = e.rotation[0];
+                enemyRotation.x = e.rotation[1];
+                enemyRotation.y = e.rotation[2];
+                enemyRotation.z = e.rotation[3];
+
+
+
+                if (e.name.Contains("Variant"))
+                {
+                    Instantiate(myRatPrefab, enemyPosition, enemyRotation);
+                }
+
+                else if (e.name.Contains("Bird"))
+                {
+                    Instantiate(myBirdPrefab, enemyPosition, enemyRotation);
+                }
+
+
+            }
+        }
+        else{
+            SaveSystem.SavePlayer(this);
+            AllAgents.SaveTransforms();
+        }
+
+
+
+
+
+
+
+        currentScene = SceneManager.GetActiveScene().buildIndex;
+
+
         SaveSystem.SavePlayer(this);
         // Application.targetFrameRate = 60;
         health = maxHealth;
@@ -204,6 +273,7 @@ public class PlayerController3D : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.N))
         {
+            loaded = true;
             SaveSystem.SavePlayer(this);
 
             AllAgents.SaveTransforms();
