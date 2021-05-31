@@ -35,10 +35,10 @@ public class BobController : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            anim.SetBool("Attack", true);
+            anim.SetTrigger("Attack");
         }
-        if (Input.GetButtonUp("Fire1"))
-            anim.SetBool("Attack", false);
+        /*if (Input.GetButtonUp("Fire1"))
+            anim.SetBool("Attack", false);*/
         if (Input.GetButtonDown("Fire2"))
             anim.SetTrigger("Parry");
         if (Input.GetButtonDown("Jump"))
