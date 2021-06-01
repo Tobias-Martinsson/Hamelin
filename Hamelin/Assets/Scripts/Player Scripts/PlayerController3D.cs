@@ -21,8 +21,6 @@ public class PlayerController3D : MonoBehaviour
     private Vector3 velocityXZ;
     private Vector3 gravityVelocity;
     private Vector3 jumpingVelocity;
-    private Vector3 jumpPower;
-    private Vector3 gravityPower;
     private float gravityBonus = 1.4f;
     private float gravityFallBonus = 2.4f;
     private bool upOnRoof = false;
@@ -37,15 +35,12 @@ public class PlayerController3D : MonoBehaviour
     [SerializeField] private float airResistance;
     [SerializeField] private RaycastHit groundHit;
     private Collider[] collidingObjects;
-    private RaycastHit hitInfo3;
     private Vector3 normal;
     private float collisionMargin = 0.2f;
     private new CapsuleCollider collider;
 
 
     [Header("Camera Variables")]
-    private float rotationX;
-    private float rotationY;
     [SerializeField] private float mouseSensitivity;
     [SerializeField] private new Camera camera;
 
@@ -81,11 +76,7 @@ public class PlayerController3D : MonoBehaviour
     private float ladderRotationY;
 
     [Header("Bugnet Variables")]
-    private float netRotationX = 0;
     public SphereCollider bugNet;
-    private float netRotationSpeed = -10f;
-    private Vector3 bugNetOffset = new Vector3(0.2f, 2.5f, 0);
-    private Vector3 bugNetStartOffset = new Vector3(0.2f, 1.5f, 0);
     private float netHoldMovementDecrease = 1.5f;
     private float newSwipeMovementDecrease = 4f;
     private bool netReady = true;
@@ -109,31 +100,12 @@ public class PlayerController3D : MonoBehaviour
     public GameObject myRatPrefab;
     public GameObject myBirdPrefab;
 
-    
-
-    //[Header("Unused Grapplinghook")]
-    /*
-    public float grapplingSpeed = 0.5f;
-    public float maxGrapplingSpeed = 20.0f;
-    public float hookDistanceStop = 4f;
-    public GameObject hookPrefab;
-    public Transform shootLocation;
-
-    Hook hook;
-    bool pulling;
-    
-    Rigidbody rigid;
-    */
-
     [Header("Killzone Respawn Variables")]
     public Transform jumpLocation;
     public GameObject respawnPoint;
     private bool falling;
 
-    //private StateMachine StateMachine;
-
     void Awake() => collider = GetComponent<CapsuleCollider>();
-
 
     // Start is called before the first frame update
     void Start()
@@ -146,13 +118,9 @@ public class PlayerController3D : MonoBehaviour
         health2.SetActive(true);
         health3.SetActive(true);
 
-
         if (PlayerPrefs.HasKey("loaded") == false){
             PlayerPrefs.SetInt("loaded", 0);
         }
-     
-
-        PlayerData data = SaveSystem.LoadPlayer();
 
         if (PlayerPrefs.GetInt("loaded") == 1)
         {
@@ -165,70 +133,27 @@ public class PlayerController3D : MonoBehaviour
             SaveGame();
         }
 
-
-      
-        // Application.targetFrameRate = 60;
-      
-
         scene = SceneManager.GetActiveScene();
-
-        //grappling hook test
-        /*
-        rigid = GetComponent<Rigidbody>();
-        pulling = false;
-        */
-
-        //StateMachine = new StateMachine(this, States);
-
-     
     }
-
-    private bool grounded = false;
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
         MovementSetup();
 
         AbilityHandler();
 
         UpdateMovement();
 
-        GetCameraRotation();
-
         DamageHandler();
-
 
     }
 
     void Update()
     {
-
         onGround = GroundCheck(point2);
 
-        InputSceneChange();
-
         InputAbilities(onGround);
-
-        if(Input.GetKeyDown(KeyCode.N)){
-            SaveGame();
-        }
-
-
-    }
-    private void InputSceneChange() {
-
-        //if (Input.GetKeyDown(KeyCode.Escape))
-        //{
-        //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-       // }
-
-
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-        }
     }
 
     public void SaveGame() {
@@ -269,8 +194,6 @@ public class PlayerController3D : MonoBehaviour
             enemyRotation.y = e.rotation[2];
             enemyRotation.z = e.rotation[3];
 
-
-
             if (e.name.Contains("Variant"))
             {
                 Instantiate(myRatPrefab, enemyPosition, enemyRotation);
@@ -280,8 +203,6 @@ public class PlayerController3D : MonoBehaviour
             {
                 Instantiate(myBirdPrefab, enemyPosition, enemyRotation);
             }
-
-
         }
     }
     private void InputAbilities(bool onGround)
@@ -309,7 +230,6 @@ public class PlayerController3D : MonoBehaviour
                 }
                 SetClimbing(true);
             }
-
         }
         //jump
         if (Input.GetKeyDown(KeyCode.Space) && onGround)
@@ -329,8 +249,6 @@ public class PlayerController3D : MonoBehaviour
                 netReady = false;
             }
         }
-
-
     }
 
     private void DamageHandler()
@@ -342,19 +260,15 @@ public class PlayerController3D : MonoBehaviour
             if (startDamageTimer)
             {
                 DamageWaitTime();
-
             }
         }
     }
     private void UpdateMovement()
     {
-
         StopInputDuringDash();
 
         velocity += inputVelocity;
         velocity += gravityVelocity;
-
-
 
         LimitMaxSpeed();
 
@@ -370,10 +284,17 @@ public class PlayerController3D : MonoBehaviour
             PreventCollision(collidingObjects);
         }
 
+<<<<<<< Updated upstream
         transform.position += velocity;
 
 
        
+=======
+        if(health > 0)
+        {
+            transform.position += velocity;
+        }
+>>>>>>> Stashed changes
     }
 
     private void StopInputDuringDash() {
@@ -388,7 +309,6 @@ public class PlayerController3D : MonoBehaviour
                 velocity.z *= 0.1f;
             }
         }
-
     }
 
     private void LimitMaxSpeed() {
@@ -450,14 +370,6 @@ public class PlayerController3D : MonoBehaviour
         }
     }
 
-    private void GetCameraRotation()
-    {
-
-        rotationY = camera.GetComponent<CameraFollowScript>().rotationY;
-        rotationX = camera.GetComponent<CameraFollowScript>().rotationX;
-
-    }
-
     private void MovementSetup()
     {
         //Points på spelaren
@@ -465,13 +377,11 @@ public class PlayerController3D : MonoBehaviour
         point2 = transform.position + collider.center + Vector3.down * (collider.height / 2 - collider.radius);
 
         //Update velocity
-        RaycastHit hit;
         grounded = Physics.CapsuleCast(
             point1,
             point2,
             collider.radius,
             Vector3.down,
-            out hit,
             groundCheckDistance + collisionMargin,
             collisionMask
         );
@@ -480,7 +390,7 @@ public class PlayerController3D : MonoBehaviour
         // Rotate player. To keep or not to keep
         if (climbing == false)
         {
-            playerMesh.transform.rotation = Quaternion.Euler(0, rotationY, 0);
+            playerMesh.transform.rotation = Quaternion.Euler(0, camera.GetComponent<CameraFollowScript>().rotationY, 0);
         }
         else {
           
@@ -518,14 +428,13 @@ public class PlayerController3D : MonoBehaviour
     
     public void KillZoneCollision() {
 
-                Debug.Log("RESPAWN");
-                SetDamageDealt(true);
-                velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
-                transform.position = jumpLocation.transform.position;
+        Debug.Log("RESPAWN");
+        SetDamageDealt(true);
+        velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
+        transform.position = jumpLocation.transform.position;
 
     }
     
-
     private void UpdateGroundNormal() {
 
         if (GroundCheck(point2))
@@ -545,7 +454,6 @@ public class PlayerController3D : MonoBehaviour
                 respawnPoint.transform.position = transform.position;
             }
             falling = true;
-            //
         }
     }
 
@@ -563,12 +471,9 @@ public class PlayerController3D : MonoBehaviour
             startDamageTimer = false;
             damageDealt = false;
             return true;
-
         }
-
         return false;
     }
-
 
     private bool NetWaitTime(float seconds)
     {
@@ -602,7 +507,6 @@ public class PlayerController3D : MonoBehaviour
         return false;
     }
 
-
     //kalkylerar normalkraften med hj�lp av normalen fr�n overlapcapsule-kollisionerna.
     Vector3 CalculateNormalForce(Vector3 velocity, Vector3 normal)
     {
@@ -617,8 +521,6 @@ public class PlayerController3D : MonoBehaviour
         }
 
     }
-
-
 
     void NetHold()
     {
@@ -658,19 +560,12 @@ public class PlayerController3D : MonoBehaviour
     void NetReset()
     {
         maxSpeedXZ = startMaxSpeedXZ;
-
         bugNet.isTrigger = true;
         catchCheck = false;
         netReady = true;
         netSwipe = false;
 
-
-
     }
-
-
-
-
 
     public void SetDamageDealt(bool b)
     {
@@ -685,6 +580,7 @@ public class PlayerController3D : MonoBehaviour
         velocity *= Mathf.Pow(airResistance, Time.deltaTime);
 
     }
+
     //applicerar friktion p� karakt�ren.
     void ApplyFriction(Vector3 normalForce)
     {
@@ -698,8 +594,6 @@ public class PlayerController3D : MonoBehaviour
             velocity -= velocity.normalized * normalForce.magnitude *
                 kineticFrictionCoefficient;
         }
-
-
     }
 
     public void SetCatchCheckTrue()
@@ -714,10 +608,20 @@ public class PlayerController3D : MonoBehaviour
         if (!invincible)
         {
             health = health - 1;
+<<<<<<< Updated upstream
 
             Debug.Log("took damage,current health: " + health);
             if (health <= 0)
             {
+=======
+            
+            Debug.Log("took damage,current health: " + health);
+            if (health <= 0)
+            {
+                
+                playerAnimator.SetBool("Dead", true);
+                StartCoroutine(DeathWaitTime(2f));
+>>>>>>> Stashed changes
                 PlayerPrefs.SetInt("loaded", 0);
                 SceneManager.LoadScene(scene.name);
             }
@@ -814,7 +718,6 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
-
     void DodgeDash()
     {
         if (dashAllowed)
@@ -843,7 +746,6 @@ public class PlayerController3D : MonoBehaviour
         }
 
     }
-
     public void SetClimbReady(bool b)
     {
         climbReady = b;
@@ -881,7 +783,6 @@ public class PlayerController3D : MonoBehaviour
         return upOnRoof;
     }
     
-
     Vector3 GroundNormal(Vector3 point2)
     {
         RaycastHit hit;
@@ -889,116 +790,20 @@ public class PlayerController3D : MonoBehaviour
         return hit.normal;
     }
 
-
     //ser till att karakt�ren inte �ker igenom n�got, tvingar den att stanna och d�dar dens momentum vid kontakt.
     public void PreventCollision(Collider[] collidingObjects)
     {
-
 
         Vector3 separationVector;
         foreach (Collider col in collidingObjects)
         {
 
             Physics.ComputePenetration(collider, transform.position, transform.rotation, col, col.transform.position, col.transform.rotation, out separationVector, out float distance);
-
-
-            //  velocity += separationVector.normalized * skinWidth;
             Vector3 normalForce = CalculateNormalForce(velocity, separationVector.normalized);
             velocity += normalForce;
 
             ApplyFriction(normalForce);
 
-
         }
-
-
-        /*
-        transform.position +=
-        separationVector + separationVector.normalized * skinWidth;
-        velocity += CalculateNormalForce(velocity, separationVector.normalized);
-        */
-
     }
-
-
-
-    /*
-     private void UpdateHook(){
-    
-
-        // Grappling hook 
-        //shootLocation.transform.rotation = Quaternion.Euler(rotationX, rotationY, 0);
-      
-        if (hook == null && Input.GetKeyDown(KeyCode.G))
-        {
-            StopAllCoroutines();
-            pulling = false;
-            hook = Instantiate(hookPrefab, shootLocation.position, Quaternion.identity).GetComponent<Hook>();
-            hook.Initialize(this, shootLocation);
-            StartCoroutine(DestroyHookAfterLifetime());
-         
-        }
-        //else if (hook != null && Input.GetMouseButtonDown(1))
-        else if (hook != null && Input.GetKeyDown(KeyCode.G))
-        {
-         //   DestroyHook();
-        }
-        
-        if (pulling && hook != null)
-        {
-           
-            Debug.Log("pulling");
-            if (Vector3.Distance(transform.position, hook.transform.position) <= hookDistanceStop)
-            {
-                maxSpeedXZ = startMaxSpeedXZ;
-                DestroyHook();
-          
-            }
-            else
-            {
-          
-                Vector3 newVector = (hook.transform.position - transform.position).normalized * grapplingSpeed;
-                velocity += newVector;
-                maxSpeedXZ = maxGrapplingSpeed;
-
-                if (velocity.magnitude > maxGrapplingSpeed)
-                {
-                    velocity = Vector3.ClampMagnitude(velocity, maxGrapplingSpeed);
-                }
-            
-            }
-            
-        }
-        else {
-       
-    // Deacceleration metoden här under anropas inte om grappling hooken är aktiv
-
-    //  }
-
-    //    StateMachine.RunUpdate();
-}
-
-
-public void StartPull()
-    {
-        pulling = true;
-    }
-    
-
-    private void DestroyHook()
-    {
-        if (hook == null) return;
-
-        pulling = false;
-        Destroy(hook.gameObject);
-        hook = null;
-    }
-
-    private IEnumerator DestroyHookAfterLifetime()
-    {
-        yield return new WaitForSeconds(8f);
-
-        DestroyHook();
-    }
-    */
 }
