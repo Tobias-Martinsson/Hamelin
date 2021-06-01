@@ -67,6 +67,8 @@ public class MainMenu : MonoBehaviour
         //mainMeny.SetActive(false);
         //optionsMeny.SetActive(true);
         animator.SetTrigger("OptionsMenu");
+        animator.ResetTrigger("BackToMain");
+        
 
     }
 
@@ -81,7 +83,15 @@ public class MainMenu : MonoBehaviour
     {
         animator.SetTrigger("HowToPlayMenu");
 
+
     }
+
+    public void OnExitHowToPlay()
+    {
+        animator.SetTrigger("BackToMain");
+        animator.ResetTrigger("HowToPlayMenu");
+    }
+
 
     
 
@@ -91,6 +101,7 @@ public class MainMenu : MonoBehaviour
        // mainMeny.SetActive(true);
        // optionsMeny.SetActive(false);
        animator.SetTrigger("BackToMain");
+       animator.ResetTrigger("OptionsMenu");
 
     }
    
