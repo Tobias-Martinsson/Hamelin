@@ -164,15 +164,10 @@ public class PlayerController3D : MonoBehaviour
         }
 
 
-
-
-
-
-
         currentScene = SceneManager.GetActiveScene().buildIndex;
 
 
-        SaveSystem.SavePlayer(this);
+      
         // Application.targetFrameRate = 60;
       
 
@@ -216,6 +211,9 @@ public class PlayerController3D : MonoBehaviour
 
         InputAbilities(onGround);
 
+        if(Input.GetKeyDown(KeyCode.N)){
+            SaveGame();
+        }
 
 
     }

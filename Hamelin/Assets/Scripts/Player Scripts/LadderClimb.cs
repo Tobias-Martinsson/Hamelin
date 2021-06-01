@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Main author: Tim Agélii
 public class LadderClimb : MonoBehaviour
@@ -9,17 +10,33 @@ public class LadderClimb : MonoBehaviour
     public Transform bottomPoint;
     public Transform endPoint;
     public Transform ladderTransform;
-   
-   
+    public GameObject popup;
+    public Text ptext;
+
+    private void Start()
+    {
+        DeActivatePopup();
+    }
 
     private void OnTriggerStay(Collider collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             float yPos = collision.gameObject.transform.position.y;
-    
-      
-        
+            if (collision.gameObject.GetComponent<PlayerController3D>().GetOnGround())
+            {
+                ptext = ptext.GetComponent<Text>();
+                ptext.text = "Press E to climb";
+                ActivatePopup();
+            }
+            else
+            {
+                DeActivatePopup();
+            }
+           
+
+
+
 
             if (Mathf.Abs(yPos - topPoint.position.y) <= (Mathf.Abs(yPos - bottomPoint.position.y)))
             {
@@ -31,10 +48,27 @@ public class LadderClimb : MonoBehaviour
             }
 
         }
+        
     }
-  
-       
-        void OnTriggerEnter(Collider collision)
+
+
+    private void ActivatePopup()
+    {
+
+            popup.SetActive(true);
+    }
+
+    private void DeActivatePopup()
+    {
+        if (popup.activeInHierarchy)
+        {
+            popup.SetActive(false);
+        }
+
+    }
+
+
+    void OnTriggerEnter(Collider collision)
         {
         
         //input for ladder
@@ -60,6 +94,9 @@ public class LadderClimb : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
+            
+            DeActivatePopup();
+
             collision.gameObject.GetComponent<PlayerController3D>().SetClimbing(false);
             collision.gameObject.GetComponent<PlayerController3D>().SetClimbReady(false);
         }
