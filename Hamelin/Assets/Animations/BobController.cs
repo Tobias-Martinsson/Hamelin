@@ -9,6 +9,7 @@ public class BobController : MonoBehaviour
 {
     public AudioClip attackSound;
     public AudioClip[] ladderSounds;
+    public AudioClip[] painSounds;
 
     private Animator anim;
     private AudioSource source;
@@ -18,6 +19,7 @@ public class BobController : MonoBehaviour
 
     private float minPitch = 0.7f;
     private float maxPitch = 1.2f;
+    private float normalPitch = 1.0f;
 
     void Start()
     {       
@@ -55,10 +57,21 @@ public class BobController : MonoBehaviour
 
     public void PlayLadderSound()
     {
+        source.pitch = normalPitch;
         int clipIndex = Random.Range(1, ladderSounds.Length);
         AudioClip clip = ladderSounds[clipIndex];
         source.PlayOneShot(clip);
         ladderSounds[clipIndex] = ladderSounds[0];
         ladderSounds[0] = clip;
+    }
+
+    public void PlayPainSound()
+    {
+        source.pitch = normalPitch;
+        int clipIndex = Random.Range(1, painSounds.Length);
+        AudioClip clip = painSounds[clipIndex];
+        source.PlayOneShot(clip);
+        painSounds[clipIndex] = painSounds[0];
+        painSounds[0] = clip;
     }
 }
