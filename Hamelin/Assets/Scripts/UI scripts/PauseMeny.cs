@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMeny : MonoBehaviour
 {
@@ -71,7 +72,13 @@ public class PauseMeny : MonoBehaviour
         //Set Cursor to not be visible
         Cursor.visible = activation;
     }
-    private void PauseMenyDeactivated()
+
+    public void quitGameToMainMenu()
+    {
+        ResumeGame();
+        SceneManager.LoadScene(0);
+    }
+    public void PauseMenyDeactivated()
     {
         ResumeGame();
         pauseMeny.SetActive(false);
@@ -81,6 +88,13 @@ public class PauseMeny : MonoBehaviour
         otherUIActivation(true);
 
 
+    }
+
+    public void restartLevel()
+    {
+        PlayerPrefs.SetInt("loaded", 0);
+        ResumeGame();
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     private void otherUIActivation(bool activation){
         if (activation){

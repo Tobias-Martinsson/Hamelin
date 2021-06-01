@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMeny;
     public GameObject optionsMeny;
     public Animator animator;
-    public int currentScene;
+    private int savedScene;
 
     
     //public void OnPlay()
@@ -22,7 +22,7 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         PlayerData data = SaveSystem.LoadPlayer();
-        currentScene = data.currentScene;
+        savedScene = data.currentScene;
         animator.SetBool("PushedEnter", false);
     }
 
@@ -31,8 +31,8 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            Debug.Log("Load Scene" + currentScene);
-            SceneManager.LoadScene(currentScene);
+            Debug.Log("Load Scene" + savedScene);
+            SceneManager.LoadScene(savedScene);
         }
         if (Input.GetKeyDown(KeyCode.Return)){
              animator.SetTrigger("PushedEnter");
@@ -57,7 +57,7 @@ public class MainMenu : MonoBehaviour
     //When player push the load game button
     public void OnLoadGame()
     {
-        SceneManager.LoadScene(currentScene);
+        SceneManager.LoadScene(savedScene);
     }
 
     // when player push the options buttonm
