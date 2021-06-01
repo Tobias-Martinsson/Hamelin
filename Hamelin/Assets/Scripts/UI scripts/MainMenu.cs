@@ -23,7 +23,7 @@ public class MainMenu : MonoBehaviour
     {
         PlayerData data = SaveSystem.LoadPlayer();
         currentScene = data.currentScene;
-        animator.SetBool("PushedEnter", false);
+        
     }
 
 
@@ -63,8 +63,9 @@ public class MainMenu : MonoBehaviour
     // when player push the options buttonm
     public void OnOptions()
     {
-        mainMeny.SetActive(false);
-        optionsMeny.SetActive(true);
+        //mainMeny.SetActive(false);
+        //optionsMeny.SetActive(true);
+        animator.SetTrigger("OptionsMenu");
 
     }
 
@@ -77,14 +78,18 @@ public class MainMenu : MonoBehaviour
         //when player push the on how to play button
     public void OnHowToPlay()
     {
+        animator.SetTrigger("HowToPlayMenu");
 
     }
 
+    
+
         //when player is in the options meny and wants to go to main meny
-public void OnExitOptions()
+    public void OnExitOptions()
     {
-        mainMeny.SetActive(true);
-        optionsMeny.SetActive(false);
+       // mainMeny.SetActive(true);
+       // optionsMeny.SetActive(false);
+       animator.SetTrigger("BackToMain");
 
     }
    
