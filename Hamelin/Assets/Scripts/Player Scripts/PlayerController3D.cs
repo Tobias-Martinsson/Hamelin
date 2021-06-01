@@ -104,12 +104,15 @@ public class PlayerController3D : MonoBehaviour
     public Transform jumpLocation;
     public GameObject respawnPoint;
     private bool falling;
+    private bool grounded;
+    Animator playerAnimator;
 
     void Awake() => collider = GetComponent<CapsuleCollider>();
 
     // Start is called before the first frame update
     void Start()
     {
+        playerAnimator = gameObject.GetComponentInChildren<Animator>();
         Cursor.visible = false;
         currentScene = SceneManager.GetActiveScene().buildIndex;
         startMaxSpeedXZ = maxSpeedXZ;
@@ -284,17 +287,11 @@ public class PlayerController3D : MonoBehaviour
             PreventCollision(collidingObjects);
         }
 
-<<<<<<< Updated upstream
-        transform.position += velocity;
 
-
-       
-=======
         if(health > 0)
         {
             transform.position += velocity;
         }
->>>>>>> Stashed changes
     }
 
     private void StopInputDuringDash() {
@@ -602,28 +599,32 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    private IEnumerator DeathWaitTime(float x)
+    {
+        yield return new WaitForSeconds(x);
+        SceneManager.LoadScene(scene.name);
+    }
+
     private void PlayerTakesDamage()
     {
 
         if (!invincible)
         {
             health = health - 1;
-<<<<<<< Updated upstream
-
-            Debug.Log("took damage,current health: " + health);
-            if (health <= 0)
-            {
-=======
             
             Debug.Log("took damage,current health: " + health);
             if (health <= 0)
             {
-                
+
                 playerAnimator.SetBool("Dead", true);
-                StartCoroutine(DeathWaitTime(2f));
->>>>>>> Stashed changes
                 PlayerPrefs.SetInt("loaded", 0);
-                SceneManager.LoadScene(scene.name);
+                StartCoroutine(DeathWaitTime(2f));
+
+                
+            }
+            else
+            {
+                playerAnimator.SetTrigger("Hit");
             }
 
             invincible = true;
