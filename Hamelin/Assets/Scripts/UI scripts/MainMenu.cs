@@ -4,11 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 //Main Author: Freja Muruganand
+//Supporting Author My Karlén
 public class MainMenu : MonoBehaviour
 {
     public GameObject mainMeny;
     public GameObject optionsMeny;
+    public Animator animator;
     public int currentScene;
+
+    
     //public void OnPlay()
     //{
     //    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
@@ -19,6 +23,7 @@ public class MainMenu : MonoBehaviour
     {
         PlayerData data = SaveSystem.LoadPlayer();
         currentScene = data.currentScene;
+        animator.SetBool("PushedEnter", false);
     }
 
 
@@ -28,6 +33,10 @@ public class MainMenu : MonoBehaviour
         {
             Debug.Log("Load Scene" + currentScene);
             SceneManager.LoadScene(currentScene);
+        }
+        if (Input.GetKeyDown(KeyCode.Return)){
+             animator.SetTrigger("PushedEnter");
+
         }
     }
 

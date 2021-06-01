@@ -10,6 +10,7 @@ public class Quest
     public string title;
     public string dialogue;
     public string description;
+    public string instructions;
     public QuestGiver questGiver;
     //The amount of enemies that are required to be caught
     public int enemyAmount;
