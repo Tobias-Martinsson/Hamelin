@@ -138,6 +138,7 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        currentScene = SceneManager.GetActiveScene().buildIndex;
         startMaxSpeedXZ = maxSpeedXZ;
         Cursor.lockState = CursorLockMode.Confined;
         health1.SetActive(true);
@@ -164,9 +165,6 @@ public class PlayerController3D : MonoBehaviour
         }
 
 
-        currentScene = SceneManager.GetActiveScene().buildIndex;
-
-
       
         // Application.targetFrameRate = 60;
       
@@ -189,6 +187,7 @@ public class PlayerController3D : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+
         MovementSetup();
 
         AbilityHandler();

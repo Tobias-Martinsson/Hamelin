@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 119459892700236825}
   - component: {fileID: 8989710653139858031}
   m_Layer: 5
-  m_Name: Quit Game
+  m_Name: Main Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -201,7 +201,7 @@ GameObject:
   - component: {fileID: 4085054140355615546}
   - component: {fileID: 1369516106811215955}
   m_Layer: 5
-  m_Name: Save Game Panel
+  m_Name: Restart Panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357,7 +357,7 @@ GameObject:
   - component: {fileID: 274090204586854243}
   - component: {fileID: 5183146090265289622}
   m_Layer: 5
-  m_Name: SaveGame Button
+  m_Name: Restart Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -464,7 +464,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 274090204586854243}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6701309059282418850}
+        m_TargetAssemblyTypeName: PauseMeny, Assembly-CSharp
+        m_MethodName: restartLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1585525195787124088
 GameObject:
   m_ObjectHideFlags: 0
@@ -610,7 +622,7 @@ GameObject:
   - component: {fileID: 5182785810406864055}
   - component: {fileID: 1094594891862619430}
   m_Layer: 5
-  m_Name: How To play
+  m_Name: Controls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -953,7 +965,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Restart
+  m_Text: Save GAME
 --- !u!1 &2772092646152937420
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,7 +1274,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Save Game
+  m_Text: Restart
 --- !u!1 &3800827096736077042
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,7 +1512,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Quit
+  m_Text: QUIT
 --- !u!1 &5047782081396737611
 GameObject:
   m_ObjectHideFlags: 0
@@ -1789,7 +1801,7 @@ GameObject:
   - component: {fileID: 245982526600987289}
   - component: {fileID: 1186806588210400588}
   m_Layer: 5
-  m_Name: Resume Game button
+  m_Name: Save game button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1898,8 +1910,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PausMeny, Assembly-CSharp
-        m_MethodName: PauseMenyDeactivated
+        m_TargetAssemblyTypeName: PlayerController3D, Assembly-CSharp
+        m_MethodName: SaveGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3887,7 +3899,7 @@ GameObject:
   - component: {fileID: 3754833309070295136}
   - component: {fileID: 7406481394046390211}
   m_Layer: 5
-  m_Name: Quit Game Button
+  m_Name: Main Menu Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3994,7 +4006,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3754833309070295136}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6701309059282418850}
+        m_TargetAssemblyTypeName: PauseMeny, Assembly-CSharp
+        m_MethodName: quitGameToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7424838728654761614
 GameObject:
   m_ObjectHideFlags: 0
@@ -4007,7 +4031,7 @@ GameObject:
   - component: {fileID: 9149756344571315301}
   - component: {fileID: 4870602106666113870}
   m_Layer: 5
-  m_Name: Restart
+  m_Name: Save
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4192,8 +4216,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PausMeny, Assembly-CSharp
+      - m_Target: {fileID: 6701309059282418850}
+        m_TargetAssemblyTypeName: PauseMeny, Assembly-CSharp
         m_MethodName: PauseMenyDeactivated
         m_Mode: 1
         m_Arguments:
