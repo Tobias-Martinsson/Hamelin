@@ -104,6 +104,7 @@ public class PlayerController3D : MonoBehaviour
 
     [Header("Player Mesh")]
     [SerializeField] private GameObject playerMesh;
+    private Animator playerAnimator;
 
     //TEMP FOR TESTING OF SAVING
     public GameObject myRatPrefab;
@@ -138,6 +139,7 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerAnimator = gameObject.GetComponentInChildren<Animator>();
         currentScene = SceneManager.GetActiveScene().buildIndex;
         startMaxSpeedXZ = maxSpeedXZ;
         Cursor.lockState = CursorLockMode.Confined;
@@ -369,7 +371,11 @@ public class PlayerController3D : MonoBehaviour
             PreventCollision(collidingObjects);
         }
 
-        transform.position += velocity;
+        if(health > 0)
+        {
+            transform.position += velocity;
+        }
+        
 
 
        
@@ -707,18 +713,34 @@ public class PlayerController3D : MonoBehaviour
 
     }
 
+    private IEnumerator DeathWaitTime(float x)
+    {
+        yield return new WaitForSeconds(x);
+        SceneManager.LoadScene(scene.name);
+    }
+
     private void PlayerTakesDamage()
     {
 
         if (!invincible)
         {
             health = health - 1;
+            
+            
 
             Debug.Log("took damage,current health: " + health);
             if (health <= 0)
             {
+                
+                
+                playerAnimator.SetBool("Dead", true);
+                StartCoroutine(DeathWaitTime(2f));
                 PlayerPrefs.SetInt("loaded", 0);
-                SceneManager.LoadScene(scene.name);
+                
+            }
+            else
+            {
+                playerAnimator.SetTrigger("Hit");
             }
 
             invincible = true;
