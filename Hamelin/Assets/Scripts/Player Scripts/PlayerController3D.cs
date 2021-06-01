@@ -138,6 +138,7 @@ public class PlayerController3D : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
         currentScene = SceneManager.GetActiveScene().buildIndex;
         startMaxSpeedXZ = maxSpeedXZ;
         Cursor.lockState = CursorLockMode.Confined;
