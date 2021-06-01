@@ -62,7 +62,7 @@ public class CameraFollowScript : MonoBehaviour
 
         }
 
-        transform.position = targetObject.transform.position + offset * 0.8f;
+        transform.position = targetObject.transform.position + offset * 0.5f;
       
 
     }
