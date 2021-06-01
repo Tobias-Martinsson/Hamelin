@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
+//Main author: Freja Muruganand
 public class DynamicFootsteps : MonoBehaviour
 {
     private AudioSource source;

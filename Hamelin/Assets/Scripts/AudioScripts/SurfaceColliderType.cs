@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Main author: Freja Muruganand
 public class SurfaceColliderType : MonoBehaviour
 {
     public enum Mode { Default, Grass, Wood, Car }
