@@ -21,6 +21,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = true;
         PlayerData data = SaveSystem.LoadPlayer();
         currentScene = data.currentScene;
         
