@@ -18,6 +18,7 @@ public class QuestGiver : MonoBehaviour
     public Text dialogueText;
     public Text descriptionText;
     public Text logText;
+    public Text instructionText;
 
     public Animator anim;
 
@@ -35,6 +36,7 @@ public class QuestGiver : MonoBehaviour
         titleText.text = quest.title;
         dialogueText.text = quest.dialogue;
         descriptionText.text = quest.description;
+        instructionText.text = quest.instructions;
         logText.text = "";
     }
 
