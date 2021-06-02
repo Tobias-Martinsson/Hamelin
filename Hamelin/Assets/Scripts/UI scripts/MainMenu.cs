@@ -17,6 +17,7 @@ public class MainMenu : MonoBehaviour
     private float maxPitch = 1.2f;
 
     private int savedScene;
+    private PlayerData data;
 
     
     //public void OnPlay()
@@ -28,8 +29,12 @@ public class MainMenu : MonoBehaviour
     private void Start()
     {
         Cursor.visible = true;
-        PlayerData data = SaveSystem.LoadPlayer();
-        savedScene = data.currentScene;
+        data = SaveSystem.LoadPlayer();
+        if(data != null)
+        {
+            savedScene = data.currentScene;
+        }
+       
         animator.SetBool("PushedEnter", false);
 
         source = GetComponent<AudioSource>();
@@ -66,7 +71,12 @@ public class MainMenu : MonoBehaviour
     //When player push the load game button
     public void OnLoadGame()
     {
-        SceneManager.LoadScene(savedScene);
+       if(data != null)
+        {
+            SceneManager.LoadScene(savedScene);
+        }
+           
+        
     }
 
     // when player push the options buttonm

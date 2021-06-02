@@ -165,48 +165,52 @@ public class PlayerController3D : MonoBehaviour
 
         AllAgents.SaveTransforms();
     }
+
     private void LoadGame() {
-        PlayerData data = SaveSystem.LoadPlayer();
-        foreach (GameObject a in GameObject.FindGameObjectsWithTag("Enemy"))
+        if(PlayerPrefs.GetInt("loaded") == 1)
         {
-            Destroy(a);
-        }
-
-        health = data.health;
-        Vector3 position;
-
-        position.x = data.position[0];
-        position.y = data.position[1];
-        position.z = data.position[2];
-        transform.position = position;
-
-        upOnRoof = data.onRoof;
-        GetComponentInChildren<BugNetController>().setScore(data.score);
-        SetUIHealth();
-
-        foreach (EnemySaveData e in data.enemySaveData)
-        {
-            Vector3 enemyPosition;
-            enemyPosition.x = e.position[0];
-            enemyPosition.y = e.position[1];
-            enemyPosition.z = e.position[2];
-
-            Quaternion enemyRotation;
-            enemyRotation.w = e.rotation[0];
-            enemyRotation.x = e.rotation[1];
-            enemyRotation.y = e.rotation[2];
-            enemyRotation.z = e.rotation[3];
-
-            if (e.name.Contains("Variant"))
+            PlayerData data = SaveSystem.LoadPlayer();
+            foreach (GameObject a in GameObject.FindGameObjectsWithTag("Enemy"))
             {
-                Instantiate(myRatPrefab, enemyPosition, enemyRotation);
+                Destroy(a);
             }
 
-            else if (e.name.Contains("Bird"))
+            health = data.health;
+            Vector3 position;
+
+            position.x = data.position[0];
+            position.y = data.position[1];
+            position.z = data.position[2];
+            transform.position = position;
+
+            upOnRoof = data.onRoof;
+            GetComponentInChildren<BugNetController>().setScore(data.score);
+            SetUIHealth();
+
+            foreach (EnemySaveData e in data.enemySaveData)
             {
-                Instantiate(myBirdPrefab, enemyPosition, enemyRotation);
+                Vector3 enemyPosition;
+                enemyPosition.x = e.position[0];
+                enemyPosition.y = e.position[1];
+                enemyPosition.z = e.position[2];
+
+                Quaternion enemyRotation;
+                enemyRotation.w = e.rotation[0];
+                enemyRotation.x = e.rotation[1];
+                enemyRotation.y = e.rotation[2];
+                enemyRotation.z = e.rotation[3];
+
+                if (e.name.Contains("Variant"))
+                {
+                    Instantiate(myRatPrefab, enemyPosition, enemyRotation);
+                }
+
+                else if (e.name.Contains("Bird"))
+                {
+                    Instantiate(myBirdPrefab, enemyPosition, enemyRotation);
+                }
             }
-        }
+        }        
     }
     private void InputAbilities(bool onGround)
     {
