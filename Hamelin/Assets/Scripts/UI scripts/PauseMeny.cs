@@ -5,8 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class PauseMeny : MonoBehaviour
 {
+    public Animator CPanimator;
     public GameObject pauseMeny;
-    public GameObject otherUiElements;
+
     public GameObject convoPanel;
     public GameObject popupPanel;
     public GameObject questPanel;
@@ -66,8 +67,9 @@ public class PauseMeny : MonoBehaviour
         } else {
             popupPanelActivation = false;
         }
-        animator.SetTrigger("OpenPauseMenu");
+        
         otherUIActivation(false);
+        animator.SetTrigger("OpenPauseMenu");
 
 
     }
@@ -113,6 +115,7 @@ public class PauseMeny : MonoBehaviour
     private void otherUIActivation(bool activation){
         if (activation){
             if(conversationPanelActivation){
+                CPanimator.SetTrigger("OpenCP");
                 convoPanel.SetActive(true);
             }
             if(popupPanelActivation){
@@ -122,6 +125,7 @@ public class PauseMeny : MonoBehaviour
 
 
         } else {
+            CPanimator.SetTrigger("CloseCP");
             convoPanel.SetActive(false);
             popupPanel.SetActive(false);
             questPanel.SetActive(false);
