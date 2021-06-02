@@ -13,9 +13,12 @@ public class PauseMeny : MonoBehaviour
     public GameObject hTPPanel;
     public bool conversationPanelActivation;
     public bool popupPanelActivation;
+
+    public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
+        //PlayerAnimatorUnscaledTime();
         
     }
 
@@ -36,10 +39,19 @@ public class PauseMeny : MonoBehaviour
         }
     }
 
+        public void PlayerAnimatorUnscaledTime()
+         {
+             AnimatorUpdateMode animatorUpdateMode = animator.updateMode;
+             animator.updateMode = animatorUpdateMode;
+ 
+             animatorUpdateMode = AnimatorUpdateMode.UnscaledTime;
+         }
+
     private void PauseMenyActivated()
     {
+        
+        animator.SetTrigger("OpenPauseMenu");
         PauseGame();
-        pauseMeny.SetActive(true);
         //deactivate camera
         //Get mouse back 
         activateMouse(true);
@@ -80,6 +92,7 @@ public class PauseMeny : MonoBehaviour
     }
     public void PauseMenyDeactivated()
     {
+        animator.SetTrigger("ClosePauseMenu");
         ResumeGame();
         pauseMeny.SetActive(false);
         //activate camera
@@ -117,14 +130,20 @@ public class PauseMeny : MonoBehaviour
     }
 
     public void howToPlay(){
-        hTPPanel.SetActive(true);
-        pauseMeny.SetActive(false);
+        animator.SetTrigger("OpenHowTo");
+        animator.ResetTrigger("OpenPauseMenu");
+        
 
     }
 
+    public void optionsMenu(){
+        animator.SetTrigger("OpenOptions");
+        animator.ResetTrigger("OpenPauseMenu");
+    }
+
     public void backToMenu(){
-        hTPPanel.SetActive(false);
-        pauseMeny.SetActive(true);
+        animator.SetTrigger("BackToMenu");
+        
     }
 
 
