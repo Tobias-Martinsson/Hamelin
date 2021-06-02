@@ -10,6 +10,12 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMeny;
     public GameObject optionsMeny;
     public Animator animator;
+
+    public AudioClip clip;
+    private AudioSource source;
+    private float minPitch = 0.9f;
+    private float maxPitch = 1.2f;
+
     private int savedScene;
 
     
@@ -25,6 +31,8 @@ public class MainMenu : MonoBehaviour
         PlayerData data = SaveSystem.LoadPlayer();
         savedScene = data.currentScene;
         animator.SetBool("PushedEnter", false);
+
+        source = GetComponent<AudioSource>();
     }
 
 
@@ -103,6 +111,12 @@ public class MainMenu : MonoBehaviour
        animator.SetTrigger("BackToMain");
        animator.ResetTrigger("OptionsMenu");
 
+    }
+
+    public void PlayButtonSound()
+    {
+        source.pitch = Random.Range(minPitch, maxPitch);
+        source.PlayOneShot(clip);
     }
    
 }
