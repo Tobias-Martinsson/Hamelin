@@ -7,7 +7,7 @@ using UnityEngine.UI;
 //Secondary Author: Tobias Martinsson
 public class QuestGiver : MonoBehaviour
 {
-    //public Animator CPanimator;
+    public Animator CPanimator;
     public Quest quest;
     public QuestGoal questGoal;
     public BugNetController bugNet;
@@ -37,6 +37,7 @@ public class QuestGiver : MonoBehaviour
         
         questGoal.currentAmount = 0;
         //questWindow.SetActive(true);
+        CPanimator.SetTrigger("OpencP");
         logWindow.SetActive(false);
         titleText.text = quest.title;
         dialogueText.text = quest.dialogue;
@@ -49,7 +50,8 @@ public class QuestGiver : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.E)) {
-            questWindow.SetActive(false);
+           // questWindow.SetActive(false);
+           CPanimator.SetTrigger("CloseCP");
             quest.isActive = true;
 
             SetQuestLog();
