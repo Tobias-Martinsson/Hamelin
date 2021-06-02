@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//Main Author: Tim Agélii
 public static class AllAgents 
 {
     public static List<SomeAgent> allAgents = new List<SomeAgent>();

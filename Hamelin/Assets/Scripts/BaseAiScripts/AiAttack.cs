@@ -24,7 +24,7 @@ public class AiAttack : State
         
         if (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) > AttackDistance)
         {
-            Debug.Log("Chase");
+         
             StateMachine.ChangeState<AiChasePlayer>();
         }
         

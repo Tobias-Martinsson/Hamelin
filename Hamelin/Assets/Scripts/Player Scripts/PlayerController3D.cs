@@ -130,7 +130,7 @@ public class PlayerController3D : MonoBehaviour
             LoadGame();
         }
         else{
-            Debug.Log(health);
+        
             health = maxHealth;
 
             SaveGame();
@@ -425,7 +425,7 @@ public class PlayerController3D : MonoBehaviour
     
     public void KillZoneCollision() {
 
-        Debug.Log("RESPAWN");
+ 
         SetDamageDealt(true);
         velocity = new Vector3(-velocity.x * 3, 0, -velocity.z * 3);
         transform.position = jumpLocation.transform.position;
@@ -446,8 +446,7 @@ public class PlayerController3D : MonoBehaviour
             //Set Respawn
             if (!falling && respawnPoint)
             {
-                //jumpLocation = GameObject.Find("Player").transform;
-                //Debug.Log(jumpLocation.transform.position.x);
+             
                 respawnPoint.transform.position = transform.position;
             }
             falling = true;
@@ -456,13 +455,13 @@ public class PlayerController3D : MonoBehaviour
 
     private bool DamageWaitTime()
     {
-        Debug.Log("WAIT TIME CALLED");
+     
 
         damageTimer += Time.deltaTime;
 
         if (damageTimer >= invincibleTime)
         {
-            Debug.Log("TIMER COMPLETE AFTER: " + invincibleTime);
+     
             damageTimer = 0;
             invincible = false;
             startDamageTimer = false;
@@ -612,7 +611,6 @@ public class PlayerController3D : MonoBehaviour
         {
             health = health - 1;
             
-            Debug.Log("took damage,current health: " + health);
             if (health <= 0)
             {
 
@@ -665,7 +663,7 @@ public class PlayerController3D : MonoBehaviour
     public void SetLadderRotation(float y) {
 
         ladderRotationY = y;
-        Debug.Log(ladderRotationY);
+   
     }
 
     public void SetClimbing(bool b)
@@ -682,8 +680,7 @@ public class PlayerController3D : MonoBehaviour
         jumpingVelocity = new Vector3(0, 0, 0);
 
         playerMesh.transform.rotation = Quaternion.Euler(0, ladderRotationY, 0);
-        Debug.Log(ladderRotationY);
-        Debug.Log(playerMesh.transform.rotation);
+     
 
         if (ladderStartPointBottom)
         {

@@ -27,10 +27,10 @@ public class BugNetController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.tag);
+     
         if(collision.gameObject.tag == "Enemy")
         {
-            Debug.Log("Rat hit");
+        
             GetComponentInParent<PlayerController3D>().SetCatchCheckTrue();
             Destroy(collision.gameObject);
             //Ifall flying enemies

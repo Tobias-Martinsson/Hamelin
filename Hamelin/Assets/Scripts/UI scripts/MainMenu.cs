@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.M))
         {
-            Debug.Log("Load Scene" + savedScene);
+         
             SceneManager.LoadScene(savedScene);
         }
         if (Input.GetKeyDown(KeyCode.Return)){

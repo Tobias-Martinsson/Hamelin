@@ -83,8 +83,7 @@ public class LadderClimb : MonoBehaviour
 
             
             collision.gameObject.GetComponent<PlayerController3D>().SetLadderRotation(ladderTransform.rotation.eulerAngles.y);
-            Debug.Log(ladderTransform.rotation.eulerAngles.y);
-        
+         
         
         }
             

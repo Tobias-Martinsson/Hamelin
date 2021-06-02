@@ -34,7 +34,7 @@ public class AiPatrolState : State
 
         if (!Physics.Linecast(Agent.transform.position, Agent.PlayerPosition, Agent.CollisionLayer) && (Vector3.Distance(Agent.transform.position, Agent.PlayerPosition) < chaseDistance))
         {
-            Debug.Log("Chase player");
+      
             StateMachine.ChangeState<AiChasePlayer>();
         }
     }

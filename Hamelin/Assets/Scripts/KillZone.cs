@@ -38,7 +38,7 @@ public class KillZone : MonoBehaviour
 
     private void SpawnKillZone()
     {
-        Debug.Log("Spawn Killzone");
+     
         col.enabled = !col.enabled;
         //turns on clouds / My
         clouds.SetActive(true);
@@ -46,7 +46,7 @@ public class KillZone : MonoBehaviour
     }
     private void DestroyKillZone()
     {
-        Debug.Log("Destroy Killzone");
+       
         col.enabled = !col.enabled;
         //turns of clouds / My
         clouds.SetActive(false);
@@ -57,7 +57,7 @@ public class KillZone : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("Hit");
+        
             player.GetComponent<PlayerController3D>().KillZoneCollision();
         }
     }
