@@ -7,6 +7,7 @@ using UnityEngine.UI;
 //Secondary Author: Tobias Martinsson
 public class QuestGiver : MonoBehaviour
 {
+    //public Animator CPanimator;
     public Quest quest;
     public QuestGoal questGoal;
     public BugNetController bugNet;
@@ -29,9 +30,13 @@ public class QuestGiver : MonoBehaviour
         {
             anim = anim.GetComponent<Animator>();
         }
+
+        
+
+
         
         questGoal.currentAmount = 0;
-        questWindow.SetActive(true);
+        //questWindow.SetActive(true);
         logWindow.SetActive(false);
         titleText.text = quest.title;
         dialogueText.text = quest.dialogue;
