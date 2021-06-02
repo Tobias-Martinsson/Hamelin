@@ -76,16 +76,14 @@ public class MainMenu : MonoBehaviour
         //optionsMeny.SetActive(true);
         animator.SetTrigger("OptionsMenu");
         animator.ResetTrigger("BackToMain");
+        animator.ResetTrigger("HowToPlayMenu");
         
 
     }
 
-    //when player push the on credits button
+    
 
-    public void OnCredits()
-    {
-
-    }
+    
         //when player push the on how to play button
     public void OnHowToPlay()
     {
@@ -98,6 +96,7 @@ public class MainMenu : MonoBehaviour
     {
         animator.SetTrigger("BackToMain");
         animator.ResetTrigger("HowToPlayMenu");
+        animator.ResetTrigger("OptionsMenu");
     }
 
 
@@ -110,6 +109,7 @@ public class MainMenu : MonoBehaviour
        // optionsMeny.SetActive(false);
        animator.SetTrigger("BackToMain");
        animator.ResetTrigger("OptionsMenu");
+       animator.ResetTrigger("HowToPlayMenu");
 
     }
 
@@ -118,5 +118,17 @@ public class MainMenu : MonoBehaviour
         source.pitch = Random.Range(minPitch, maxPitch);
         source.PlayOneShot(clip);
     }
+
+    //when player push the on credits button
+    public void OnCredits()
+    {
+       // mainMeny.SetActive(true);
+       // optionsMeny.SetActive(false);
+       animator.SetTrigger("CreditsMenu");
+       animator.ResetTrigger("OptionsMenu");
+       animator.ResetTrigger("HowToPlayMenu");
+
+    }
+
    
 }
