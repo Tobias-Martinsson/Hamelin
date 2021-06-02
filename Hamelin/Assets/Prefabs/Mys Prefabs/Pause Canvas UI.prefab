@@ -1255,7 +1255,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 935afb11df9af3e42a6673007aba0479, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -1938,6 +1938,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 8300000, guid: 8110f8745d7fa8246833e5693eab204b, type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 6701309059282418850}
+        m_TargetAssemblyTypeName: PauseMeny, Assembly-CSharp
+        m_MethodName: optionsMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4529,6 +4541,22 @@ PrefabInstance:
     - target: {fileID: 5175020354260511014, guid: 86f4f128f15928343a0d732b9b5d05f8, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5175020354508741712, guid: 86f4f128f15928343a0d732b9b5d05f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5175020354508741712, guid: 86f4f128f15928343a0d732b9b5d05f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 6701309059282418850}
+    - target: {fileID: 5175020354508741712, guid: 86f4f128f15928343a0d732b9b5d05f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: backToMenu
+      objectReference: {fileID: 0}
+    - target: {fileID: 5175020354508741712, guid: 86f4f128f15928343a0d732b9b5d05f8, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PauseMeny, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 5175020354698946653, guid: 86f4f128f15928343a0d732b9b5d05f8, type: 3}
       propertyPath: m_AnchorMax.y

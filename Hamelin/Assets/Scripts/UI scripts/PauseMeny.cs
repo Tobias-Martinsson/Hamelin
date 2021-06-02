@@ -50,7 +50,7 @@ public class PauseMeny : MonoBehaviour
     private void PauseMenyActivated()
     {
         
-        animator.SetTrigger("OpenPauseMenu");
+        
         PauseGame();
         //deactivate camera
         //Get mouse back 
@@ -66,6 +66,7 @@ public class PauseMeny : MonoBehaviour
         } else {
             popupPanelActivation = false;
         }
+        animator.SetTrigger("OpenPauseMenu");
         otherUIActivation(false);
 
 
